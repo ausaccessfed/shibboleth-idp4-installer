@@ -3,14 +3,14 @@
   pre_tasks:
   vars:
     installer:
-      root: "{{ install_base }}/shibboleth-idp-installer"
-      path: "{{ install_base }}/shibboleth-idp-installer/build"
-      repository: "{{ install_base }}/shibboleth-idp-installer/repository"
+      root: "{{ install_base }}/shibboleth-idp4-installer"
+      path: "{{ install_base }}/shibboleth-idp4-installer/build"
+      repository: "{{ install_base }}/shibboleth-idp4-installer/repository"
   tasks:
     - name: 'Verify Ansible meets AAF Installer version requirments.'
       assert:
-        that: "ansible_version.full is version_compare('2.6', '>=')"
-        msg: "You must update Ansible to at least 2.6 to use this version of the AAF IdP Installer."
+        that: "ansible_version.full is version_compare('2.9', '>=')"
+        msg: "You must update Ansible to at least 2.9 to use this version of the AAF IdP Installer."
 
     - name: 'Create local_conf.yml if it does not exist'
       copy:
@@ -88,9 +88,9 @@
       shib_cas_authenticator:
          url: "{{ download.shib_cas_authenticator.baseurl }}/shib-cas-authenticator-{{ download.shib_cas_authenticator.version }}.jar"
     installer:
-      root: "{{ install_base }}/shibboleth-idp-installer"
-      path: "{{ install_base }}/shibboleth-idp-installer/build"
-      repository: "{{ install_base }}/shibboleth-idp-installer/repository"
+      root: "{{ install_base }}/shibboleth-idp4-installer"
+      path: "{{ install_base }}/shibboleth-idp4-installer/build"
+      repository: "{{ install_base }}/shibboleth-idp4-installer/repository"
     jetty:
       root: "{{ install_base }}/jetty"
       home: "{{ install_base }}/jetty/jetty-distribution-{{ download.jetty.version }}"
