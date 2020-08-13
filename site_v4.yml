@@ -21,7 +21,7 @@
         mode: 0644
         force: no
 
-- hosts: idp-servers
+- hosts: idp_servers
   vars:
     aaf_binaries:
       baseurl: https://aaf-binaries.s3-ap-southeast-2.amazonaws.com 
