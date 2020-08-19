@@ -66,6 +66,26 @@
         baseurl: "{{ aaf_binaries.baseurl }}/jars/cas_extensions"
         version: 3.3.0
         sha256sum: 435aebc3e301341e31c22e73ee5dee42c36bb1ea88483b5db182b13170a79ff2
+      logback-access:
+        baseurl: "{{ aaf_binaries.baseurl }}/jars/logback"
+        version: 1.2.3
+        sha256sum: 0a4fc8753abe266ea7245e6d9653d6275dc1137cad6ecd1b2612204033d89687
+      logback-classic:
+        baseurl: "{{ aaf_binaries.baseurl }}/jars/logback"
+        version: 1.2.3
+        sha256sum: fb53f8539e7fcb8f093a56e138112056ec1dc809ebb020b59d8a36a5ebac37e0
+      logback-core:
+        baseurl: "{{ aaf_binaries.baseurl }}/jars/logback"
+        version: 1.2.3
+        sha256sum: 5946d837fe6f960c02a53eda7a6926ecc3c758bbdd69aa453ee429f858217f22
+      jcl-over-slf4j:
+        baseurl: "{{ aaf_binaries.baseurl }}/jars/slf4j"
+        version: 1.7.25
+        sha256sum: 5e938457e79efcbfb3ab64bc29c43ec6c3b95fffcda3c155f4a86cc320c11e14
+      slf4j-api:
+        baseurl: "{{ aaf_binaries.baseurl }}/jars/slf4j"
+        version: 1.7.25
+        sha256sum: 18c4a0095d5c1da6b817592e767bb23d29dd2f560ad74df75ff3961dbde25b79
     urls:
       jetty:
         url: "{{ download.jetty.baseurl }}/jetty-distribution-{{ download.jetty.version }}.tar.gz"
@@ -87,6 +107,16 @@
         url: "{{ download.cas_client_core.baseurl }}/cas-client-core-{{ download.cas_client_core.version }}.jar"
       shib_cas_authenticator:
          url: "{{ download.shib_cas_authenticator.baseurl }}/shib-cas-authenticator-{{ download.shib_cas_authenticator.version }}.jar"
+      logback-access:
+         url: "{{ download.logback-access.baseurl }}/logback-access-{{ download.logback-access.version }}.jar"
+      logback-classic:
+         url: "{{ download.logback-classic.baseurl }}/logback-classic-{{ download.logback-classic.version }}.jar"
+      logback-core:
+         url: "{{ download.logback-core.baseurl }}/logback-core-{{ download.logback-core.version }}.jar"
+      jcl-over-slf4j:
+         url: "{{ download.jcl-over-slf4j.baseurl }}/jcl-over-slf4j-{{ download.jcl-over-slf4j.version }}.jar"
+      slf4j-api:
+         url: "{{ download.slf4j-api.baseurl }}/slf4j-api-{{ download.slf4j-api.version }}.jar"
     installer:
       root: "{{ install_base }}/shibboleth-idp4-installer"
       path: "{{ install_base }}/shibboleth-idp4-installer/build"
@@ -124,42 +154,15 @@
         - '{{ installer.root }}'
         - '{{ installer.path }}'
 
-    - name: 'Update yum packages (yum -y update)'
-      yum: name=* state=latest
-      when: ((server_patch is undefined) or (server_patch is none) or (server_patch=="true"))
-
-    - name: 'Set SELinux to permissive mode'
-      selinux:
-        policy: targeted
-        state: permissive
-
-    - name: 'Install required packages'
-      yum: 
-        name:
-          - httpd
-          - mod_ssl
-          - mod_ldap
-          - java-1.8.0-openjdk
-          - java-1.8.0-openjdk-devel
-          - mariadb-devel
-          - mariadb
-          - mariadb-server
-          - MySQL-python
-          - ntp
-        state: installed
-
-    - name: 'Enable NTP service'
-      service: name=ntpd state=started enabled=yes
-
+    - include_tasks: tasks/system.yml
     - include_tasks: tasks/jetty.yml
-    - include_tasks: tasks/db.yml
-    - include_tasks: tasks/idp.yml
-    - include_tasks: tasks/apache.yml
-    - include_tasks: tasks/firewalld.yml
-      when: firewall is defined and firewall=="firewalld"
-    - include_tasks: tasks/iptables.yml
-      when: firewall is defined and firewall=="iptables"
-    - include_tasks: tasks/local_conf.yml
+#    - include_tasks: tasks/db.yml
+#    - include_tasks: tasks/idp.yml
+#    - include_tasks: tasks/apache.yml
+#    - include_tasks: tasks/firewalld.yml
+#      when: firewall is defined and firewall=="true"
+    - include_tasks: tasks/libs.yml
+#    - include_tasks: tasks/local_conf.yml
 
   handlers:
     - name: Restart idp

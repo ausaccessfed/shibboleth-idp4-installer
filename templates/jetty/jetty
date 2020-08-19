@@ -1,0 +1,12 @@
+JAVA_HOME=/usr/lib/jvm/java
+JAVA=$JAVA_HOME/bin/java
+JAVA_OPTIONS=" -server"
+JETTY_HOME=/opt/jetty/jetty-distribution-9.4.20.v20190813
+JETTY_STATE=/opt/jetty/tmp/jetty.state
+JETTY_USER=jetty
+JETTY_PORT=443
+JETTY_HOST=0.0.0.0
+JETTY_START_LOG=/opt/shibboleth/jetty/logs/jetty-start.log
+JETTY_ARGS="jetty.logs=/opt/shibboleth/jetty/logs jetty.server.dumpAfterStart=true"
+JETTY_BASE=/opt/shibboleth/jetty
+
