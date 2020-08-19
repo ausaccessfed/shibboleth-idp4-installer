@@ -88,7 +88,6 @@ echo ""
 echo "  2. Apply any configuration changes made within the assets directory for: "
 echo "    * Shibboleth IdP"
 echo "    * Jetty"
-echo "    * Apache HTTPD"
 echo ""
 echo -e "  3. RESTART all dependant processes.\n"
 
