@@ -102,7 +102,7 @@
 
 - name: 'Set logback-access configuration'
   template:
-    dest: '{{ jetty.home }}/resources/logback-access.xml'
+    dest: '{{ jetty.base }}/resources/logback-access.xml'
     src: 'templates/jetty/logback-access.xml'
     owner: root
     group: jetty
@@ -111,7 +111,7 @@
 
 - name: 'Set logback configuration'
   template:
-    dest: '{{ jetty.home }}/resources/logback.xml'
+    dest: '{{ jetty.base }}/resources/logback.xml'
     src: 'templates/jetty/logback.xml'
     owner: root
     group: jetty
@@ -122,7 +122,7 @@
 
 - name: 'Set idp.ini configuration'
   template:
-    dest: '{{ jetty.home }}/start.d/idp.ini'
+    dest: '{{ jetty.base }}/start.d/idp.ini'
     src: 'templates/jetty/idp.ini'
     owner: root
     group: jetty
@@ -153,7 +153,7 @@
 
 - name: 'Set start.ini'
   template:
-    dest: '{{ jetty.home }}/start.ini'
+    dest: '{{ jetty.base }}/start.ini'
     src: 'templates/jetty/start.ini'
     owner: root
     group: jetty
