@@ -221,6 +221,14 @@
   with_items:
   - '{{ jetty.home }}/bin/jetty.sh'
 
+- name: 'Create jetty log directory'
+  file:
+    name: /var/log/jetty
+    owner: jetty
+    group: jetty
+    mode: 0700
+    state: directory
+
 - name: 'Symlink jetty log directory'
   file:
     name: '{{ jetty.base }}/logs'
