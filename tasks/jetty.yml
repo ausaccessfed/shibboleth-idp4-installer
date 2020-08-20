@@ -17,7 +17,7 @@
 - name: 'Download jetty distribution'
   get_url:
     url: '{{ urls.jetty.url }}'
-    dest: '{{ jetty_dist_archive_path }}'
+    dest: '/opt/jetty.tar'
     sha256sum: '{{ download.jetty.sha256sum }}'
 
 - name: 'Extract jetty distribution'
@@ -100,7 +100,7 @@
 
 # Files in jetty.base/resources
 
-- name: 'Set logback-accesc configuration'
+- name: 'Set logback-access configuration'
   template:
     dest: '{{ jetty.home }}/resources/logback-access.xml'
     src: 'templates/jetty/logback-access.xml'
