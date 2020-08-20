@@ -24,9 +24,9 @@
 
 - name: 'Install logback-access'
   get_url:
-    url: '{{ urls.logback-access.url }}'
-    dest: '{{ shib_idp.libs }}/logback-access-{{ download.logback-access.version }}.jar'
-    sha256sum: '{{ download.logback-access.sha256sum }}'
+    url: '{{ urls.logback_access.url }}'
+    dest: '{{ shib_idp.libs }}/logback-access-{{ download.logback_access.version }}.jar'
+    sha256sum: '{{ download.logback_access.sha256sum }}'
     owner: root
     group: jetty
     mode: 0640
@@ -34,14 +34,14 @@
 - name: 'Link to logback-access library'
   file:
     name: '{{ jetty.base }}/lib/logback/logback-access.jar'
-    src: '{{ shib_idp.libs }}/logback-access-{{ download.logback-access.version }}.jar'
+    src: '{{ shib_idp.libs }}/logback-access-{{ download.logback_access.version }}.jar'
     state: link
 
 - name: 'Install logback-classic'
   get_url:
-    url: '{{ urls.logback-classic.url }}'
-    dest: '{{ shib_idp.libs }}/logback-classic-{{ download.logback-classic.version }}.jar'
-    sha256sum: '{{ download.logback-classic.sha256sum }}'
+    url: '{{ urls.logback_classic.url }}'
+    dest: '{{ shib_idp.libs }}/logback-classic-{{ download.logback_classic.version }}.jar'
+    sha256sum: '{{ download.logback_classic.sha256sum }}'
     owner: root
     group: jetty
     mode: 0640
@@ -49,14 +49,14 @@
 - name: 'Link to logback-classic library'
   file:
     name: '{{ jetty.base }}/lib/logback/logback-classic.jar'
-    src: '{{ shib_idp.libs }}/logback-classic-{{ download.logback-classic.version }}.jar'
+    src: '{{ shib_idp.libs }}/logback-classic-{{ download.logback_classic.version }}.jar'
     state: link
 
 - name: 'Install logback-core'
   get_url:
-    url: '{{ urls.logback-core.url }}'
-    dest: '{{ shib_idp.libs }}/logback-core-{{ download.logback-core.version }}.jar'
-    sha256sum: '{{ download.logback-core.sha256sum }}'
+    url: '{{ urls.logback_core.url }}'
+    dest: '{{ shib_idp.libs }}/logback-core-{{ download.logback_core.version }}.jar'
+    sha256sum: '{{ download.logback_core.sha256sum }}'
     owner: root
     group: jetty
     mode: 0640
@@ -64,14 +64,14 @@
 - name: 'Link to logback-core library'
   file:
     name: '{{ jetty.base }}/lib/logback/logback-core.jar'
-    src: '{{ shib_idp.libs }}/logback-core-{{ download.logback-core.version }}.jar'
+    src: '{{ shib_idp.libs }}/logback-core-{{ download.logback_core.version }}.jar'
     state: link
 
 - name: 'Install jcl-over-slf4j'
   get_url:
-    url: '{{ urls.jcl-over-slf4j.url }}'
-    dest: '{{ shib_idp.libs }}/jcl-over-slf4j-{{ download.jcl-over-slf4j.version }}.jar'
-    sha256sum: '{{ download.jcl-over-slf4j.sha256sum }}'
+    url: '{{ urls.jcl_over_slf4j.url }}'
+    dest: '{{ shib_idp.libs }}/jcl-over-slf4j-{{ download.jcl_over_slf4j.version }}.jar'
+    sha256sum: '{{ download.jcl_over_slf4j.sha256sum }}'
     owner: root
     group: jetty
     mode: 0640
@@ -79,14 +79,14 @@
 - name: 'Link to jcl-over-slf4j library'
   file:
     name: '{{ jetty.base }}/lib/logback/jcl-over-slf4j.jar'
-    src: '{{ shib_idp.libs }}/jcl-over-slf4j-{{ download.jcl-over-slf4j.version }}.jar'
+    src: '{{ shib_idp.libs }}/jcl-over-slf4j-{{ download.jcl_over_slf4j.version }}.jar'
     state: link
 
 - name: 'Install slf4j-api'
   get_url:
-    url: '{{ urls.slf4j-api.url }}'
-    dest: '{{ shib_idp.libs }}/slf4j-api-{{ download.slf4j-api.version }}.jar'
-    sha256sum: '{{ download.slf4j-api.sha256sum }}'
+    url: '{{ urls.slf4j_api.url }}'
+    dest: '{{ shib_idp.libs }}/slf4j-api-{{ download.slf4j_api.version }}.jar'
+    sha256sum: '{{ download.slf4j_api.sha256sum }}'
     owner: root
     group: jetty
     mode: 0640
@@ -94,6 +94,6 @@
 - name: 'Link to slf4j-api library'
   file:
     name: '{{ jetty.base }}/lib/logback/slf4j-api.jar'
-    src: '{{ shib_idp.libs }}/slf4j-api-{{ download.slf4j-api.version }}.jar'
+    src: '{{ shib_idp.libs }}/slf4j-api-{{ download.slf4j_api.version }}.jar'
     state: link
 
