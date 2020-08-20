@@ -220,3 +220,13 @@
     mode: 0750
   with_items:
   - '{{ jetty.home }}/bin/jetty.sh'
+
+- name: 'Symlink jetty log directory'
+  file:
+    name: '{{ jetty.base }}/logs'
+    src: /var/log/jetty
+    state: link
+    owner: jetty
+    group: jetty
+    force: yes
+
