@@ -11,9 +11,6 @@
 - name: 'Install required packages'
   yum:
     name:
-      - httpd
-      - mod_ssl
-      - mod_ldap
       - java-11-openjdk-devel
       - mariadb-devel
       - mariadb

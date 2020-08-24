@@ -58,6 +58,7 @@
     - '{{ jetty.base }}/modules'
     - '{{ jetty.base }}/resources'
     - '{{ jetty.base }}/start.d'
+    - '{{ jetty.base }}/tmp'
     - '{{ jetty.base }}/webapps'
 
 # Files in jetty.base/etc
@@ -237,4 +238,15 @@
     owner: jetty
     group: jetty
     force: yes
+
+- name: 'Create Web PKCS#12 archive"
+  openssl_pkcs12:
+    action: export
+    path: 
+    friendly_name: Web Site cert and key
+    privatekey_path: 'assets/{{ inventory_hostname }}/jetty/ssl/server.key'
+    certificate_path: 'assets/{{ inventory_hostname }}/jetty/ssl/server.crt'
+    other_certificates: 'assets/{{ inventory_hostname }}/jetty/ssl/intermediate.crt'
+    passphrase: {{ jetty.web_443_keystore_pw }}
+    state: present
 
