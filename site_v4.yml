@@ -126,7 +126,7 @@
       home: "{{ install_base }}/jetty/jetty-distribution-{{ download.jetty.version }}"
       base: "{{ install_base }}/shibboleth/jetty"
       current: "{{ install_base }}/jetty/current"
-      tmp_directory: "{{ install_base }}/jetty/tmp"
+      tmp_directory: "{{ install_base }}/shibboleth/jetty/tmp"
       state_directory: "{{ install_base }}/shibboleth/jetty/tmp"
       web_443_keystore_pw: "{{ lookup('password', installer.repository + '/passwords/' + inventory_hostname + '/web_443_keystore chars=letters,digits length=64') }}"
     shib_idp:
@@ -160,20 +160,15 @@
     - include_tasks: tasks/jetty.yml
 #    - include_tasks: tasks/db.yml
 #    - include_tasks: tasks/idp.yml
-#    - include_tasks: tasks/apache.yml
 #    - include_tasks: tasks/firewalld.yml
 #      when: firewall is defined and firewall=="true"
     - include_tasks: tasks/libs.yml
-#    - include_tasks: tasks/local_conf.yml
+    - include_tasks: tasks/local_conf.yml
 
   handlers:
     - name: Restart idp
       service:
         name: idp
-        state: restarted
-    - name: Restart Apache
-      service:
-        name: httpd
         state: restarted
     - name: Restart database
       service:
