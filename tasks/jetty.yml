@@ -185,9 +185,9 @@
     mode: 0640
 
 - name: 'Add favicon.ico to site'
-  file:
-    dest: '{{ jetty.base }}/webapps/root/favicon.ico'
+  copy:
     src: 'templates/jetty/favicon.ico'
+    dest: '{{ jetty.base }}/webapps/root/favicon.ico'
     owner: jetty
     group: jetty
     mode: 640
