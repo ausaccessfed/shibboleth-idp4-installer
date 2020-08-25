@@ -6,7 +6,7 @@
 
 <body>
 <header>
-<img alt="{{ organisation_name }}" src="images/{{ oganisation_logo_img }}" width="261" height="84" />
+<h1>{{ organisation_name }}</H1>
 </header>
 <main>
 <section>
