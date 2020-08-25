@@ -50,6 +50,7 @@
     mode: 0750
   with_items:
     - '{{ jetty.base }}'
+    - '{{ jetty.base }}/credentials'
     - '{{ jetty.base }}/etc'
     - '{{ jetty.base }}/lib'
     - '{{ jetty.base }}/lib/ext'
@@ -242,7 +243,7 @@
 - name: 'Create Web PKCS#12 archive'
   openssl_pkcs12:
     action: export
-    path: 
+    path: '{{ jetty.base }}/credentials/idp-userfacing.p12'
     friendly_name: Web Site cert and key
     privatekey_path: 'assets/{{ inventory_hostname }}/jetty/ssl/server.key'
     certificate_path: 'assets/{{ inventory_hostname }}/jetty/ssl/server.crt'
