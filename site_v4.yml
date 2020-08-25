@@ -32,8 +32,8 @@
         sha256sum: ddf4f4454df83c971c726acabbcfc0cbd443726a30b052ae8cb61f4933852dc8
       shib_idp:
         baseurl: "{{ aaf_binaries.baseurl }}/shibboleth"
-        version: 3.4.6
-        sha256sum: a35ee8e0e8dafa3b66660b7df1762eea7876eabd38b06f34e45dc179745edc3c
+        version: 4.0.1
+        sha256sum: 832f73568c5b74a616332258fd9dc555bb20d7dd9056c18dc0ccf52e9292102a
       mysql_connector:
         baseurl: "{{ aaf_binaries.baseurl }}/jars/Connector-J"
         version: 8.0.16
@@ -159,7 +159,7 @@
     - include_tasks: tasks/system.yml
     - include_tasks: tasks/jetty.yml
     - include_tasks: tasks/db.yml
-#    - include_tasks: tasks/idp.yml
+    - include_tasks: tasks/idp.yml
 #    - include_tasks: tasks/firewalld.yml
 #      when: firewall is defined and firewall=="true"
     - include_tasks: tasks/libs.yml
