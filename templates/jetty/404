@@ -6,7 +6,7 @@
 
 <body>
 <header>
-<h1>{{ organisation_name }}</H1>
+<h1>{{ organisation_name }}</h1>
 </header>
 <main>
 <section>
