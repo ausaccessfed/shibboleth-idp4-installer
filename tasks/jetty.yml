@@ -168,28 +168,28 @@
 
 # Files in jetty.base/webapps/root
 
-- name: "Set 404'
+- name: 'Set 404'
   template:
     dest: '{{ jetty.base }}/webapps/root/404'
-    src: templates/jetty/404'
+    src: 'templates/jetty/404'
     owner: root
     group: jetty
     mode: 0640
     backup: no
 
-- name: "Set index.html'
+- name: 'Set index.html'
   template:
     dest: '{{ jetty.base }}/webapps/root/index.html'
-    src: templates/jetty/index.html'
+    src: 'templates/jetty/index.html'
     owner: root
     group: jetty
     mode: 0640
     backup: no
 
-- name: "Set web.xml'
+- name: 'Set web.xml'
   template:
     dest: '{{ jetty.base }}/webapps/root/WEB-INF/web.xml'
-    src: templates/jetty/web.xml'
+    src: 'templates/jetty/web.xml'
     owner: root
     group: jetty
     mode: 0640
@@ -275,11 +275,11 @@
   openssl_pkcs12:
     action: export
     path: '{{ jetty.base }}/credentials/idp-userfacing.p12'
-    friendly_name: Web Site cert and key
+    friendly_name: 'Web Site cert and key'
     privatekey_path: 'assets/{{ inventory_hostname }}/jetty/ssl/server.key'
     certificate_path: 'assets/{{ inventory_hostname }}/jetty/ssl/server.crt'
     other_certificates: 'assets/{{ inventory_hostname }}/jetty/ssl/intermediate.crt'
-    passphrase: {{ jetty.web_443_keystore_pw }}
+    passphrase: '{{ jetty.web_443_keystore_pw }}'
     state: present
     mode: 0640
     owner: root
