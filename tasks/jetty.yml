@@ -239,7 +239,7 @@
     group: jetty
     force: yes
 
-- name: 'Create Web PKCS#12 archive"
+- name: 'Create Web PKCS#12 archive'
   openssl_pkcs12:
     action: export
     path: 
