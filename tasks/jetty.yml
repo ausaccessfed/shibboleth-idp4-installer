@@ -59,7 +59,6 @@
     - '{{ jetty.base }}/modules'
     - '{{ jetty.base }}/resources'
     - '{{ jetty.base }}/start.d'
-    - '{{ jetty.base }}/tmp'
     - '{{ jetty.base }}/webapps'
     - '{{ jetty.base }}/webapps/root'
     - '{{ jetty.base }}/webapps/root/WEB-INF'
