@@ -175,7 +175,6 @@
     owner: root
     group: jetty
     mode: 0640
-    backup: no
 
 - name: 'Set index.html'
   template:
@@ -184,7 +183,14 @@
     owner: root
     group: jetty
     mode: 0640
-    backup: no
+
+- name: 'Add favicon.ico to site'
+  file:
+    dest: '{{ jetty.base }}/webapps/root/favicon.ico'
+    src: 'templates/jetty/favicon.ico'
+    owner: jetty
+    group: jetty
+    mode: 640
 
 - name: 'Set web.xml'
   template:
@@ -193,7 +199,6 @@
     owner: root
     group: jetty
     mode: 0640
-    backup: no
 
 # Jetty default in /etc/default
 
