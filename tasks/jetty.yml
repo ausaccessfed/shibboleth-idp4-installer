@@ -189,7 +189,7 @@
     dest: '{{ jetty.base }}/webapps/root/favicon.ico'
     owner: jetty
     group: jetty
-    mode: 640
+    mode: 0640
 
 - name: 'Set web.xml'
   template:
