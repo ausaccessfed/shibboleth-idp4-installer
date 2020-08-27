@@ -49,13 +49,13 @@
     group: root
     mode: 0700
 
-- fail:
-    msg: 'Check point #1'
-
 - name: 'Run IdP install'
   command: '{{ shib_idp.src_root }}/install-{{ download.shib_idp.version }}.sh'
   args:
     creates: '{{ shib_idp.home }}'
+
+- fail:
+    msg: 'Check point #1'
 
 - name: 'Create libs directory'
   file:
