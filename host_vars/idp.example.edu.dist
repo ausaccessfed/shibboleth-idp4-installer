@@ -15,6 +15,12 @@ idp_attribute_scope: "example.edu"
 # Your organisation's name
 organisation_name: "The University of Example"
 
+# Your organisation's home url
+organisation_url: "https://example.edu"
+
+# Your organisation's home url
+organisation_support: "support@example.edu"
+
 # Your schacHomeOrganization. See http://www.terena.org/activities/tf-emc2/schacreleases.html
 home_organisation: "example.edu"
 
@@ -24,9 +30,6 @@ home_organisation: "example.edu"
 # urn:mace:terena.org:schac:homeOrganizationType:au:research-institution
 # urn:mace:terena.org:schac:homeOrganizationType:au:other
 home_organisation_type: "urn:mace:terena.org:schac:homeOrganizationType:au:university"
-
-# The federation's group id used for metadata-based attribute filtering
-federation_group_id: "https://md.test.aaf.edu.au/aaf-test-metadata.xml"
 
 # Run yum -update on every execution of update_idp.sh
 server_patch: "true"
