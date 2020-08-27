@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS shibpid (
     peerProvidedId VARCHAR(50) NULL,
     creationDate TIMESTAMP NOT NULL,
     deactivationDate TIMESTAMP NULL,
-    PRIMARY KEY (localEntity, peerEntity, persistentId),
+    PRIMARY KEY (localEntity, peerEntity, persistentId)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
