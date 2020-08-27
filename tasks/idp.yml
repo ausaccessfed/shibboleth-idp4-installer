@@ -63,9 +63,6 @@
     mode: 0640
     backup: yes
 
-- fail:
-    msg: 'Check point #1'
-
 - name: 'Copy customised IdP branding (css)'
   copy:
     dest: '{{ shib_idp.home }}/edit-webapp/css/'
@@ -82,6 +79,9 @@
   with_items:
     - dummylogo-mobile.png
     - dummylogo.png
+
+- fail:
+    msg: 'Check point #1'
 
 - name: 'Copy customised IdP branding (images)'
   copy:
