@@ -24,6 +24,9 @@ organisation_support: "support@example.edu"
 # Your schacHomeOrganization. See http://www.terena.org/activities/tf-emc2/schacreleases.html
 home_organisation: "example.edu"
 
+# Password Reset
+password_reset_url: "#"
+
 # Your schacHomeOrganizationType. See http://www.terena.org/activities/tf-emc2/schacreleases.html
 # Relevant values are:
 # urn:mace:terena.org:schac:homeOrganizationType:au:university
