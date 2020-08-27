@@ -1,0 +1,44 @@
+---
+# ------------------------------------------------------------------------------
+# EXAMPLE: CONFIGURED FOR AAF TEST ENVIRONMENT
+# ------------------------------------------------------------------------------
+
+# The host name of the target machine
+idp_host_name: "idp.example.edu"
+
+# IdP Entity ID
+idp_entity_id: "https://idp.example.edu/idp/shibboleth"
+
+# IdP 'Attribute Scope'
+idp_attribute_scope: "example.edu"
+
+# Your organisation's name
+organisation_name: "The University of Example"
+
+# Your schacHomeOrganization. See http://www.terena.org/activities/tf-emc2/schacreleases.html
+home_organisation: "example.edu"
+
+# Your schacHomeOrganizationType. See http://www.terena.org/activities/tf-emc2/schacreleases.html
+# Relevant values are:
+# urn:mace:terena.org:schac:homeOrganizationType:au:university
+# urn:mace:terena.org:schac:homeOrganizationType:au:research-institution
+# urn:mace:terena.org:schac:homeOrganizationType:au:other
+home_organisation_type: "urn:mace:terena.org:schac:homeOrganizationType:au:university"
+
+# The federation's group id used for metadata-based attribute filtering
+federation_group_id: "https://md.test.aaf.edu.au/aaf-test-metadata.xml"
+
+# Run yum -update on every execution of update_idp.sh
+server_patch: "true"
+
+# Installed Firewall [firewalld | iptables | none ]
+firewall: "firewalld"
+
+# Enable BackChannel
+enable_backchannel: "false"
+
+# Enable eduGAIN
+enable_edugain: "false"
+
+# Enable shibcas
+enable_shibcas: "false"
