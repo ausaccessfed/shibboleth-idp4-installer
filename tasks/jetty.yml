@@ -201,7 +201,7 @@
 
 - name: 'Add robots.txt to site'
   copy:
-    src: 'assets/{{ inventory_hostname }}/jetty/root/robots.txt'
+    src: 'templates/jetty/robots.txt'
     dest: '{{ jetty.base }}/webapps/root/robots.txt'
     owner: jetty
     group: jetty
