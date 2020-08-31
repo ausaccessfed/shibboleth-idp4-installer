@@ -80,9 +80,6 @@
     - dummylogo-mobile.png
     - dummylogo.png
 
-- fail:
-    msg: 'Check point #1'
-
 - name: 'Copy customised IdP branding (images)'
   copy:
     dest: '{{ shib_idp.home }}/edit-webapp/images/'
@@ -92,18 +89,19 @@
     mode: 0640
     backup: no
 
-- name: 'Create Java Script directory'
-  file:
-    name: '{{ shib_idp.home }}/edit-webapp/js/'
-    owner: root
-    group: root
-    mode: 0755
-    state: directory
-
 - name: 'Copy customised IdP branding (Java Script)'
   copy:
     dest: '{{ shib_idp.home }}/edit-webapp/js/'
     src: 'assets/{{ inventory_hostname }}/idp/branding/webapp/js/'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: no
+
+- name: 'Copy index.jsp'
+  copy:
+    dest: '{{ shib_idp.home }}/edit-webapp/index.jsp'
+    src: 'assets/{{ inventory_hostname }}/idp/branding/webapp/index.jsp'
     owner: root
     group: jetty
     mode: 0640
@@ -118,8 +116,15 @@
     mode: 0640
     backup: yes
   with_items:
+    - admin/unlock-keys.vm
+    - client-storage/client-storage-read.vm
+    - client-storage/client-storage-write.vm
     - duo.vm
     - error.vm
+    - intercept/attribute-release.vm
+    - intercept/expiring-password.vm
+    - intercept/impersonate.vm
+    - intercept/terms-of-use.vm
     - login-error.vm
     - login.vm
     - logout-complete.vm
@@ -128,13 +133,14 @@
     - spnego-unavailable.vm
     - user-prefs.js
     - user-prefs.vm
-    - intercept/attribute-release.vm
-    - intercept/expiring-password.vm
-    - intercept/terms-of-use.vm
-    - intercept/impersonate.vm
 
 - name: 'Re-run IdP install.sh to install aaf-shib-ext and IdP branding'
   shell: '{{ shib_idp.src_root }}/install-{{ download.shib_idp.version}}.sh'
+
+
+#######
+- fail:
+    msg: 'Check point #1'
 
 - name: 'Install mysql connector library'
   get_url:
