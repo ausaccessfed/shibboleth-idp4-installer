@@ -172,9 +172,6 @@
     group: jetty
     force: yes
 
-- fail:
-    msg: 'Check point #1'
-
 - name: 'Set access control'
   template:
     src: 'assets/{{inventory_hostname}}/idp/conf/access-control.xml'
@@ -193,10 +190,10 @@
     mode: 0640
     backup: yes
 
-- name: 'Set eduGAIN attribute filter'
+- name: 'Set attribute registry'
   template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/edugain-attribute-filter.xml'
-    dest: '{{ shib_idp.home }}/conf/edugain-attribute-filter.xml'
+    src: 'assets/{{inventory_hostname}}/idp/conf/attribute-registry.xml'
+    dest: '{{ shib_idp.home }}/conf/attribute-registry.xml'
     owner: root
     group: jetty
     mode: 0640
@@ -230,20 +227,58 @@
     backup: yes
 
 - name: 'Set Shibboleth credentials.xml'
-  copy:
+  template:
     src: 'assets/{{inventory_hostname}}/idp/conf/credentials.xml'
     dest: '{{ shib_idp.home }}/conf/credentials.xml'
     owner: root
     group: jetty
     mode: 0640  
+    backup: yes
 
 - name: 'Set Shibboleth errors.xml'
-  copy:
+  template:
     src: 'assets/{{inventory_hostname}}/idp/conf/errors.xml'
     dest: '{{ shib_idp.home }}/conf/errors.xml'
     owner: root
     group: jetty
     mode: 0640  
+    backup: yes
+
+- name: 'Set global.xml'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/global.xml'
+    dest: '{{ shib_idp.home }}/conf/global.xml'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
+- name: 'Set idp.properties'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/idp.properties'
+    dest: '{{ shib_idp.home }}/conf/idp.properties'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
+- name: 'Set ldap.properties'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/ldap.properties'
+    dest: '{{ shib_idp.home }}/conf/ldap.properties'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
+- name: 'Set Shibboleth logback configuration'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/logback.xml'
+    dest: '{{ shib_idp.home }}/conf/logback.xml'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
 
 - name: 'Set metadata provider'
   template:
@@ -254,28 +289,10 @@
     mode: 0640
     backup: yes
 
-- name: 'Set federation attribute filter'
+- name: 'Set Shibboleth relying-party.xml'
   template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/metadata-based-attribute-filter.xml'
-    dest: '{{ shib_idp.home }}/conf/metadata-based-attribute-filter.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-
-- name: 'Set services.properties'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/services.properties'
-    dest: '{{ shib_idp.home }}/conf/services.properties'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-
-- name: 'Set services.xml'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/services.xml'
-    dest: '{{ shib_idp.home }}/conf/services.xml'
+    src: 'assets/{{inventory_hostname}}/idp/conf/relying-party.xml'
+    dest: '{{ shib_idp.home }}/conf/relying-party.xml'
     owner: root
     group: jetty
     mode: 0640
@@ -299,10 +316,47 @@
     mode: 0640
     backup: yes
 
+- name: 'Set services.properties'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/services.properties'
+    dest: '{{ shib_idp.home }}/conf/services.properties'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
+- name: 'Set services.xml'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/services.xml'
+    dest: '{{ shib_idp.home }}/conf/services.xml'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
 - name: 'Set session-manager.xml'
   template:
     src: 'assets/{{inventory_hostname}}/idp/conf/session-manager.xml'
     dest: '{{ shib_idp.home }}/conf/session-manager.xml'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
+###
+- name: 'Set eduGAIN attribute filter'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/edugain-attribute-filter.xml'
+    dest: '{{ shib_idp.home }}/conf/edugain-attribute-filter.xml'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
+- name: 'Set federation attribute filter'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/metadata-based-attribute-filter.xml'
+    dest: '{{ shib_idp.home }}/conf/metadata-based-attribute-filter.xml'
     owner: root
     group: jetty
     mode: 0640
@@ -341,50 +395,6 @@
     dest: '{{ shib_idp.home }}/credentials/federation-metadata-cert.pem'
     force: yes
   when: metadata_cert_sha256sum is not defined
-
-- name: 'Set ldap.properties'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/ldap.properties'
-    dest: '{{ shib_idp.home }}/conf/ldap.properties'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-
-- name: 'Set idp.properties'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/idp.properties'
-    dest: '{{ shib_idp.home }}/conf/idp.properties'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-
-- name: 'Set global.xml'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/global.xml'
-    dest: '{{ shib_idp.home }}/conf/global.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-
-- name: 'Set Shibboleth logback configuration'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/logback.xml'
-    dest: '{{ shib_idp.home }}/conf/logback.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-
-- name: 'Set Shibboleth relying-party.xml'
-  copy:
-    src: 'assets/{{inventory_hostname}}/idp/conf/relying-party.xml'
-    dest: '{{ shib_idp.home }}/conf/relying-party.xml'
-    owner: root
-    group: jetty
-    mode: 0640
 
 - name: 'Set authn/duo-authn-config.xml'
   copy:
@@ -700,3 +710,9 @@
 
 - name: 'Enable idp service'
   service: name=idp state=restarted enabled=yes
+
+
+
+- fail:
+    msg: 'Check point #1'
+
