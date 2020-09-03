@@ -22,7 +22,7 @@
     <bean id="shibboleth.context-check.Condition" parent="shibboleth.Conditions.AND">
         <constructor-arg>
             <list>
-                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{{'https://sp.example.org'}}" />
+                <bean parent="shibboleth.Conditions.RelyingPartyId" c:candidates="#{{ '{{' }}'https://sp.example.org'{{ '}}' }}" />
                 <bean class="net.shibboleth.idp.profile.logic.SimpleAttributePredicate"
                         p:useUnfilteredAttributes="true">
                     <property name="attributeValueMap">
