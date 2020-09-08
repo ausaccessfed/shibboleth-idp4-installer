@@ -48,5 +48,38 @@
         <entry key="foo" value="bar"/>
     </util:map>
     -->
+
+    <bean id="shibboleth.JPAStorageService"
+        class="org.opensaml.storage.impl.JPAStorageService"
+        p:cleanupInterval="%{idp.storage.cleanupInterval:PT10M}"
+        c:factory-ref="shibboleth.JPAStorageService.EntityManagerFactory" />
+  
+    <bean id="shibboleth.JPAStorageService.EntityManagerFactory"
+        class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceUnitName" value="storageservice" />
+        <property name="packagesToScan" value="org.opensaml.storage.impl" />
+        <property name="dataSource" ref="shibboleth.JPAStorageService.DataSource" />
+        <property name="jpaVendorAdapter" ref="shibboleth.JPAStorageService.JPAVendorAdapter" />
+        <property name="jpaDialect">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+        </property>
+    </bean>
+
+    <bean id="shibboleth.JPAStorageService.JPAVendorAdapter"
+        class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="database" value="MYSQL" />
+    </bean>
+
+    <bean id="shibboleth.JPAStorageService.DataSource"
+        class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true"
+        p:driverClassName="com.mysql.jdbc.Driver"
+        p:jdbcUrl="jdbc:mysql://localhost/idp_db?autoReconnect=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=GMT"
+        p:username="idp_admin"
+        p:password="%{idp.storage.dbpassword}"
+        p:maxIdle="5"
+        p:maxWaitMillis="15000"
+        p:testOnBorrow="true"
+        p:validationQuery="select 1"
+        p:validationQueryTimeout="5" />
     
 </beans>
