@@ -112,54 +112,6 @@
     src: '{{ shib_idp.libs }}/aaf-shib-ext-{{ download.aaf_shib_ext.version }}.jar'
     state: link
 
-- name: 'Install Jars - commons-dbcp2'
-  get_url:
-    url: '{{ urls.commons_dbcp2.url }}'
-    dest: '{{ installer.path }}/commons-dbcp2-{{ download.commons_dbcp2.version }}-bin.tar.gz'
-    sha256sum: '{{ download.commons_dbcp2.sha256sum }}'
-    owner: root
-    group: jetty
-    mode: 0640
-
-- name: 'Extract commons-dbcp2 distribution'
-  shell: >
-    umask 0027;
-    tar zx -C {{ installer.path }} -f {{ installer.path }}/commons-dbcp2-{{ download.commons_dbcp2.version }}-bin.tar.gz
-    creates={{ installer.path }}/commons-dbcp2-{{ download.commons_dbcp2.version }}/commons-dbcp2-{{ download.commons_dbcp2.version }}.jar
-
-- name: 'Copy over commons-dbcp2 lib'
-  command: 'cp {{ installer.path }}/commons-dbcp2-{{ download.commons_dbcp2.version }}/commons-dbcp2-{{ download.commons_dbcp2.version }}.jar {{ shib_idp.libs }}/ creates="{{ shib_idp.libs }}/commons-dbcp2-{{ download.commons_dbcp2.version }}.jar"'
-
-- name: 'Link to commons-dbcp2 lib'
-  file:
-    name: '{{ shib_idp.home }}/edit-webapp/WEB-INF/lib/commons-dbcp2.jar'
-    src: '{{ shib_idp.libs }}/commons-dbcp2-{{ download.commons_dbcp2.version }}.jar'
-    state: link
-
-- name: 'Install Jars - commons-pool2'
-  get_url:
-    url: '{{ urls.commons_pool2.url }}'
-    dest: '{{ installer.path }}/commons-pool2-{{ download.commons_pool2.version }}-bin.tar.gz'
-    sha256sum: '{{ download.commons_pool2.sha256sum }}'
-    mode: 0640
-    owner: root
-    group: jetty
-
-- name: 'Extract commons-pool2 distribution'
-  shell: >
-    umask 0027;
-    tar zx -C {{ installer.path }} -f {{ installer.path }}/commons-pool2-{{ download.commons_pool2.version }}-bin.tar.gz
-    creates={{ installer.path }}/commons-pool2-{{ download.commons_pool2.version }}/commons-pool2-{{ download.commons_pool2.version }}.jar
-
-- name: 'Copy over commons-pool2 lib'
-  command: 'cp {{ installer.path }}/commons-pool2-{{ download.commons_pool2.version }}/commons-pool2-{{ download.commons_pool2.version }}.jar {{ shib_idp.libs }}/ creates="{{ shib_idp.libs }}/commons-pool2-{{ download.commons_pool2.version }}.jar"'
-
-- name: 'Link to commons-pool2 lib'
-  file:
-    name: '{{ shib_idp.home }}/edit-webapp/WEB-INF/lib/commons-pool2.jar'
-    src: '{{ shib_idp.libs }}/commons-pool2-{{ download.commons_pool2.version }}.jar'
-    state: link
-
 - name: 'Install mysql connector library'
   get_url:
     url: '{{ urls.mysql_connector.url }}'
