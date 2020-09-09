@@ -71,7 +71,7 @@
     </bean>
 
     <bean id="shibboleth.JPAStorageService.DataSource"
-        class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" lazy-init="true"
+        class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" lazy-init="true"
         p:driverClassName="com.mysql.jdbc.Driver"
         p:jdbcUrl="jdbc:mysql://localhost/idp_db?autoReconnect=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=GMT"
         p:username="idp_admin"
