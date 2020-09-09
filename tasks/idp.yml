@@ -586,7 +586,7 @@
     mode: 0640
     backup: yes
 
-- name: 'Set authn/x509-internal-authn-config.xml
+- name: 'Set authn/x509-internal-authn-config.xml'
   template:
     src: 'assets/{{inventory_hostname}}/idp/conf/authn/x509-internal-authn-config.xml'
     dest: '{{ shib_idp.home }}/conf/authn/x509-internal-authn-config.xml'
