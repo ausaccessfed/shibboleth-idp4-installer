@@ -21,68 +21,47 @@
                         http://www.w3.org/2009/xmlenc11# http://www.w3.org/TR/2013/REC-xmlenc-core1-20130411/xenc-schema-11.xsd"
     sortKey="1">
 
-    <!--
-    Below you place the mechanisms which define how to load the metadata for SP(s) you will
-    provide service to.
-    
-    Some simple examples are provided. The documentation provides more details; in most cases,
-    the modern replacement for these older plugins are the "DynamicHTTPMetadataProvider" and
-    "LocalDynamic" variants, which provide dramatic memory savings and more reliable operation.
-     
-    NOTE: You do NOT need to load metadata for this IdP itself within this configuration.
-    -->
-    
-    
-    
-    <!--
-    Example HTTP metadata provider.  Use this if you want to download the metadata
-    from a remote source.
+    <!-- Federation metadata -->
+    <MetadataProvider id="FederationMetadata"
+      xsi:type="FileBackedHTTPMetadataProvider"
+      refreshDelayFactor="0.125"
+      maxRefreshDelay="PT2H"
+      backingFile="{{ shib_idp.home }}/metadata/{{ metadata_file_name }}"
+      metadataURL="{{ metadata_url }}">
 
-    You *MUST* provide the SignatureValidationFilter in order to function securely.
-    Get the public key certificate from the party publishing the metadata, and validate
-    it with them via some out of band mechanism (e.g., a fingerprint on a secure page).
+      <MetadataFilter xsi:type="RequiredValidUntil" maxValidityInterval="P30D" />
 
-    The EntityRoleWhiteList saves memory by only loading metadata from SAML roles
-    that the IdP needs to interoperate with.
-    -->
-    
-    <!--
-    <MetadataProvider id="HTTPMetadata"
-                      xsi:type="FileBackedHTTPMetadataProvider"
-                      backingFile="%{idp.home}/metadata/localCopyFromXYZHTTP.xml"
-                      metadataURL="http://WHATEVER"> 
-        
-        <MetadataFilter xsi:type="SignatureValidation" certificateFile="%{idp.home}/credentials/metaroot.pem" />
-        <MetadataFilter xsi:type="RequiredValidUntil" maxValidityInterval="P30D"/>
-        <MetadataFilter xsi:type="EntityRoleWhiteList">
-            <RetainedRole>md:SPSSODescriptor</RetainedRole>
-        </MetadataFilter>
+      <MetadataFilter xsi:type="SignatureValidation"
+        certificateFile="{{ shib_idp.home }}/credentials/{{ metadata_cert_file_name }}"
+        requireSignedRoot="true">
+      </MetadataFilter>
+
+      <MetadataFilter xsi:type="EntityRoleWhiteList">
+        <RetainedRole>md:SPSSODescriptor</RetainedRole>
+      </MetadataFilter>
     </MetadataProvider>
-    -->   
 
-    <!--
-    Example file metadata provider.  Use this if you want to load metadata
-    from a local file. You use this if you have some local SPs which are not
-    "federated" but you wish to offer a service to.
-    
-    If you do not provide a SignatureValidation filter, then you have the
-    responsibility to ensure that the contents on disk are trustworthy.
-    -->
-    
-    <!--
-    <MetadataProvider id="LocalMetadata"  xsi:type="FilesystemMetadataProvider" metadataFile="PATH_TO_YOUR_METADATA"/>
-    -->
+    {% if enable_edugain == "true" %}
+    <!-- eduGAIN metadata -->
+    <MetadataProvider id="eduGAINMetadata"
+      xsi:type="FileBackedHTTPMetadataProvider"
+      refreshDelayFactor="0.125"
+      maxRefreshDelay="PT2H"
+      backingFile="{{ shib_idp.home }}/metadata/{{ adugain_metadata_file_name }}"
+      metadataURL="{{ edugain_metadata_url }}">
 
+      <MetadataFilter xsi:type="RequiredValidUntil" maxValidityInterval="P30D" />
 
-    <!--
-    Example CAS metadata source for managing CAS services using SAML metadata.
-    -->
+      <MetadataFilter xsi:type="SignatureValidation"
+        certificateFile="{{ shib_idp.home }}/credentials/{{ edugain_metadata_cert_file_name }}"
+        requireSignedRoot="true">
+      </MetadataFilter>
 
-    <!--
-    <MetadataProvider id="CASMetadata"
-                      xsi:type="FilesystemMetadataProvider"
-                      metadataFile="PATH_TO_YOUR_METADATA"
-                      indexesRef="shibboleth.CASMetadataIndices" />
-    -->
+      <MetadataFilter xsi:type="EntityRoleWhiteList">
+        <RetainedRole>md:SPSSODescriptor</RetainedRole>
+      </MetadataFilter>
+    </MetadataProvider>
+    {% endif %}
+
 
 </MetadataProvider>

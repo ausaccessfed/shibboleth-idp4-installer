@@ -16,6 +16,7 @@
     
     <variable name="idp.logfiles" value="${idp.home}/logs" />
     <variable name="idp.loghistory" value="${idp.loghistory:-180}" />
+    <variable name="idp.auditloghistory" value="${idp.auditloghistory:-732}" />
     
     <!-- Much higher performance if you operate on DEBUG. -->
     <!-- <variable name="idp.process.appender" value="ASYNC_PROCESS" /> -->
@@ -64,6 +65,10 @@
     <logger name="org.springframework" level="${idp.loglevel.spring}"/>
     <logger name="org.apache.catalina" level="${idp.loglevel.container}"/>
     <logger name="org.eclipse.jetty" level="${idp.loglevel.container}"/>
+
+    <!-- Suppress logs that add little or no value -->
+    <!-- Log shown when a user hits the back button -->
+    <logger name="org.springframework.webflow.execution.repository.NoSuchFlowExecutionException" level="OFF" />
 
 
     <!-- =========================================================== -->
@@ -139,7 +144,7 @@
 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${idp.logfiles}/idp-audit-%d{yyyy-MM-dd}.log.gz</fileNamePattern>
-            <maxHistory>${idp.loghistory}</maxHistory>
+            <maxHistory>${idp.auditloghistory}</maxHistory>
         </rollingPolicy>
 
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
