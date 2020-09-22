@@ -16,11 +16,59 @@
     <!--         AAF CORE ATTRIBUTES                -->
     <!-- ========================================== -->
 
-<!--
+    <!-- auEduPersonSharedToken -->
     <AttributeDefinition id="auEduPersonSharedToken" xsi:type="Simple">
         <InputDataConnector ref="sharedToken" attributeNames="auEduPersonSharedToken"/>
     </AttributeDefinition>
--->
+    -->
+
+    <!-- displayName -->
+    <!-- Provided via exportAttributes in the ldap data connector -->
+
+    <!-- eduPersonAffiliation -->
+    <AttributeDefinition xsi:type="ScriptedAttribute" id="eduPersonAffiliation">
+        <InputDataConnector ref="ldap" attributeNames="eduPersonAffiliation" />
+        <Script><![CDATA[
+            var HashSet = Java.type("java.util.HashSet");
+            var StringAttributeValue = Java.type("net.shibboleth.idp.attribute.StringAttributeValue");
+            var newAffiliations = new HashSet();
+
+            add_member = false;
+
+            if (typeof eduPersonAffiliation != "undefined" && eduPersonAffiliation.getValues().size() >= 1) {
+                for ( i = 0; i < eduPersonAffiliation.getValues().size(); i++){
+                    value = eduPersonAffiliation.getValues().get(i).toLowerCase();
+                    if (value.equals("affiliate") ||
+                        value.equals("alum") ||
+                        value.equals("member") ||
+                        value.equals("library-walk-in")) {
+                        newAffiliations.add(new StringAttributeValue(value));
+                    }
+                    if (value.equals("student") ||
+                        value.equals("faculty") ||
+                        value.equals("staff") ||
+                        value.equals("employee")) {
+                        newAffiliations.add(new StringAttributeValue(value));
+                        add_member = true;
+                    }
+                }
+            }
+      
+            if (add_member) { newAffiliations.add(new StringAttributeValue("member")); }
+      
+            if (newAffiliations.size() < 1) {
+                newAffiliations.add(new StringAttributeValue("affiliate"));
+            }
+
+            eduPersonAffiliation.getValues().clear();
+
+            itr = newAffiliations.iterator();
+            while(itr.hasNext()){
+               eduPersonAffiliation.addValue(itr.next());
+            }
+        ]]></Script>
+    </AttributeDefinition>
+
 
     <AttributeDefinition xsi:type="Simple" id="displayName">
         <InputDataConnector ref="ldap" attributeNames="displayName" />
@@ -71,7 +119,6 @@
         principalCredential="%{idp.attribute.resolver.LDAP.bindDNCredential}"
         useStartTLS="%{idp.attribute.resolver.LDAP.useStartTLS:true}"
         connectTimeout="%{idp.attribute.resolver.LDAP.connectTimeout}"
-        trustFile="%{idp.attribute.resolver.LDAP.trustCertificates}"
         responseTimeout="%{idp.attribute.resolver.LDAP.responseTimeout}"
         exportAttributes="displayName">
         <FilterTemplate>
