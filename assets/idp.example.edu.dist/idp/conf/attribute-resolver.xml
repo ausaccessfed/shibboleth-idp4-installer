@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-    This file is an EXAMPLE configuration file. While the configuration
-    presented in this example file is semi-functional, it isn't very
-    interesting. It is here only as a starting point for your deployment
-    process.
-    
-    Very few attribute definitions and data connectors are demonstrated,
-    and the data is derived statically from the logged-in username and a
-    static example connector.
-
-    Attribute-resolver-full.xml contains more examples of attributes,
-    encoders, and data connectors. Deployers should refer to the Shibboleth
-    documentation for a complete list of components and their options.
--->
 <AttributeResolver
         xmlns="urn:mace:shibboleth:2.0:resolver" 
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
         xsi:schemaLocation="urn:mace:shibboleth:2.0:resolver http://shibboleth.net/schema/idp/shibboleth-attribute-resolver.xsd">
+
+    <!-- ========================================== -->
+    <!--         The User's ID - UID                -->
+    <!-- ========================================== -->
+ 
+    <!-- Option 1: Using the subject's canonicalized principal name -->
+
+    <AttributeDefinition id="uid" xsi:type="PrincipalName" />
+       
+    <!-- ========================================== -->
+    <!--         AAF CORE ATTRIBUTES                -->
+    <!-- ========================================== -->
+
+<!--
+    <AttributeDefinition id="auEduPersonSharedToken" xsi:type="Simple">
+        <InputDataConnector ref="sharedToken" attributeNames="auEduPersonSharedToken"/>
+    </AttributeDefinition>
+-->
+
+    <AttributeDefinition xsi:type="Simple" id="displayName">
+        <InputDataConnector ref="ldap" attributeNames="displayName" />
+    </AttributeDefinition>
 
 
     <!-- ========================================== -->
@@ -46,23 +54,6 @@
     despite the problems with that practice. Consider making the EPPN
     value the same as your official email addresses whenever possible.
     -->
-    <AttributeDefinition id="mail" xsi:type="Template">
-        <InputAttributeDefinition ref="uid" />
-        <Template>
-          <![CDATA[
-               ${uid}@example.org
-          ]]>
-        </Template>
-    </AttributeDefinition>
-
-    <!--
-    This is an example of an attribute sourced from a data connector.
-    -->
-    <AttributeDefinition id="eduPersonScopedAffiliation" xsi:type="Scoped" scope="%{idp.scope}">
-        <InputDataConnector ref="staticAttributes" attributeNames="affiliation" />
-    </AttributeDefinition>
-
-
     <!-- ========================================== -->
     <!--      Data Connectors                       -->
     <!-- ========================================== -->
@@ -72,5 +63,41 @@
             <Value>member</Value>
         </Attribute>
     </DataConnector>
+
+    <DataConnector id="ldap" xsi:type="LDAPDirectory"
+        ldapURL="%{idp.attribute.resolver.LDAP.ldapURL}"
+        baseDN="%{idp.attribute.resolver.LDAP.baseDN}"
+        principal="%{idp.attribute.resolver.LDAP.bindDN}"
+        principalCredential="%{idp.attribute.resolver.LDAP.bindDNCredential}"
+        useStartTLS="%{idp.attribute.resolver.LDAP.useStartTLS:true}"
+        connectTimeout="%{idp.attribute.resolver.LDAP.connectTimeout}"
+        trustFile="%{idp.attribute.resolver.LDAP.trustCertificates}"
+        responseTimeout="%{idp.attribute.resolver.LDAP.responseTimeout}"
+        exportAttributes="displayName">
+        <FilterTemplate>
+            <![CDATA[
+                %{idp.attribute.resolver.LDAP.searchFilter}
+            ]]>
+        </FilterTemplate>
+        <ConnectionPool
+            minPoolSize="%{idp.pool.LDAP.minSize:3}"
+            maxPoolSize="%{idp.pool.LDAP.maxSize:10}"
+            blockWaitTime="%{idp.pool.LDAP.blockWaitTime:PT3S}"
+            validatePeriodically="%{idp.pool.LDAP.validatePeriodically:true}"
+            validateTimerPeriod="%{idp.pool.LDAP.validatePeriod:PT5M}"
+            validateDN="%{idp.pool.LDAP.validateDN:}"
+            validateFilter="%{idp.pool.LDAP.validateFilter:(objectClass=*)}"
+            expirationTime="%{idp.pool.LDAP.idleTime:PT10M}"/>
+    </DataConnector>
+
+<!--
+    <resolver:DataConnector xsi:type="SharedToken" xmlns="urn:mace:aaf.edu.au:shibboleth:2.0:resolver:dc"
+        id="sharedToken"
+        sourceAttributeId="uid"
+        salt="{{ shib_idp.aepst_salt }}"
+        dataSource="shibboleth.JPAStorageService.DataSource">
+        <resolver:Dependency ref="uid" />
+    </resolver:DataConnector>
+-->
 
 </AttributeResolver>

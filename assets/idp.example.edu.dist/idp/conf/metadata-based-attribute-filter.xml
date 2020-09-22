@@ -1,1 +1,44 @@
-PLACE Holder
+<?xml version="1.0" encoding="UTF-8"?>
+
+<AttributeFilterPolicyGroup id="{{ federation_id }}-ShibbolethFilterPolicy"
+        xmlns="urn:mace:shibboleth:2.0:afp"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="urn:mace:shibboleth:2.0:afp http://shibboleth.net/schema/idp/shibboleth-afp.xsd">
+
+    <!-- Applies only to entities found in the Federation metadata and the 
+         attribute requirements of each service as defined in the metadata -->
+
+    <AttributeFilterPolicy id="{{ federation_id }}-fed-policy">
+
+        <PolicyRequirementRule xsi:type="InEntityGroup"
+                               groupID="{{ federation_group_id }}" />
+
+        <AttributeRule attributeID="persistentID">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="transientId">
+            <PermitValueRule xsi:type="ANY"/>
+        </AttributeRule>
+
+    <!--         The User's ID - UID                -->
+
+        <AttributeRule attributeID="uid">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+    <!--         AAF CORE ATTRIBUTES                -->
+
+        <AttributeRule attributeID="auEduPersonSharedToken">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="displayName">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+
+
+    </AttributeFilterPolicy>
+</AttributeFilterPolicyGroup>
+
