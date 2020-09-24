@@ -415,6 +415,33 @@
     mode: 0640
     backup: yes
 
+- name: 'Set attributes/custom/dsdStudentID.props'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/attributes/custom/dsdStudentID.props'
+    dest: '{{ shib_idp.home }}/conf/attributes/custom/dsdStudentID.props'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
+- name: 'Set attributes/custom/schacHomeOrganization.props'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/attributes/custom/schacHomeOrganization.props'
+    dest: '{{ shib_idp.home }}/conf/attributes/custom/schacHomeOrganization.props'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
+- name: 'Set attributes/custom/schacHomeOrganizationType.props'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/attributes/custom/schacHomeOrganizationType.props'
+    dest: '{{ shib_idp.home }}/conf/attributes/custom/schacHomeOrganizationType.props'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
 - name: 'Set authn/authn-comparison.xml'
   template:
     src: 'assets/{{inventory_hostname}}/idp/conf/authn/authn-comparison.xml'
