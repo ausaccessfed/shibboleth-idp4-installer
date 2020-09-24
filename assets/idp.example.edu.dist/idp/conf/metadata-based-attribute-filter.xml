@@ -8,7 +8,7 @@
     <!-- Applies only to entities found in the Federation metadata and the 
          attribute requirements of each service as defined in the metadata -->
 
-    <AttributeFilterPolicy id="{{ federation_id }}-fed-policy">
+    <Attributaid="{{ federation_id }}-fed-policy">
 
         <PolicyRequirementRule xsi:type="InEntityGroup"
                                groupID="{{ federation_group_id }}" />
@@ -38,6 +38,64 @@
         </AttributeRule>
 
         <AttributeRule attributeID="eduPersonAffiliation">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="eduPersonEntitlement">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="eduPersonPrincipalName">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="eduPersonScopedAffiliation">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="eduPersonTargetedID">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="mail">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="givenName">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="sn">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="schacHomeOrganization">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="schacHomeOrganizationType">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="o">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="eduPersonOrcid">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+    <!--         AAF OPTIONAL ATTRIBUTES                -->
+
+        <AttributeRule attributeID="dsdStudentID">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="cn">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="eduPersonAssurance">
             <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
         </AttributeRule>
 

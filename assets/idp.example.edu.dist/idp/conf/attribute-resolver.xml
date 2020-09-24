@@ -4,23 +4,36 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
         xsi:schemaLocation="urn:mace:shibboleth:2.0:resolver http://shibboleth.net/schema/idp/shibboleth-attribute-resolver.xsd">
 
+
     <!-- ========================================== -->
     <!--         The User's ID - UID                -->
     <!-- ========================================== -->
- 
-    <!-- Option 1: Using the subject's canonicalized principal name -->
 
+    <!-- Option 1: Using the subject's canonicalized principal name -->
     <AttributeDefinition id="uid" xsi:type="PrincipalName" />
-       
+
+    <!-- Option 2: From the user's UID attribute in the directory -->
+    <!--
+    <AttributeDefinition id="uid" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="uid" />
+    </AttributeDefinition>
+    -->
+
+    <!-- Option 3: From the user's sAMAccountName in Active Directory -->
+    <!--
+    <AttributeDefinition id="uid" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="sAMAccountName" />
+    </AttributeDefinition>
+    -->
+
     <!-- ========================================== -->
     <!--         AAF CORE ATTRIBUTES                -->
     <!-- ========================================== -->
 
     <!-- auEduPersonSharedToken -->
     <AttributeDefinition id="auEduPersonSharedToken" xsi:type="Simple">
-        <InputDataConnector ref="sharedToken" attributeNames="auEduPersonSharedToken"/>
+        <InputDataConnector ref="staticAttributes" attributeNames="token" />
     </AttributeDefinition>
-    -->
 
     <!-- displayName -->
     <!-- Provided via exportAttributes in the ldap data connector -->
@@ -53,9 +66,9 @@
                     }
                 }
             }
-      
+
             if (add_member) { newAffiliations.add(new StringAttributeValue("member")); }
-      
+
             if (newAffiliations.size() < 1) {
                 newAffiliations.add(new StringAttributeValue("affiliate"));
             }
@@ -69,46 +82,136 @@
         ]]></Script>
     </AttributeDefinition>
 
-
-    <AttributeDefinition xsi:type="Simple" id="displayName">
-        <InputDataConnector ref="ldap" attributeNames="displayName" />
+    <!-- eduPersonAssurance -->
+    <AttributeDefinition id="eduPersonAssurance" xsi:type="Simple">
+        <InputDataConnector ref="staticAttributes" attributeNames="eduPersonAssurance" />
     </AttributeDefinition>
 
+    
+    <!-- eduPersonEntitlement -->
+    <!-- Provided via exportAttributes in the ldap data connector -->
 
-    <!-- ========================================== -->
-    <!--      Attribute Definitions                 -->
-    <!-- ========================================== -->
-
-    <!--
-    The EPPN is the "standard" federated username in higher ed.
-    For guidelines on the implementation of this attribute, refer
-    to the Shibboleth and eduPerson documentation. Above all, do
-    not expose a value for this attribute without considering the
-    long term implications. 
-    -->
+    <!-- eduPersonPrincipalName -->
+    
+    <!-- Option 1: Appending the organisations scope to the user's UID -->
     <AttributeDefinition id="eduPersonPrincipalName" xsi:type="Scoped" scope="%{idp.scope}">
         <InputAttributeDefinition ref="uid" />
     </AttributeDefinition>
 
-    <!--
-    The uid is the closest thing to a "standard" LDAP attribute
-    representing a local username, but you should generally *never*
-    expose uid to federated services, as it is rarely globally unique.
+    <!-- Option 2: From value in LDAP -->
+    <!--           Note: The domain name suffix MUST match the scope value -->
+    <!--                 assigned to the IdP (in the IdPs Scope value in the metadata -->
+    <!-- 
+    <AttributeDefinition id="eduPersonPrincipalName" xsi:type="Prescoped">
+        <InputDataConnector ref="ldap" attributeNames="eduPersonPrincipalName" />
+    </AttributeDefinition>
     -->
-    <AttributeDefinition id="uid" xsi:type="PrincipalName" />
 
-    <!--
-    In the rest of the world, the email address is the standard identifier,
-    despite the problems with that practice. Consider making the EPPN
-    value the same as your official email addresses whenever possible.
-    -->
+    <!-- eduPersonScopedAffiliation -->
+
+    <AttributeDefinition xsi:type="Scoped" id="eduPersonScopedAffiliation" scope="%{idp.scope}">
+        <InputAttributeDefinition ref="eduPersonAffiliation" />
+    </AttributeDefinition>
+
+    <!-- eduPersonTargetedID -->
+
+    <AttributeDefinition xsi:type="SAML2NameID" id="eduPersonTargetedID"
+    nameIdFormat="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent">
+        <InputDataConnector ref="StoredIDConnector" attributeNames="StoredID" />
+        <AttributeEncoder xsi:type="SAML1XMLObject" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10"/>
+        <AttributeEncoder xsi:type="SAML2XMLObject" name="urn:oid:1.3.6.1.4.1.5923.1.1.1.10" friendlyName="eduPersonTargetedID"/>
+    </AttributeDefinition>
+
+    <!-- mail -->
+    <!-- Provided via exportAttributes in the ldap data connector -->
+
+    <!-- givenName -->
+    <AttributeDefinition id="givenName" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="givenName" />
+    </AttributeDefinition>
+
+    <!-- sn (surname) -->
+    <AttributeDefinition id="sn" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="sn" />
+    </AttributeDefinition>
+
+    <!-- schacHomeOrganisation -->
+    <AttributeDefinition id="schacHomeOrganization" xsi:type="Simple">
+        <InputDataConnector ref="staticAttributes" attributeNames="schacHomeOrganization" />
+    </AttributeDefinition>
+
+    <!-- schacHomeOrganisationType -->
+    <AttributeDefinition id="schacHomeOrganizationType" xsi:type="Simple">
+        <InputDataConnector ref="staticAttributes" attributeNames="schacHomeOrganizationType" />
+    </AttributeDefinition>
+
+    <!-- o (Organisation) -->
+    <AttributeDefinition xsi:type="Simple" id="o">
+        <InputDataConnector ref="staticAttributes" attributeNames="o" />
+    </AttributeDefinition>
+
+    <!-- eduPersonOrcid -->
+    <!-- Provided via exportAttributes in the ldap data connector -->
+
+    <!-- ========================================== -->
+    <!--     AAF improtant Optional ATTRIBUTES       -->
+    <!-- ========================================== -->
+
+    <!-- dsdStudentId - Used by myEquals -->
+    <AttributeDefinition xsi:type="Simple" id="dsdStudentId">
+        <InputDataConnector ref="ldap" attributeNames="studentNumber" />
+    </AttributeDefinition>
+
+    <!-- cn (commonName) - Previously a CORE attribute, still used by many services -->
+    <!--                   Note: Script is used to ensure cn is of the correct format -->
+    <!--                         for the AAF. "FirstName SPACE Surname". -->
+
+    <AttributeDefinition xsi:type="ScriptedAttribute" id="cn">
+        <InputAttributeDefinition ref="givenName" />
+        <InputAttributeDefinition ref="sn" />
+        <Script><![CDATA[
+
+            cn.getValues().clear();
+
+            var hyphenatedGN = null;
+            var hyphenatedSN = null;
+
+            if (typeof givenName != "undefined" && givenName != null && givenName.getValues().size() > 0) {
+                hyphenatedGN = givenName.getValues().get(0).replace(/ /g, '-');
+            }
+
+            if (typeof sn != "undefined" && sn != null && sn.getValues().size() > 0) {
+                hyphenatedSN = sn.getValues().get(0).replace(/ /g, '-');
+            }
+
+            cn.getValues().add([hyphenatedGN, hyphenatedSN].join(' '));
+
+            ]]>
+        </Script>
+    </AttributeDefinition>
+
+    
     <!-- ========================================== -->
     <!--      Data Connectors                       -->
     <!-- ========================================== -->
 
     <DataConnector id="staticAttributes" xsi:type="Static">
-        <Attribute id="affiliation">
-            <Value>member</Value>
+        <Attribute id="schacHomeOrganization">
+            <Value>{{ home_organisation }}</Value>
+        </Attribute>
+        <Attribute id="schacHomeOrganizationType">
+            <Value>{{ home_organisation_type }}</Value>
+        </Attribute>
+        <Attribute id="o">
+            <Value>{{ organisation_name }}</Value>
+        </Attribute>
+        <Attribute id="eduPersonAssurance">
+            <Value>urn:mace:aaf.edu.au:iap:id:1</Value>
+            <Value>urn:mace:aaf.edu.au:iap:authn:1</Value>
+        </Attribute>
+
+        <Attribute id="token">
+            <Value>X3ykzu2pZcTW4oEutChmrrrP66c</Value>
         </Attribute>
     </DataConnector>
 
@@ -120,7 +223,7 @@
         useStartTLS="%{idp.attribute.resolver.LDAP.useStartTLS:true}"
         connectTimeout="%{idp.attribute.resolver.LDAP.connectTimeout}"
         responseTimeout="%{idp.attribute.resolver.LDAP.responseTimeout}"
-        exportAttributes="displayName">
+        exportAttributes="displayName eduPersonEntitlement mail eduPersonOrcid">
         <FilterTemplate>
             <![CDATA[
                 %{idp.attribute.resolver.LDAP.searchFilter}
@@ -137,6 +240,13 @@
             expirationTime="%{idp.pool.LDAP.idleTime:PT10M}"/>
     </DataConnector>
 
+    <DataConnector id="StoredIDConnector" xsi:type="StoredId" 
+        generatedAttributeID="StoredID"
+        salt="xxxxxxxxxxxxxxxxxxxxxxxxx" >
+        <InputAttributeDefinition ref="uid" />
+        <BeanManagedConnection>shibboleth.JPAStorageService.DataSource</BeanManagedConnection>
+    </DataConnector>
+
 <!--
     <resolver:DataConnector xsi:type="SharedToken" xmlns="urn:mace:aaf.edu.au:shibboleth:2.0:resolver:dc"
         id="sharedToken"
@@ -146,5 +256,6 @@
         <resolver:Dependency ref="uid" />
     </resolver:DataConnector>
 -->
+
 
 </AttributeResolver>
