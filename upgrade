@@ -1,0 +1,10 @@
+#!/bin/bash
+
+declare -a nodes
+
+the_install_base=/opt
+working_dir=$the_install_base/shibboleth-idp4-installer/repository
+
+cd $working_dir || exit
+
+#git pull
