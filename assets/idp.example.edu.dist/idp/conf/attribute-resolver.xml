@@ -242,20 +242,17 @@
 
     <DataConnector id="StoredIDConnector" xsi:type="StoredId" 
         generatedAttributeID="StoredID"
-        salt="xxxxxxxxxxxxxxxxxxxxxxxxx" >
-        <InputAttributeDefinition ref="uid" />
+        salt=idp.persistentId.salt >
+        <InputAttributeDefinition ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
         <BeanManagedConnection>shibboleth.JPAStorageService.DataSource</BeanManagedConnection>
     </DataConnector>
 
-<!--
     <resolver:DataConnector xsi:type="SharedToken" xmlns="urn:mace:aaf.edu.au:shibboleth:2.0:resolver:dc"
         id="sharedToken"
-        sourceAttributeId="uid"
-        salt="{{ shib_idp.aepst_salt }}"
+        sourceAttributeId="YOUR_SOURCE_ATTRIBUTE_HERE"
+        salt=idp.aepst_salt"
         dataSource="shibboleth.JPAStorageService.DataSource">
         <resolver:Dependency ref="uid" />
     </resolver:DataConnector>
--->
-
 
 </AttributeResolver>
