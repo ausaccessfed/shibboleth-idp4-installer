@@ -1,0 +1,52 @@
+---
+# ------------------------------------------------------------------------------
+# EXAMPLE: CONFIGURED FOR AAF PRODUCTION ENVIRONMENT
+# ------------------------------------------------------------------------------
+
+# The host name of the target machine
+idp_host_name: "idp.example.edu"
+
+# IdP Entity ID
+idp_entity_id: "https://idp.example.edu/idp/shibboleth"
+
+# IdP 'Attribute Scope'
+idp_attribute_scope: "example.edu"
+
+# Shared federation metadata
+metadata_url: "https://md.aaf.edu.au/aaf-metadata.xml"
+
+# Shared federation certificate
+metadata_cert_url: "https://md.aaf.edu.au/aaf-metadata-certificate.pem"
+metadata_cert_sha256sum: 00ec963039ca877b7111db3188d3d646e071c4c84ab8201fc35ad62a77ffa1a1
+
+
+# Your organisation's name
+organisation_name: "The University of Example"
+
+# Your schacHomeOrganization. See http://www.terena.org/activities/tf-emc2/schacreleases.html
+home_organisation: "example.edu"
+
+# Your schacHomeOrganizationType. See http://www.terena.org/activities/tf-emc2/schacreleases.html
+# Relevant values are:
+# urn:mace:terena.org:schac:homeOrganizationType:au:university
+# urn:mace:terena.org:schac:homeOrganizationType:au:research-institution
+# urn:mace:terena.org:schac:homeOrganizationType:au:other
+home_organisation_type: "urn:mace:terena.org:schac:homeOrganizationType:au:university"
+
+# The federation's group id used for metadata-based attribute filtering
+federation_group_id: "https://md.aaf.edu.au/aaf-metadata.xml"
+
+# Run yum -update on every execution of update_idp.sh
+server_patch: "true"
+
+# Installed Firewall [firewalld none ]
+firewall: "firewalld" 
+
+# Enable BackChannel
+enable_backchannel: "false"
+
+# eduGAIN metadata
+edugain_metadata_url: "https://md.aaf.edu.au/aaf-edugain-metadata.xml"
+
+# Enable eduGAIN
+enable_edugain: "false"
