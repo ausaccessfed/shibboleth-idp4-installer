@@ -252,7 +252,7 @@
         sourceAttributeId="YOUR_SOURCE_ATTRIBUTE_HERE"
         salt=idp.aepst_salt"
         dataSource="shibboleth.JPAStorageService.DataSource">
-        <resolver:Dependency ref="uid" />
+        <resolver:Dependency ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
     </resolver:DataConnector>
 
 </AttributeResolver>
