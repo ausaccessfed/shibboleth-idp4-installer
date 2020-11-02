@@ -806,8 +806,6 @@
 
 - include: idp-credentials.yml
 
-- include: libs.yml
-
 - name: 'Fix IdP dir permissions'
   file:
     name: '{{ shib_idp.home }}/{{ item }}'
