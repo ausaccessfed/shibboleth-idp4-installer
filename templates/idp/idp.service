@@ -1,5 +1,5 @@
 [Unit]
-Description=Shibboleth Identity Provider
+Description=Shibboleth V4 Identity Provider
 After=syslog.target network.target mariadb.target
 
 [Service]
@@ -8,6 +8,8 @@ ExecStart=/bin/bash -c "{{ install_base }}/shibboleth/shibboleth-idp/current/bin
 ExecStop=/bin/bash -c "{{ install_base }}/shibboleth/shibboleth-idp/current/bin/idp.sh stop"
 RemainAfterExit=yes
 TimeoutSec=300
+User=jetty
+AmbientCapabilities=CAP_NET_BIND_SERVICE
 
 [Install]
 WantedBy=multi-user.target
