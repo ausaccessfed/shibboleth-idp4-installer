@@ -4,29 +4,33 @@ set -e
 #
 # ------------------------ END BOOTRAP CONFIGURATION ---------------------------
 
-LOCAL_REPO=$INSTALL_BASE/shibboleth-idp-installer/repository
-SHIBBOLETH_IDP_INSTANCE=$INSTALL_BASE/shibboleth/shibboleth-idp/current
-ANSIBLE_HOSTS_FILE=$LOCAL_REPO/ansible_hosts
-ANSIBLE_HOST_VARS=$LOCAL_REPO/host_vars/$HOST_NAME
-ANSIBLE_CFG=$LOCAL_REPO/ansible.cfg
-UPDATE_IDP_SCRIPT=$LOCAL_REPO/update_idp.sh
-ASSETS=$LOCAL_REPO/assets/$HOST_NAME
-APACHE_ASSETS=$ASSETS/apache
-CREDENTIAL_BACKUP_PATH=$ASSETS/idp/credentials
-LDAP_PROPERTIES=$ASSETS/idp/conf/ldap.properties
-APACHE_IDP_CONFIG=$ASSETS/apache/idp.conf
-ACTIVITY_LOG=$INSTALL_BASE/shibboleth-idp-installer/activity.log
+function set_internal_variables {
+    LOCAL_REPO=$INSTALL_BASE/shibboleth-idp4-installer/repository
+    SHIBBOLETH_IDP_INSTANCE=$INSTALL_BASE/shibboleth/shibboleth-idp/current
+    ANSIBLE_HOSTS_FILE=$LOCAL_REPO/ansible_hosts
+    ANSIBLE_HOST_VARS=$LOCAL_REPO/host_vars/$HOST_NAME
+    ANSIBLE_CFG=$LOCAL_REPO/ansible.cfg
+    DEPLOY_IDP_SCRIPT=$LOCAL_REPO/deploy
+    UPGRADE_IDP_SCRIPT=$LOCAL_REPO/upgrade
+    ASSETS=$LOCAL_REPO/assets/$HOST_NAME
+    CREDENTIAL_BACKUP_PATH=$ASSETS/idp/credentials
+    LDAP_PROPERTIES=$ASSETS/idp/conf/ldap.properties
+    SECRETS_PROPERTIES=$ASSETS/idp/credentials/secrets.properties
+    ACTIVITY_LOG=$INSTALL_BASE/shibboleth-idp4-installer/activity.log
 
-GIT_REPO=https://github.com/ausaccessfed/shibboleth-idp-installer.git
-GIT_BRANCH=master
+    GIT_REPO=https://github.com/ausaccessfed/shibboleth-idp4-installer.git
+    #GIT_BRANCH=master
+    GIT_BRANCH=develop
 
-FR_TEST_REG=https://manager.test.aaf.edu.au/federationregistry/registration/idp
-FR_PROD_REG=https://manager.aaf.edu.au/federationregistry/registration/idp
+    FR_TEST_REG=https://manager.test.aaf.edu.au/federationregistry/registration/idp
+    FR_PROD_REG=https://manager.aaf.edu.au/federationregistry/registration/idp
+}
+
 
 function ensure_mandatory_variables_set {
   for var in HOST_NAME ENVIRONMENT ORGANISATION_NAME ORGANISATION_BASE_DOMAIN \
     HOME_ORG_TYPE SOURCE_ATTRIBUTE_ID INSTALL_BASE YUM_UPDATE FIREWALL \
-    ENABLE_BACKCHANNEL ENABLE_EDUGAIN ENABLE_SHIBCAS; do
+    ENABLE_BACKCHANNEL ENABLE_EDUGAIN; do
     if [ ! -n "${!var:-}" ]; then
       echo "Variable '$var' is not set! Set this in `basename $0`"
       exit 1
@@ -39,10 +43,9 @@ function ensure_mandatory_variables_set {
      exit 1
   fi
 
-  if [ $FIREWALL != "firewalld" ] && [ $FIREWALL != "iptables" ] \
-     && [ $FIREWALL != "none" ]
+  if [ $FIREWALL != "firewalld" ] && [ $FIREWALL != "none" ]
   then
-    echo "Variable FIREWALL must be one of firewalld, iptables or none"
+    echo "Variable FIREWALL must be one of firewalld or none"
     exit 1
   fi
 
@@ -67,18 +70,13 @@ function ensure_mandatory_variables_set {
      echo "Variable ENABLE_EDUGAIN must be either true or false"
      exit 1
   fi
-
-  if [ $ENABLE_SHIBCAS != "true" ] && [ $ENABLE_SHIBCAS != "false" ]
-  then
-     echo "Variable ENABLE_SHIBCAS must be either true or false"
-     exit 1
-  fi
 }
 
 function ensure_install_base_exists {
   if [ ! -d "$INSTALL_BASE" ]; then
     echo "The directory $INSTALL_BASE where you have requested the install"
-    echo "to occur does not exist."
+    echo "to occur does not exist. Please create this directory before"
+    echo "contining."
     exit 1
   fi
 }
@@ -152,7 +150,7 @@ function setup_repo {
 function set_ansible_hosts {
   if [ ! -f $ANSIBLE_HOSTS_FILE ]; then
     cat > $ANSIBLE_HOSTS_FILE << EOF
-[idp-servers]
+[idp_servers]
 $HOST_NAME
 EOF
   else
@@ -162,11 +160,12 @@ EOF
 
 function replace_property {
 # There will be a space between the property and its value.
-  local property=$1
+  local property1=$1
+  local property2="`echo $1 | sed 's/ \*/ /'`"
   local value=$2
   local file=$3
   if [ ! -z "$value" ]; then
-    sed -i "s/.*$property.*/$property $value/g" $file
+    sed -i "s/.*$property1.*/$property2 $value/g" $file
   fi
 }
 
@@ -182,7 +181,11 @@ function replace_property_nosp {
 
 
 function set_ansible_host_vars {
-  local entity_id="https:\/\/$HOST_NAME\/idp\/shibboleth"
+  if [[ -z $ENTITY_ID ]]; then
+    local entity_id="https:\/\/$HOST_NAME\/idp\/shibboleth"
+  else
+    local entity_id="`echo $ENTITY_ID | sed 's:/:\\\\/:g'`"
+  fi
   replace_property 'idp_host_name:' "\"$HOST_NAME\"" $ANSIBLE_HOST_VARS
   replace_property 'idp_entity_id:' "\"$entity_id\"" $ANSIBLE_HOST_VARS
   replace_property 'idp_attribute_scope:' "\"$ORGANISATION_BASE_DOMAIN\"" \
@@ -201,18 +204,20 @@ function set_ansible_host_vars {
     $ANSIBLE_HOST_VARS
   replace_property 'enable_edugain:' "\"$ENABLE_EDUGAIN\"" \
     $ANSIBLE_HOST_VARS
-  replace_property 'enable_shibcas:' "\"$ENABLE_SHIBCAS\"" \
-    $ANSIBLE_HOST_VARS
 }
 
 function set_ansible_cfg_log_path {
+echo $ANSIBLE_CFG
   replace_property_nosp 'log_path=' "${ACTIVITY_LOG////\\/}" \
     $ANSIBLE_CFG
+echo "Done"
 }
 
 function set_update_idp_script_cd_path {
   replace_property_nosp 'the_install_base=' "${INSTALL_BASE////\\/}" \
-    $UPDATE_IDP_SCRIPT
+    $DEPLOY_IDP_SCRIPT
+  replace_property_nosp 'the_install_base=' "${INSTALL_BASE////\\/}" \
+    $UPGRADE_IDP_SCRIPT
 }
 
 function set_source_attribute_in_attribute_resolver {
@@ -226,49 +231,43 @@ function set_source_attribute_in_saml_nameid_properties {
 }
 
 function set_ldap_properties {
-  replace_property 'idp.authn.LDAP.ldapURL =' \
-    "ldap:\/\/$LDAP_HOST" $LDAP_PROPERTIES
-  replace_property 'idp.authn.LDAP.baseDN =' \
+  local ldap_url="`echo $LDAP_URL | sed 's:/:\\\\/:g'`"
+  replace_property 'idp.authn.LDAP.ldapURL *=' \
+    "$ldap_url" $LDAP_PROPERTIES
+  replace_property 'idp.authn.LDAP.baseDN *=' \
     "$LDAP_BASE_DN" $LDAP_PROPERTIES
-  replace_property 'idp.authn.LDAP.bindDN =' \
+  replace_property 'idp.authn.LDAP.bindDN *=' \
     "$LDAP_BIND_DN" $LDAP_PROPERTIES
-  replace_property 'idp.authn.LDAP.bindDNCredential =' \
-    "$LDAP_BIND_DN_PASSWORD" $LDAP_PROPERTIES
-  replace_property 'idp.authn.LDAP.userFilter =' \
+  replace_property 'idp.authn.LDAP.bindDNCredential *=' \
+    "$LDAP_BIND_DN_PASSWORD" $SECRETS_PROPERTIES
+  replace_property 'idp.authn.LDAP.userFilter *=' \
     "($LDAP_USER_FILTER_ATTRIBUTE={user})" $LDAP_PROPERTIES
 }
 
-function set_apache_ecp_ldap_properties {
-  replace_property 'AuthLDAPURL' \
-    "\"ldap:\/\/$LDAP_HOST\/$LDAP_BASE_DN?$LDAP_USER_FILTER_ATTRIBUTE\"" \
-    $APACHE_IDP_CONFIG
-  replace_property 'AuthLDAPBindDN' "\"$LDAP_BIND_DN\"" $APACHE_IDP_CONFIG
-  replace_property 'AuthLDAPBindPassword' "\"$LDAP_BIND_DN_PASSWORD\"" \
-    $APACHE_IDP_CONFIG
-}
-
 function create_ansible_assets {
+echo "Host: $HOST_NAME"
   cd $LOCAL_REPO
   sh create_assets.sh $HOST_NAME $ENVIRONMENT
 }
 
-function create_apache_self_signed_certs {
-  if [ ! -s $APACHE_ASSETS/server.key ] &&
-     [ ! -s $APACHE_ASSETS/server.crt ] &&
-     [ ! -s $APACHE_ASSETS/intermediate.crt ]; then
-    openssl genrsa -out $APACHE_ASSETS/server.key 2048
-    openssl req -new -x509 -key $APACHE_ASSETS/server.key \
-      -out $APACHE_ASSETS/server.crt -sha256 -subj "/CN=$HOST_NAME/"
-    cp $APACHE_ASSETS/server.crt $APACHE_ASSETS/intermediate.crt
+function create_self_signed_certs {
+  if [ ! -s $ASSETS/tls/server.key ] &&
+     [ ! -s $ASSETS/tls/server.crt ] &&
+     [ ! -s $ASSETS/tls/intermediate.crt ]; then
+    openssl genrsa -out $ASSETS/tls/server.key 2048
+    openssl req -new -x509 -key $ASSETS/tls/server.key \
+      -out $ASSETS/tls/server.crt -sha256 -subj "/CN=$HOST_NAME/"
+    cp $ASSETS/tls/server.crt $ASSETS/tls/intermediate.crt
   else
-    echo "Apache keypair ($APACHE_ASSETS) already exists, skipping"
+    echo "Webservere keypair ($ASSETS/tls) already exists, skipping"
   fi
 }
 
 function run_ansible {
   pushd $LOCAL_REPO > /dev/null
-  ansible-playbook -i ansible_hosts site.yml --force-handlers --extra-var="install_base=$INSTALL_BASE"
+  ansible-playbook -i ansible_hosts site_v4.yml --force-handlers --extra-var="install_base=$INSTALL_BASE"
   popd > /dev/null
+echo "Done"
 }
 
 function backup_shibboleth_credentials {
@@ -277,6 +276,7 @@ function backup_shibboleth_credentials {
   fi
 
   cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/* $CREDENTIAL_BACKUP_PATH
+echo "Done"
 }
 
 function display_fr_idp_registration_link {
@@ -285,6 +285,7 @@ function display_fr_idp_registration_link {
   else
     echo "$FR_PROD_REG"
   fi
+echo "Done"
 }
 
 function display_completion_message {
@@ -329,75 +330,80 @@ To make your IdP functional follow these steps:
    indicating your IdP is pending.
 
    You should now continue with the installation steps documented at
-   http://ausaccessfed.github.io/shibboleth-idp-installer/installation.html
+   https://aaf.freshdesk.com/a/solutions/articles/19000119755
 
 EOF
+echo "Done"
 }
 
 function prevent_duplicate_execution {
   touch "/root/.lock-idp-bootstrap"
+echo "Done"
 }
 
 function duplicate_execution_warning {
-  if [ -e "/root/.lock-idp-bootstrap" ]
+  if [ -e "/root/.lock-idp-bootstrap-v4" ]
   then
     echo -e "\n\n-----"
     echo "The bootstrap process has already been executed and could be destructive if run again."
-    echo "It is likely you want to run an update instead."
-    echo "Please see http://ausaccessfed.github.io/shibboleth-idp-installer/customisation.html for further details."
-    echo -e "\n\nIn certain cases you may need to re-run the bootstrap process if you've made an error during initial installation."
-    echo "Please see http://ausaccessfed.github.io/shibboleth-idp-installer/installation.html to disable this warning."
+    echo "It is likely you want to run an deploy instead."
+    echo "Please see https://aaf.freshdesk.com/a/solutions/articles/19000119755 for further details."
+    echo -e "\n\nIn certain cases you may need to re-run the bootstrap process if you've made an error"
+    echo "during initial installation. Please see"
+    echo "https://aaf.freshdesk.com/a/solutions/articles/19000119754#Reasons-to-re-run-the-installer"
+    echo "to disable this warning."
     echo -e "-----\n\n"
     exit 0
   fi
 }
 
-function test_python_package_warning {
-
-python - << EOF
-import warnings
-import sys
-
-def format_Warning(message, category, filename, lineno, line=''):
-    if (category.__name__ == 'RequestsDependencyWarning'):
-       sys.exit (-1)
-    else:
-       sys.exit (0)
-
-warnings.formatwarning = format_Warning
-
-import requests
-
-EOF
+function read_bootstrap_ini {
+    ini="$(<$1)"                # read the file
+    ini="${ini//[/\[}"          # escape [
+    ini="${ini//]/\]}"          # escape ]
+    IFS=$'\n' && ini=( ${ini} ) # convert to line-array
+    ini=( ${ini[*]//;*/} )      # remove comments with ;
+    ini=( ${ini[*]//#*/} )      # remove comments with #
+    ini=( ${ini[*]/\    =/=} )  # remove tabs before =
+    ini=( ${ini[*]/=\   /=} )   # remove tabs after =
+    ini=( ${ini[*]/\ =\ /=} )   # remove anything with a space around =
+    ini=( ${ini[*]/#\\[/\}$'\n'cfg.section.} ) # set section prefix
+    ini=( ${ini[*]/%\\]/ \(} )    # convert text2function (1)
+    ini=( ${ini[*]/=/=\( } )    # convert item to array
+    ini=( ${ini[*]/%/ \)} )     # close array parenthesis
+    ini=( ${ini[*]/%\\ \)/ \\} ) # the multiline trick
+    ini=( ${ini[*]/%\( \)/\(\) \{ :} ) # convert text2function (2) with noop :
+                                       # in case there are no values
+    ini=( ${ini[*]/%\} \)/\}} ) # remove extra parenthesis
+    ini[0]="" # remove first element
+    ini[${#ini[*]} + 1]='}'    # add the last brace
+    eval "$(echo "${ini[*]}")" # eval the result
 }
 
-function correct_python_package_warning {
-  set +e
-  test_python_package_warning
-  retval=$?
+function run_as_root {
+    if [[ $USER != "root" ]]; then
+        echo "bootstrap-v4.sh MUST be run as root!"
+        exit 1
+    fi
+}
 
-  if [ $retval -ne 0 ]
-   then
-     yum -y install python-pip
-     pip install --upgrade pip
-     pip install --upgrade requests
+function get_cfg_section {
 
-     test_python_package_warning
-     retval=$?
-     if [ $retval -ne 0 ]
-       then
-       echo "Python Package warning NOT corrected. Continuing anyway"
-       echo "You may see warnings from Python about package Dependency"
-       echo "Warnings when using the update_idp.sh script. These warnings"
-       echo "safely be ignored."
-     else
-       echo "Python Package warning corrected. Continuing"
-     fi
-  fi
-  set -e
+    if [[ $(declare -F cfg.section.$1) ]]; then
+        cfg.section.$1
+    else
+       echo "Section [$1] not found in bootstrap-v4.ini"
+       exit 1
+    fi
 }
 
 function bootstrap {
+  run_as_root
+  read_bootstrap_ini 'bootstrap-v4.ini'
+  get_cfg_section main
+  get_cfg_section ldap
+  get_cfg_section advanced
+  set_internal_variables 
   ensure_mandatory_variables_set
   ensure_install_base_exists
   duplicate_execution_warning
@@ -411,14 +417,12 @@ function bootstrap {
   set_source_attribute_in_attribute_resolver
   set_source_attribute_in_saml_nameid_properties
 
-  if [ ${LDAP_HOST} ];
+  if [ ${LDAP_URL} ];
   then
     set_ldap_properties
-    set_apache_ecp_ldap_properties
   fi
 
-  create_apache_self_signed_certs
-  correct_python_package_warning
+  create_self_signed_certs
   run_ansible
   backup_shibboleth_credentials
   display_completion_message
