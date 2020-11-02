@@ -296,9 +296,9 @@
     action: export
     path: '{{ jetty.base }}/credentials/idp-userfacing.p12'
     friendly_name: 'Web Site cert and key'
-    privatekey_path: 'assets/{{ inventory_hostname }}/tls/web-server.key'
-    certificate_path: 'assets/{{ inventory_hostname }}/tls/web-server.crt'
-    other_certificates: 'assets/{{ inventory_hostname }}/tls/web-intermediate.crt'
+    privatekey_path: 'assets/{{ inventory_hostname }}/tls/server.key'
+    certificate_path: 'assets/{{ inventory_hostname }}/tls/server.crt'
+    other_certificates: 'assets/{{ inventory_hostname }}/tls/intermediate.crt'
     passphrase: '{{ jetty.web_443_keystore_pw }}'
     state: present
     mode: 0640
