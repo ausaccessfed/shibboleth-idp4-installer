@@ -877,6 +877,7 @@
   - credentials/idp-backchannel.p12
   - credentials/idp-encryption.key
   - credentials/idp-signing.key
+  - credentials/secrets.properties
   - system/conf/services-system.xml
 
 - name: 'Fix IdP file permissions'
