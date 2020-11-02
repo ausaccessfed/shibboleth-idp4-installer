@@ -889,6 +889,14 @@
     mode: 0600
     backup: yes
 
+- name: 'Install the IdP startup shell script'
+  template:
+    src: templated/idp/idp.sh
+    dest: '{{ shib_idp.home }}/bin/idp.sh'
+    owner: root
+    group: root
+    mode: 0755
+
 - meta: flush_handlers
 
 - name: 'Enable idp service'
