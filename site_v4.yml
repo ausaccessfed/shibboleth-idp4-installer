@@ -162,7 +162,6 @@
     - include_tasks: tasks/idp.yml
     - include_tasks: tasks/firewalld.yml
       when: firewall is defined and firewall=="firewalld"
-    - include_tasks: tasks/libs.yml
     - include_tasks: tasks/local_conf.yml
 
   handlers:
