@@ -247,12 +247,11 @@
         <BeanManagedConnection>shibboleth.JPAStorageService.DataSource</BeanManagedConnection>
     </DataConnector>
 
-    <resolver:DataConnector xsi:type="SharedToken" xmlns="urn:mace:aaf.edu.au:shibboleth:2.0:resolver:dc"
-        id="sharedToken"
-        sourceAttributeId="YOUR_SOURCE_ATTRIBUTE_HERE"
-        salt=idp.aepst_salt"
+    <DataConnector xsi:type="SharedToken" id="sharedToken"
+        salt=idp.aepst_salt >
         dataSource="shibboleth.JPAStorageService.DataSource">
-        <resolver:Dependency ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
-    </resolver:DataConnector>
+        <InputAttributeDefinition ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
+        <BeanManagedConnection>shibboleth.JPAStorageService.DataSource</BeanManagedConnection>
+    </DataConnector>
 
 </AttributeResolver>
