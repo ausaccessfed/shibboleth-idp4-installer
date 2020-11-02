@@ -891,7 +891,7 @@
 
 - name: 'Install the IdP startup shell script'
   template:
-    src: templated/idp/idp.sh
+    src: templates/idp/idp.sh
     dest: '{{ shib_idp.home }}/bin/idp.sh'
     owner: root
     group: root
