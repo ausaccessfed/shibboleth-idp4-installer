@@ -901,9 +901,3 @@
 
 - name: 'Enable idp service'
   service: name=idp state=restarted enabled=yes
-
-
-
-- fail:
-    msg: 'Check point #1'
-
