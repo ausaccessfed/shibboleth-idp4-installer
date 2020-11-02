@@ -2,7 +2,9 @@
 <AttributeResolver
         xmlns="urn:mace:shibboleth:2.0:resolver" 
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-        xsi:schemaLocation="urn:mace:shibboleth:2.0:resolver http://shibboleth.net/schema/idp/shibboleth-attribute-resolver.xsd">
+        xmlns:aaf="urn:mace:aaf.edu.au:shibboleth:2.0:resolver"
+        xsi:schemaLocation="urn:mace:shibboleth:2.0:resolver http://shibboleth.net/schema/idp/shibboleth-attribute-resolver.xsd
+                            urn:mace:aaf.edu.au:shibboleth:2.0:resolver classpath:/schema/aaf-shibv4-ext.xsd">
 
 
     <!-- ========================================== -->
@@ -242,16 +244,15 @@
 
     <DataConnector id="StoredIDConnector" xsi:type="StoredId" 
         generatedAttributeID="StoredID"
-        salt=idp.persistentId.salt >
+        salt="idp.persistentId.salt" >
         <InputAttributeDefinition ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
         <BeanManagedConnection>shibboleth.JPAStorageService.DataSource</BeanManagedConnection>
     </DataConnector>
 
-    <DataConnector xsi:type="SharedToken" id="sharedToken"
-        salt=idp.aepst_salt >
-        dataSource="shibboleth.JPAStorageService.DataSource">
+    <DataConnector xsi:type="aaf:SharedToken" id="sharedToken"
+        salt="idp.aepst_salt" >
         <InputAttributeDefinition ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
-        <BeanManagedConnection>shibboleth.JPAStorageService.DataSource</BeanManagedConnection>
+        <aaf:BeanManagedConnection>shibboleth.JPAStorageService.DataSource</aaf:BeanManagedConnection>
     </DataConnector>
 
 </AttributeResolver>
