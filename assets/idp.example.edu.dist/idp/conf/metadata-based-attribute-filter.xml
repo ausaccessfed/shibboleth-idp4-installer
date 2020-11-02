@@ -8,7 +8,7 @@
     <!-- Applies only to entities found in the Federation metadata and the 
          attribute requirements of each service as defined in the metadata -->
 
-    <Attributaid="{{ federation_id }}-fed-policy">
+    <AttributeFilterPolicy id="{{ federation_id }}-fed-policy">
 
         <PolicyRequirementRule xsi:type="InEntityGroup"
                                groupID="{{ federation_group_id }}" />
