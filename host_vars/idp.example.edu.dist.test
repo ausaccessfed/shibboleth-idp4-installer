@@ -19,8 +19,20 @@ metadata_url: "https://md.test.aaf.edu.au/aaf-test-metadata.xml"
 metadata_cert_url: "https://md.aaf.edu.au/aaf-metadata-certificate.pem"
 metadata_cert_sha256sum: 00ec963039ca877b7111db3188d3d646e071c4c84ab8201fc35ad62a77ffa1a1
 
+# Metadata file name
+metadata_file_name: aaf-metadata.xml
+
 # Your organisation's name
 organisation_name: "The University of Example"
+
+# Your organisation's support desk URL
+organisation_support: "https://support.example.edu"
+
+# Your organisation's home URL
+organisation_url: "https://example.edu"
+
+# Your organisation's password reset URL
+password_reset_url: "https://changepw.example.edu"
 
 # Your schacHomeOrganization. See http://www.terena.org/activities/tf-emc2/schacreleases.html
 home_organisation: "example.edu"
@@ -49,3 +61,7 @@ edugain_metadata_url: "https://md.test.aaf.edu.au/aaf-edugain-test-metadata.xml"
 
 # Enable eduGAIN
 enable_edugain: "false"
+
+# eduGAIN Metadata file name
+edugain_metadata_filename: edugain-metadata.xml
+
