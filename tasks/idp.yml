@@ -54,6 +54,8 @@
   args:
     creates: '{{ shib_idp.home }}'
 
+- include: libs.yml
+
 - name: 'Set customised messages.properties'
   template:
     dest: '{{ shib_idp.home }}/messages/messages.properties'
