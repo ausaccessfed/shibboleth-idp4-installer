@@ -12,6 +12,9 @@ idp_entity_id: "https://idp.example.edu/idp/shibboleth"
 # IdP 'Attribute Scope'
 idp_attribute_scope: "example.edu"
 
+# Federation ID
+federation_id: "https://md.aaf.edu.au/aaf-metadata.xml"
+
 # Shared federation metadata
 metadata_url: "https://md.aaf.edu.au/aaf-metadata.xml"
 
@@ -22,8 +25,8 @@ metadata_cert_sha256sum: 00ec963039ca877b7111db3188d3d646e071c4c84ab8201fc35ad62
 # Metadata file name
 metadata_file_name: aaf-metadata.xml
 
-# eduGAIN Metadata file name
-edugain_metadata_filename: edugain-metadata.xml
+# Metadata certificate file name
+metadata_cert_file_name: aaf-metadata.pem
 
 # Your organisation's name
 organisation_name: "The University of Example"
@@ -64,3 +67,10 @@ edugain_metadata_url: "https://md.aaf.edu.au/aaf-edugain-metadata.xml"
 
 # Enable eduGAIN
 enable_edugain: "false"
+
+# eduGAIN Metadata file name
+edugain_metadata_file_name: edugain-metadata.xml
+
+# eduGAIN Metadata certificate file name
+edugain_metadata_cert_file_name: edugain-metadata.pem
+
