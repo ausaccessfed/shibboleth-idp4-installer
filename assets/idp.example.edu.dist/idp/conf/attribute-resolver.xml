@@ -34,7 +34,7 @@
 
     <!-- auEduPersonSharedToken -->
     <AttributeDefinition id="auEduPersonSharedToken" xsi:type="Simple">
-        <InputDataConnector ref="staticAttributes" attributeNames="token" />
+        <InputDataConnector ref="sharedToken" attributeNames="auEduPersonSharedToken" />
     </AttributeDefinition>
 
     <!-- displayName -->
