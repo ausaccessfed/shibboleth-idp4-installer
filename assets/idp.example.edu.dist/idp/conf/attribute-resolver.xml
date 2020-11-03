@@ -244,13 +244,13 @@
 
     <DataConnector id="StoredIDConnector" xsi:type="StoredId" 
         generatedAttributeID="StoredID"
-        salt="idp.persistentId.salt" >
+        salt="%{idp.persistentId.salt}" >
         <InputAttributeDefinition ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
         <BeanManagedConnection>shibboleth.JPAStorageService.DataSource</BeanManagedConnection>
     </DataConnector>
 
     <DataConnector xsi:type="aaf:SharedToken" id="sharedToken"
-        salt="idp.aepst_salt" >
+        salt="%{idp.aepst.salt}" >
         <InputAttributeDefinition ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
         <aaf:BeanManagedConnection>shibboleth.JPAStorageService.DataSource</aaf:BeanManagedConnection>
     </DataConnector>

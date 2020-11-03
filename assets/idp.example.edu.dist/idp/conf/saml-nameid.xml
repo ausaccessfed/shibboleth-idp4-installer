@@ -34,9 +34,7 @@
         <ref bean="shibboleth.SAML2TransientGenerator" />
         
         <!-- Uncommenting this bean requires configuration in saml-nameid.properties. -->
-        <!--
         <ref bean="shibboleth.SAML2PersistentGenerator" />
-        -->
 
         <!--
         <bean parent="shibboleth.SAML2AttributeSourcedGenerator"
