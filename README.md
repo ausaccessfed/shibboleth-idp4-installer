@@ -11,9 +11,9 @@
 # Shibboleth IdP Version 4 Installer
 
 ## Overview
-The Shibboleth IdP Installer is designed to automate the install of version 4 for the Shibboleth IdP on a dedicated CentOS 8 server.
+The Shibboleth IdP Installer is designed to automate the install of version 4 for the Shibboleth IdP on a dedicated CentOS/RedHAT version 7 or 8 server.
 
-For a full set of documentation please refer to [http://ausaccessfed.github.io/shibboleth-idp4-installer/](http://ausaccessfed.github.io/shibboleth-idp4-installer/).
+For a full set of documentation please refer to [https://aaf.freshdesk.com/support/solutions/articles/19000120020-shibboleth-idpv4-installer](https://aaf.freshdesk.com/support/solutions/articles/19000120020-shibboleth-idpv4-installer).
 
 ## Status
 This software is actively being developed and maintained. It is ready for use in production environments.
