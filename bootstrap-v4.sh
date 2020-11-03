@@ -358,8 +358,8 @@ function duplicate_execution_warning {
 
 function read_bootstrap_ini {
     ini="$(<$1)"                # read the file
-    ini="${ini//[/\[}"          # escape [
-    ini="${ini//]/\]}"          # escape ]
+    ini="${ini//[/\\[}"          # escape [
+    ini="${ini//]/\\]}"          # escape ]
     IFS=$'\n' && ini=( ${ini} ) # convert to line-array
     ini=( ${ini[*]//;*/} )      # remove comments with ;
     ini=( ${ini[*]//#*/} )      # remove comments with #
