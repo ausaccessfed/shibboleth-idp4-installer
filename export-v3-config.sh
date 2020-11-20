@@ -131,7 +131,7 @@ write_bootstrap_ini ()
 {
 echo $out_dir
 
-    bootstrap_file=$out_dir/bootstrap.ini
+    bootstrap_file=$out_dir/bootstrap-v4.ini
 
 echo $bootstrap_file
 
@@ -182,6 +182,14 @@ copy_credentials ()
     cp passwords/$idp_host_name/shib_idp_keystore $out_dir/passwords
 }
 
+copy_web_certs ()
+{
+    mkdir $out_dir/tls
+    cp assets/$idp_host_name/apache/server.crt $out_dir/tls
+    cp assets/$idp_host_name/apache/server.key $out_dir/tls
+    cp assets/$idp_host_name/apache/intermediate.crt $out_dir/tls
+}
+
 copy_config ()
 {
     mkdir $out_dir/config
@@ -214,6 +222,8 @@ write_bootstrap_ini
 copy_bilateral
 
 copy_credentials
+
+copy_web_certs
 
 copy_config 
 
