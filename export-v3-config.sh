@@ -129,11 +129,7 @@ get_ldap ()
 
 write_bootstrap_ini ()
 {
-echo $out_dir
-
     bootstrap_file=$out_dir/bootstrap-v4.ini
-
-echo $bootstrap_file
 
     echo "# Bootstrap.ini file" > $bootstrap_file
     echo "#" >> $bootstrap_file
