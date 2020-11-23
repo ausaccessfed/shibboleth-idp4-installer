@@ -129,11 +129,7 @@ get_ldap ()
 
 write_bootstrap_ini ()
 {
-echo $out_dir
-
     bootstrap_file=$out_dir/bootstrap-v4.ini
-
-echo $bootstrap_file
 
     echo "# Bootstrap.ini file" > $bootstrap_file
     echo "#" >> $bootstrap_file
@@ -197,6 +193,7 @@ copy_config ()
     cp assets/$idp_host_name/idp/conf/relying-party.xml $out_dir/config
     cp assets/$idp_host_name/idp/conf/services.xml $out_dir/config
     cp assets/$idp_host_name/idp/conf/metadata-providers.xml $out_dir/config
+    cp assets/$idp_host_name/idp/conf/ldap.properties $out_dir/config
 }
 
 export_mysql ()
