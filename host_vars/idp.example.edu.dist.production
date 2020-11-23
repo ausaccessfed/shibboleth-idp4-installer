@@ -73,4 +73,3 @@ edugain_metadata_file_name: edugain-metadata.xml
 
 # eduGAIN Metadata certificate file name
 edugain_metadata_cert_file_name: aaf-metadata.pem
-

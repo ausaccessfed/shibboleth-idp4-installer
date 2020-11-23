@@ -193,6 +193,7 @@ copy_config ()
     cp assets/$idp_host_name/idp/conf/relying-party.xml $out_dir/config
     cp assets/$idp_host_name/idp/conf/services.xml $out_dir/config
     cp assets/$idp_host_name/idp/conf/metadata-providers.xml $out_dir/config
+    cp assets/$idp_host_name/idp/conf/ldap.properties $out_dir/config
 }
 
 export_mysql ()
