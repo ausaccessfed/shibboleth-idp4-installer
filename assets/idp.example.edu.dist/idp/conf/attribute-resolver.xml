@@ -211,10 +211,6 @@
             <Value>urn:mace:aaf.edu.au:iap:id:1</Value>
             <Value>urn:mace:aaf.edu.au:iap:authn:1</Value>
         </Attribute>
-
-        <Attribute id="token">
-            <Value>X3ykzu2pZcTW4oEutChmrrrP66c</Value>
-        </Attribute>
     </DataConnector>
 
     <DataConnector id="ldap" xsi:type="LDAPDirectory"

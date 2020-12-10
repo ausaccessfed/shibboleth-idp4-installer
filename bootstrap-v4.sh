@@ -332,12 +332,10 @@ To make your IdP functional follow these steps:
    https://aaf.freshdesk.com/a/solutions/articles/19000119755
 
 EOF
-echo "Done"
 }
 
 function prevent_duplicate_execution {
   touch "/root/.lock-idp-bootstrap"
-echo "Done"
 }
 
 function duplicate_execution_warning {
