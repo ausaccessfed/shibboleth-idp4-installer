@@ -82,6 +82,10 @@ get_idp_settings ()
           firewall=firewalld
        fi 
 
+       ini=($(grep enable_backchannel: $host_vars_file))
+       enable_backchannel=${ini[1]}
+       enable_backchannel=${enable_backchannel//\"/}
+
        ini=($(grep enable_edugain: $host_vars_file))
        enable_edugain=${ini[1]}
        enable_edugain=${enable_edugain//\"/}
@@ -158,6 +162,7 @@ write_bootstrap_ini ()
     echo "INSTALL_BASE=$the_install_base" >> $bootstrap_file
     echo "FIREWALL=$firewall" >> $bootstrap_file
     echo "ENABLE_EDUGAIN=$enable_edugain" >> $bootstrap_file
+    echo "ENABLE_BACKCHANNEL=$enable_backchannel" >> $bootstrap_file
 }
 
 copy_bilateral ()
