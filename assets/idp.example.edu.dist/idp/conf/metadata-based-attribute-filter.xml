@@ -174,7 +174,7 @@
             <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
         </AttributeRule>
 
-        <AttributeRule attributeID="commonName">
+        <AttributeRule attributeID="cn">
             <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
         </AttributeRule>
 
@@ -190,7 +190,7 @@
             <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
         </AttributeRule>
 
-        <AttributeRule attributeID="locality">
+        <AttributeRule attributeID="l">
             <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
         </AttributeRule>
 
