@@ -21,18 +21,19 @@
     -->
     
     <!--
-    <util:list id="shibboleth.SignatureWhitelist">
-    </util:list>
+    <util:set id="shibboleth.IncludedSignatureAlgorithms">
+    </util:set>
 
-    <util:list id="shibboleth.SignatureBlacklist">
-    </util:list>
+    <util:set id="shibboleth.ExcludedSignatureAlgorithms">
+    </util:set>
 
-    <util:list id="shibboleth.EncryptionWhitelist">
-    </util:list>
+    <util:set id="shibboleth.IncludedEncryptionAlgorithms">
+    </util:set>
 
-    <util:list id="shibboleth.EncryptionBlacklist">
-    </util:list>
+    <util:set id="shibboleth.ExcludedEncryptionAlgorithms">
+    </util:set>
     -->
+
 
     <!--
     If you need to define and inject custom Java object(s) into the various views used throughout the
