@@ -444,7 +444,7 @@
     mode: 0640
     backup: yes
 
-- name: 'Set authn/authn.properties
+- name: 'Set authn/authn.properties'
   template:
     src: 'assets/{{inventory_hostname}}/idp/conf/authn/authn.properties'
     dest: '{{ shib_idp.home }}/conf/authn/authn.properties'
