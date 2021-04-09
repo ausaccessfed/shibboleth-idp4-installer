@@ -14,7 +14,7 @@
 
     <!-- Location and retention. -->
     
-    <variable name="idp.logfiles" value="${idp.home}/logs" />
+    <variable name="idp.logfiles" value="${idp.logfiles:-${idp.home}/logs}" />
     <variable name="idp.loghistory" value="${idp.loghistory:-180}" />
     <variable name="idp.auditloghistory" value="${idp.auditloghistory:-732}" />
     

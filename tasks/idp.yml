@@ -219,14 +219,14 @@
     mode: 0640
     backup: yes
 
-- name: 'Set cas-protocol'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/cas-protocol.xml'
-    dest: '{{ shib_idp.home }}/conf/cas-protocol.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+# - name: 'Set cas-protocol'
+#  template:
+#    src: 'assets/{{inventory_hostname}}/idp/conf/cas-protocol.xml'
+#    dest: '{{ shib_idp.home }}/conf/cas-protocol.xml'
+#    owner: root
+#    group: jetty
+#    mode: 0640
+#    backup: yes
 
 - name: 'Set Shibboleth credentials.xml'
   template:
@@ -837,7 +837,7 @@
   - conf/attribute-resolver-ldap.xml
   - conf/attribute-resolver.xml
   - conf/audit.xml
-  - conf/cas-protocol.xml
+#  - conf/cas-protocol.xml
   - conf/credentials.xml
   - conf/edugain-attribute-filter.xml
   - conf/errors.xml

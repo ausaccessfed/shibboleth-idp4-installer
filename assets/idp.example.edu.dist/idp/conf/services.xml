@@ -15,12 +15,10 @@
     <util:list id="shibboleth.RelyingPartyResolverResources">
         <value>%{idp.home}/conf/relying-party.xml</value>
         <value>%{idp.home}/conf/credentials.xml</value>
-        <value>%{idp.home}/system/conf/relying-party-system.xml</value>
     </util:list>
 
     <util:list id="shibboleth.MetadataResolverResources">
         <value>%{idp.home}/conf/metadata-providers.xml</value>
-        <value>%{idp.home}/system/conf/metadata-providers-system.xml</value>
     </util:list>
 
     <util:list id ="shibboleth.AttributeResolverResources">
@@ -33,7 +31,6 @@
     -->
     <util:list id ="shibboleth.AttributeRegistryResources">
         <value>%{idp.home}/conf/attribute-registry.xml</value>
-        <value>%{idp.home}/system/conf/attribute-registry-system.xml</value>
         <value>%{idp.home}/conf/attributes/default-rules.xml</value>
         <value>%{idp.home}/conf/attribute-resolver.xml</value>
     </util:list>
@@ -48,16 +45,10 @@
 
     <util:list id ="shibboleth.NameIdentifierGenerationResources">
         <value>%{idp.home}/conf/saml-nameid.xml</value>
-        <value>%{idp.home}/system/conf/saml-nameid-system.xml</value>
     </util:list>
     
     <util:list id="shibboleth.AccessControlResources">
         <value>%{idp.home}/conf/access-control.xml</value>
-        <value>%{idp.home}/system/conf/access-control-system.xml</value>
-    </util:list>
-
-    <util:list id="shibboleth.CASServiceRegistryResources">
-        <value>%{idp.home}/conf/cas-protocol.xml</value>
     </util:list>
 
     <!--
@@ -67,7 +58,6 @@
     -->
     <util:list id="shibboleth.MessageSourceResources">
         <value>%{idp.home}/messages/messages</value>
-        <value>%{idp.home}/system/messages/messages</value>
     </util:list>
     
 </beans>
