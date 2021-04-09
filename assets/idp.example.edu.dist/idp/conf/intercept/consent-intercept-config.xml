@@ -17,11 +17,9 @@
     <!--
     Terms of use is driven by a lookup function returning a key into messages/consent-messages.properties
     
-    The default mapping returns the relying party / SP name as the key. The second example below
+    The default mapping returns the relying party / SP name as the key. The example below
     demonstrates use of a custom mapping table from the relying party name to the key to use. 
     -->
-    
-    <alias alias="shibboleth.consent.terms-of-use.Key" name="shibboleth.RelyingPartyIdLookup.Simple" />
     
     <!--
     <bean id="shibboleth.consent.terms-of-use.Key" parent="shibboleth.Functions.Compose">
@@ -43,19 +41,19 @@
     <!-- Attribute Release configuration -->
 
     <!--
-    Attribute release whitelist, blacklist, and match expressions to determine 
+    Attribute release control sets and match expressions to determine 
     whether consent should be obtained for an attribute based on the attribute ID.
     -->
     
-    <util:list id="shibboleth.consent.attribute-release.WhitelistedAttributeIDs">
+    <util:set id="shibboleth.consent.attribute-release.PromptedAttributeIDs">
         <!--
         <value>mail</value>
         -->
-    </util:list>
+    </util:set>
 
-    <util:list id="shibboleth.consent.attribute-release.BlacklistedAttributeIDs">
+    <util:set id="shibboleth.consent.attribute-release.IgnoredAttributeIDs">
         <value>samlPairwiseID</value>
-    </util:list>
+    </util:set>
 
     <!-- 
     <bean id="shibboleth.consent.attribute-release.MatchExpression" class="java.util.regex.Pattern" factory-method="compile" 
@@ -72,29 +70,6 @@
         <value>mail</value>
     </util:list>
     -->
-
-    <!--
-    These beans define mappings between audit log categories and formatting strings.
-    -->
-
-    <!--
-    For terms-of-use acceptance, the default entry is :
-     'YYYYMMDDTHHMMSSZ|TermsAccepted|jdoe|example-tou-1|rHo...rrw=|true'
-
-    For terms-of-use refusal, the default entry is :
-     'YYYYMMDDTHHMMSSZ|TermsRejected|jdoe|example-tou-1|rHo...rrw=|false'
-    -->
-    <util:map id="shibboleth.consent.terms-of-use.AuditFormattingMap">
-        <entry key="Shibboleth-Consent-Audit" value="%T|%SP|%e|%u|%CCI|%CCV|%CCA" />
-    </util:map>
-
-    <!--
-    For attribute-release consent, the default entry is :
-     'YYYYMMDDTHHMMSSZ|https://sp.example.org|AttributeReleaseConsent|jdoe|email,eduPersonAffiliation|rHo...rrw=,rHo...rrw=|false,false'
-    -->
-    <util:map id="shibboleth.consent.attribute-release.AuditFormattingMap">
-        <entry key="Shibboleth-Consent-Audit" value="%T|%SP|%e|%u|%CCI|%CCV|%CCA" />
-    </util:map>
 
     <!--
     Specify custom symbolic replacements for attribute names to shrink the size of results saved to client-side storage 

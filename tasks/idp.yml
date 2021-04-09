@@ -123,10 +123,10 @@
     - client-storage/client-storage-write.vm
     - duo.vm
     - error.vm
-    - intercept/attribute-release.vm
-    - intercept/expiring-password.vm
-    - intercept/impersonate.vm
-    - intercept/terms-of-use.vm
+#    - intercept/attribute-release.vm
+#    - intercept/expiring-password.vm
+#    - intercept/impersonate.vm
+#    - intercept/terms-of-use.vm
     - login-error.vm
     - login.vm
     - logout-complete.vm
@@ -705,41 +705,41 @@
     mode: 0640
     backup: yes
 
-- name: 'Set intercept/context-check-intercept-config.xml'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/context-check-intercept-config.xml'
-    dest: '{{ shib_idp.home }}/conf/intercept/context-check-intercept-config.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+#- name: 'Set intercept/context-check-intercept-config.xml'
+#  template:
+#    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/context-check-intercept-config.xml'
+#    dest: '{{ shib_idp.home }}/conf/intercept/context-check-intercept-config.xml'
+#    owner: root
+#    group: jetty
+#    mode: 0640
+#    backup: yes
 
-- name: 'Set intercept/expiring-password-intercept-config.xml'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/expiring-password-intercept-config.xml'
-    dest: '{{ shib_idp.home }}/conf/intercept/expiring-password-intercept-config.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+#- name: 'Set intercept/expiring-password-intercept-config.xml'
+#  template:
+#    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/expiring-password-intercept-config.xml'
+#    dest: '{{ shib_idp.home }}/conf/intercept/expiring-password-intercept-config.xml'
+#    owner: root
+#    group: jetty
+#    mode: 0640
+#    backup: yes
 
-- name: 'Set intercept/external-intercept-config.xml'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/external-intercept-config.xml'
-    dest: '{{ shib_idp.home }}/conf/intercept/external-intercept-config.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+#- name: 'Set intercept/external-intercept-config.xml'
+#  template:
+#    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/external-intercept-config.xml'
+#    dest: '{{ shib_idp.home }}/conf/intercept/external-intercept-config.xml'
+#    owner: root
+#    group: jetty
+#    mode: 0640
+#    backup: yes
 
-- name: 'Set intercept/impersonate-intercept-config.xml'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/impersonate-intercept-config.xml'
-    dest: '{{ shib_idp.home }}/conf/intercept/impersonate-intercept-config.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+#- name: 'Set intercept/impersonate-intercept-config.xml'
+#  template:
+#    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/impersonate-intercept-config.xml'
+#    dest: '{{ shib_idp.home }}/conf/intercept/impersonate-intercept-config.xml'
+#    owner: root
+#    group: jetty
+#    mode: 0640
+#    backup: yes
 
 - name: 'Set intercept/intercept-events-flow.xml'
   template:
@@ -750,14 +750,14 @@
     mode: 0640
     backup: yes
 
-- name: 'Set intercept/profile-intercept.xml'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/profile-intercept.xml'
-    dest: '{{ shib_idp.home }}/conf/intercept/profile-intercept.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+#- name: 'Set intercept/profile-intercept.xml'
+#  template:
+#    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/profile-intercept.xml'
+#    dest: '{{ shib_idp.home }}/conf/intercept/profile-intercept.xml'
+#    owner: root
+#    group: jetty
+#    mode: 0640
+#    backup: yes
 
 - name: 'Set credentials/secrets.properties'
   template:
@@ -891,11 +891,11 @@
   - conf/c14n/subject-c14n.properties
 #  - conf/c14n/x500-subject-c14n-config.xml
   - conf/intercept/consent-intercept-config.xml
-  - conf/intercept/context-check-intercept-config.xml
-  - conf/intercept/expiring-password-intercept-config.xml
-  - conf/intercept/impersonate-intercept-config.xml
+#  - conf/intercept/context-check-intercept-config.xml
+#  - conf/intercept/expiring-password-intercept-config.xml
+#  - conf/intercept/impersonate-intercept-config.xml
   - conf/intercept/intercept-events-flow.xml
-  - conf/intercept/profile-intercept.xml
+#  - conf/intercept/profile-intercept.xml
   - credentials/idp-backchannel.p12
   - credentials/idp-encryption.key
   - credentials/idp-signing.key
