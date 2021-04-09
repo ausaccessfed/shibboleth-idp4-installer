@@ -26,6 +26,7 @@
                 <ref bean="shibboleth.metrics.MetadataGaugeSet" />
                 <ref bean="shibboleth.metrics.NameIdentifierGaugeSet" />
                 <ref bean="shibboleth.metrics.RelyingPartyGaugeSet" />
+                <ref bean="shibboleth.metrics.AttributeRegistryGaugeSet" />
                 <ref bean="shibboleth.metrics.AttributeResolverGaugeSet" />
                 <ref bean="shibboleth.metrics.AttributeFilterGaugeSet" />
                 <ref bean="shibboleth.metrics.CASServiceRegistryGaugeSet" />
@@ -59,12 +60,20 @@
         <entry key="metadata" value-ref="shibboleth.metrics.MetadataGaugeSet" />
         <entry key="nameid" value-ref="shibboleth.metrics.NameIdentifierGaugeSet" />
         <entry key="relyingparty" value-ref="shibboleth.metrics.RelyingPartyGaugeSet" />
+        <entry key="registry" value-ref="shibboleth.metrics.AttributeRegistryGaugeSet" />
         <entry key="resolver" value-ref="shibboleth.metrics.AttributeResolverGaugeSet" />
         <entry key="filter" value-ref="shibboleth.metrics.AttributeFilterGaugeSet" />
         <entry key="cas" value-ref="shibboleth.metrics.CASServiceRegistryGaugeSet" />
         <entry key="bean" value-ref="shibboleth.metrics.ManagedBeanGaugeSet" />
     </util:map>
-        
+
+    <!-- Add any desired properties into set to expose them as IdP metrics. -->
+    <!--
+    <util:set id="shibboleth.metrics.ExposedProperties">
+        <value>idp.entityID</value>
+    </util:set>
+    -->
+
     <!-- If you don't specify an alternate access policy, this named policy will be enforced. -->
     <bean id="shibboleth.metrics.DefaultAccessPolicy" class="java.lang.String" c:_0="AccessByIPAddress" />
     
