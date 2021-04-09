@@ -336,14 +336,14 @@
     mode: 0640
     backup: yes
 
-- name: 'Set session-manager.xml'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/session-manager.xml'
-    dest: '{{ shib_idp.home }}/conf/session-manager.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+#- name: 'Set session-manager.xml'
+#  template:
+#    src: 'assets/{{inventory_hostname}}/idp/conf/session-manager.xml'
+#    dest: '{{ shib_idp.home }}/conf/session-manager.xml'
+#    owner: root
+#    group: jetty
+#    mode: 0640
+#    backup: yes
 
 - name: 'Set admin/general-admin.xml'
   template:
@@ -852,7 +852,7 @@
   - conf/saml-nameid.xml
   - conf/services.properties
   - conf/services.xml
-  - conf/session-manager.xml
+#  - conf/session-manager.xml
   - conf/admin/general-admin.xml
   - conf/admin/metrics.xml
   - conf/authn/authn.properties
