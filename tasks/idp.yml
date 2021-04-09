@@ -642,23 +642,23 @@
 #    mode: 0640
 #    backup: yes
 
-- name: 'Set c14n/attribute-sourced-subject-c14n-config.xml'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/c14n/attribute-sourced-subject-c14n-config.xml'
-    dest: '{{ shib_idp.home }}/conf/c14n/attribute-sourced-subject-c14n-config.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+#- name: 'Set c14n/attribute-sourced-subject-c14n-config.xml'
+#  template:
+#    src: 'assets/{{inventory_hostname}}/idp/conf/c14n/attribute-sourced-subject-c14n-config.xml'
+#    dest: '{{ shib_idp.home }}/conf/c14n/attribute-sourced-subject-c14n-config.xml'
+#    owner: root
+#    group: jetty
+#    mode: 0640
+#    backup: yes
 
-- name: 'Set c14n/simple-subject-c14n-config.xml'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/c14n/simple-subject-c14n-config.xml'
-    dest: '{{ shib_idp.home }}/conf/c14n/simple-subject-c14n-config.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+#- name: 'Set c14n/simple-subject-c14n-config.xml'
+#  template:
+#    src: 'assets/{{inventory_hostname}}/idp/conf/c14n/simple-subject-c14n-config.xml'
+#    dest: '{{ shib_idp.home }}/conf/c14n/simple-subject-c14n-config.xml'
+#    owner: root
+#    group: jetty
+#    mode: 0640
+#    backup: yes
 
 - name: 'Set c14n/subject-c14n-events-flow.xml'
   template:
@@ -678,14 +678,23 @@
     mode: 0640
     backup: yes
 
-- name: 'Set c14n/x500-subject-c14n-config.xml'
+- name: 'Set c14n/subject-c14n.properties'
   template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/c14n/x500-subject-c14n-config.xml'
-    dest: '{{ shib_idp.home }}/conf/c14n/x500-subject-c14n-config.xml'
+    src: 'assets/{{inventory_hostname}}/idp/conf/c14n/subject-c14n.properties'
+    dest: '{{ shib_idp.home }}/conf/c14n/subject-c14n.properties'
     owner: root
     group: jetty
     mode: 0640
     backup: yes
+
+#- name: 'Set c14n/x500-subject-c14n-config.xml'
+#  template:
+#    src: 'assets/{{inventory_hostname}}/idp/conf/c14n/x500-subject-c14n-config.xml'
+#    dest: '{{ shib_idp.home }}/conf/c14n/x500-subject-c14n-config.xml'
+#    owner: root
+#    group: jetty
+#    mode: 0640
+#    backup: yes
 
 - name: 'Set intercept/consent-intercept-config.xml'
   template:
@@ -875,11 +884,12 @@
 #  - conf/authn/spnego-authn-config.xml
 #  - conf/authn/x509-authn-config.xml
 #  - conf/authn/x509-internal-authn-config.xml
-  - conf/c14n/attribute-sourced-subject-c14n-config.xml
-  - conf/c14n/simple-subject-c14n-config.xml
+#  - conf/c14n/attribute-sourced-subject-c14n-config.xml
+#  - conf/c14n/simple-subject-c14n-config.xml
   - conf/c14n/subject-c14n-events-flow.xml
   - conf/c14n/subject-c14n.xml
-  - conf/c14n/x500-subject-c14n-config.xml
+  - conf/c14n/subject-c14n.properties
+#  - conf/c14n/x500-subject-c14n-config.xml
   - conf/intercept/consent-intercept-config.xml
   - conf/intercept/context-check-intercept-config.xml
   - conf/intercept/expiring-password-intercept-config.xml
