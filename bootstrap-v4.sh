@@ -4,6 +4,12 @@ set -e
 #
 # ------------------------ END BOOTRAP CONFIGURATION ---------------------------
 
+function setup_valid_oss {
+    APT_LIST="ubuntu"
+    YUM_LIST="rhel centos"
+    OS_LIST="$APT_LIST $YUM_LIST"
+}
+
 function set_internal_variables {
     APT_LIST="ubuntu"
     YUM_LIST="rhel centos"
@@ -474,6 +480,7 @@ function get_cfg_section {
 }
 
 function bootstrap {
+  setup_valid_oss
   run_as_root
   run_on_os
   read_bootstrap_ini 'bootstrap-v4.ini'
@@ -484,10 +491,10 @@ function bootstrap {
   ensure_mandatory_variables_set
   ensure_install_base_exists
   duplicate_execution_warning
-  if [[ $DO_APT ]] then
+  if [ $DO_APT == "true" ] then
       install_apt_dependencices
   fi
-  if [[ $DO_YUM ]] then
+  if [ $DO_YUM == "true" ] then
       install_yum_dependencies
   fi
   setup_repo
