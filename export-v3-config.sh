@@ -148,7 +148,7 @@ write_bootstrap_ini ()
     echo "ORGANISATION_BASE_DOMAIN=$home_organisation" >> $bootstrap_file
     echo "HOME_ORG_TYPE=$home_organisation_type" >> $bootstrap_file
     echo "SOURCE_ATTRIBUTE_ID=$source_attribute_id" >> $bootstrap_file
-    echo "YUM_UPDATE=$server_patch" >> $bootstrap_file
+    echo "OS_UPDATE=$server_patch" >> $bootstrap_file
     
     echo >> $bootstrap_file
     echo "[ldap]" >> $bootstrap_file
