@@ -490,7 +490,7 @@ function bootstrap {
   ensure_install_base_exists
   duplicate_execution_warning
   if [ $DO_APT == "true" ]; then
-      install_apt_dependencices
+      install_apt_dependencies
   fi
   if [ $DO_YUM == "true" ]; then
       install_yum_dependencies
