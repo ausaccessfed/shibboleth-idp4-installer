@@ -11,10 +11,6 @@ function setup_valid_oss {
 }
 
 function set_internal_variables {
-    APT_LIST="ubuntu"
-    YUM_LIST="rhel centos"
-    OS_LIST="$APT_LIST $YUM_LIST"
-
     LOCAL_REPO=$INSTALL_BASE/shibboleth-idp4-installer/repository
     SHIBBOLETH_IDP_INSTANCE=$INSTALL_BASE/shibboleth/shibboleth-idp/current
     ANSIBLE_HOSTS_FILE=$LOCAL_REPO/ansible_hosts
@@ -451,7 +447,8 @@ function run_on_os {
         . /etc/os-release
 
         if [[ $OS_LIST =~ (^|[[:space:]])"$ID"($|[[:space:]]) ]]; then
-           echo "Preparing to Install Shibboleth IdP on $ID OS\n"
+           echo "Preparing to install Shibboleth IdP on $ID OS"
+           echo ""
            DO_APT="false"
            DO_YUM="false"
            if [[ $YUM_LIST =~ (^|[[:space:]])"$ID"($|[[:space:]]) ]]; then
@@ -468,6 +465,7 @@ function run_on_os {
        echo "File /etc/os-release does not exist, can not determine Operating System ID!"
        exit 1
     fi
+}
 
 function get_cfg_section {
 
@@ -491,10 +489,10 @@ function bootstrap {
   ensure_mandatory_variables_set
   ensure_install_base_exists
   duplicate_execution_warning
-  if [ $DO_APT == "true" ] then
+  if [ $DO_APT == "true" ]; then
       install_apt_dependencices
   fi
-  if [ $DO_YUM == "true" ] then
+  if [ $DO_YUM == "true" ]; then
       install_yum_dependencies
   fi
   setup_repo
@@ -506,8 +504,7 @@ function bootstrap {
   set_source_attribute_in_attribute_resolver
   set_source_attribute_in_saml_nameid_properties
 
-  if [ ${LDAP_URL} ];
-  then
+  if [ ${LDAP_URL} ]; then
     set_ldap_properties
   fi
 
