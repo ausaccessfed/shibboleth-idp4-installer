@@ -8,9 +8,9 @@
   when: (((server_patch is undefined) or (server_patch is none) or (server_patch=="true")) and (patch_with=="apt"))
 
 - name: 'Check SELinux installed'
-    stat:
-      path: /etc/selinux/config
-      register: selinux_available
+  stat:
+    path: /etc/selinux/config
+  register: selinux_available
 
 - name: 'Set SELinux to permissive mode'
   selinux:
