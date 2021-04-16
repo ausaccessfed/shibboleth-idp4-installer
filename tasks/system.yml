@@ -27,13 +27,23 @@
       - mariadb-server
       - chrony
     state: installed
+  when: patch_with=="yum"
+
+- name: 'Install required packages - apt'
+  yum:
+    name:
+      - openjdk-11-jdk
+      - mariadb-server
+      - chrony
+    state: installed
+  when: patch_with=="apt"
 
 - name: 'Install required packages - OS Version 7'
   yum:
     name:
       - MySQL-python
     state: installed
-  when: ansible_distribution_major_version == "7"
+  when:((ansible_distribution_major_version == "7") and (patch_with=="yum"))
 
 - name: 'Install required packages - OS Version 8'
   yum:
@@ -41,7 +51,14 @@
       - python3-pyOpenSSL
       - python3-PyMySQL
     state: installed
-  when: ansible_distribution_major_version == "8"
+  when: ((ansible_distribution_major_version == "8") and (patch_with=="yum"))
+
+- name: 'Install required packages - apt'
+    apt:
+    name:
+      - python3-pymysql
+    state: present
+  when: patch_with=="apt"
 
 - name: 'Enable chrony service'
   service: name=chronyd state=started enabled=yes
