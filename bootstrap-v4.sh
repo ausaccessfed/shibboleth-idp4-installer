@@ -304,7 +304,7 @@ function set_ldap_properties {
 function create_ansible_assets {
 echo "Host: $HOST_NAME"
   cd $LOCAL_REPO
-  sh create_assets.sh $HOST_NAME $ENVIRONMENT
+  bash create_assets.sh $HOST_NAME $ENVIRONMENT
 }
 
 function create_self_signed_certs {
