@@ -35,7 +35,7 @@
       - openjdk-11-jdk
       - mariadb-server
       - chrony
-    state: installed
+    state: present
   when: patch_with=="apt"
 
 - name: 'Install required packages - OS Version 7'
@@ -43,7 +43,7 @@
     name:
       - MySQL-python
     state: installed
-  when:((ansible_distribution_major_version == "7") and (patch_with=="yum"))
+  when: ((ansible_distribution_major_version == "7") and (patch_with=="yum"))
 
 - name: 'Install required packages - OS Version 8'
   yum:
@@ -54,7 +54,7 @@
   when: ((ansible_distribution_major_version == "8") and (patch_with=="yum"))
 
 - name: 'Install required packages - apt'
-    apt:
+  apt:
     name:
       - python3-pymysql
     state: present
