@@ -56,6 +56,9 @@ home_organisation_type: "urn:mace:terena.org:schac:homeOrganizationType:au:unive
 # Run yum -update on every execution of update_idp.sh
 server_patch: "true"
 
+# OS Tool to patch the system
+patch_with: "yum"
+
 # Installed Firewall [firewalld none ]
 firewall: "firewalld" 
 

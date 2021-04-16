@@ -261,6 +261,13 @@ function set_ansible_host_vars {
     $ANSIBLE_HOST_VARS
   replace_property 'enable_edugain:' "\"$ENABLE_EDUGAIN\"" \
     $ANSIBLE_HOST_VARS
+  if [ $DO_APT == "true" ]; then
+      replace_property 'patch_with: apt'
+  fi
+  if [ $DO_YUM == "true" ]; then
+      replace_property 'patch_with: yum'
+      
+  fi
 }
 
 function set_ansible_cfg_log_path {

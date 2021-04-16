@@ -1,7 +1,11 @@
 ---
 - name: 'Update yum packages (yum -y update)'
   yum: name=* state=latest
-  when: ((server_patch is undefined) or (server_patch is none) or (server_patch=="true"))
+  when: (((server_patch is undefined) or (server_patch is none) or (server_patch=="true")) and (patch_with=="yum"))
+
+- name: 'Update apt packages (apt -y upgrade)'
+  apt: name=* state=latest
+  when: (((server_patch is undefined) or (server_patch is none) or (server_patch=="true")) and (patch_with=="apt"))
 
 - name: 'Check SELinux installed'
     stat:
