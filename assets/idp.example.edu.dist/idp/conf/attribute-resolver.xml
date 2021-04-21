@@ -38,7 +38,9 @@
     </AttributeDefinition>
 
     <!-- displayName -->
-    <!-- Provided via exportAttributes in the ldap data connector -->
+    <AttributeDefinition id="displayName" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="displayName" />
+    </AttributeDefinition>
 
     <!-- eduPersonAffiliation -->
     <AttributeDefinition xsi:type="ScriptedAttribute" id="eduPersonAffiliation">
@@ -91,7 +93,9 @@
 
     
     <!-- eduPersonEntitlement -->
-    <!-- Provided via exportAttributes in the ldap data connector -->
+    <AttributeDefinition id="eduPersonEntitlement" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="eduPersonEntitlement" />
+    </AttributeDefinition>
 
     <!-- eduPersonPrincipalName -->
     
@@ -125,7 +129,9 @@
     </AttributeDefinition>
 
     <!-- mail -->
-    <!-- Provided via exportAttributes in the ldap data connector -->
+    <AttributeDefinition id="mail" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="mail" />
+    </AttributeDefinition>
 
     <!-- givenName -->
     <AttributeDefinition id="givenName" xsi:type="Simple">
@@ -153,7 +159,9 @@
     </AttributeDefinition>
 
     <!-- eduPersonOrcid -->
-    <!-- Provided via exportAttributes in the ldap data connector -->
+    <AttributeDefinition id="eduPersonOrcid" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="eduPersonOrcid" />
+    </AttributeDefinition>
 
     <!-- ========================================== -->
     <!--     AAF improtant Optional ATTRIBUTES       -->
@@ -220,8 +228,7 @@
         principalCredential="%{idp.attribute.resolver.LDAP.bindDNCredential}"
         useStartTLS="%{idp.attribute.resolver.LDAP.useStartTLS:true}"
         connectTimeout="%{idp.attribute.resolver.LDAP.connectTimeout}"
-        responseTimeout="%{idp.attribute.resolver.LDAP.responseTimeout}"
-        exportAttributes="displayName eduPersonEntitlement mail eduPersonOrcid">
+        responseTimeout="%{idp.attribute.resolver.LDAP.responseTimeout}">
         <FilterTemplate>
             <![CDATA[
                 %{idp.attribute.resolver.LDAP.searchFilter}
