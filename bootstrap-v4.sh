@@ -261,6 +261,10 @@ function set_ansible_host_vars {
     $ANSIBLE_HOST_VARS
   replace_property 'enable_edugain:' "\"$ENABLE_EDUGAIN\"" \
     $ANSIBLE_HOST_VARS
+  replace_property 'old_source_persistent_id:' "\"$SOURCE_ATTRIBUTE_ID\"" \
+    $ANSIBLE_HOST_VARS
+  replace_property 'source_persistent_id:' "\"$PERSISTENT_ATTRIBUTE_ID\"" \
+    $ANSIBLE_HOST_VARS
   if [ $DO_APT == "true" ]; then
       replace_property 'patch_with: apt'
   fi
@@ -284,15 +288,15 @@ function set_update_idp_script_cd_path {
     $UPGRADE_IDP_SCRIPT
 }
 
-function set_source_attribute_in_attribute_resolver {
-  local attr_resolver=$ASSETS/idp/conf/attribute-resolver.xml
-  sed -i "s/YOUR_SOURCE_ATTRIBUTE_HERE/$SOURCE_ATTRIBUTE_ID/g" $attr_resolver
-}
+#function set_source_attribute_in_attribute_resolver {
+#  local attr_resolver=$ASSETS/idp/conf/attribute-resolver.xml
+#  sed -i "s/YOUR_SOURCE_ATTRIBUTE_HERE/$SOURCE_ATTRIBUTE_ID/g" $attr_resolver
+#}
 
-function set_source_attribute_in_saml_nameid_properties {
-  local saml_nameid_properties=$ASSETS/idp/conf/saml-nameid.properties
-  sed -i "s/YOUR_SOURCE_ATTRIBUTE_HERE/$SOURCE_ATTRIBUTE_ID/g" $saml_nameid_properties
-}
+#function set_source_attribute_in_saml_nameid_properties {
+#  local saml_nameid_properties=$ASSETS/idp/conf/saml-nameid.properties
+#  sed -i "s/YOUR_SOURCE_ATTRIBUTE_HERE/$SOURCE_ATTRIBUTE_ID/g" $saml_nameid_properties
+#}
 
 function set_ldap_properties {
   local ldap_url="`echo $LDAP_URL | sed 's:/:\\\\/:g'`"

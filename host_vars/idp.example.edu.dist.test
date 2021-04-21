@@ -76,3 +76,6 @@ edugain_metadata_file_name: edugain-metadata.xml
 
 # eduGAIN Metadata certificate file name
 edugain_metadata_cert_file_name: aaf-metadata.pem
+
+# Source Persistent ID attribute name
+source_persistent_id:
