@@ -242,7 +242,7 @@
         generatedAttributeID="StoredID"
         salt="%{idp.persistentId.salt}" >
         <InputAttributeDefinition ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
-        <BeanManagedConnection>shibboleth.JPAStorageService.DataSource</BeanManagedConnection>
+        <BeanManagedConnection>shibboleth.JPAStorageService.PersistentDataSource</BeanManagedConnection>
     </DataConnector>
 
     <DataConnector xsi:type="aaf:SharedToken" id="sharedToken"
