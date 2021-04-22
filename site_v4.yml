@@ -39,9 +39,9 @@
         version: 8.0.23
         sha256sum: 6a0a6b9bbc84e40ed5571930af12328479d78472ebc9a01ee50fbee9d5a3be8c
       dta_ssl:
-        baseurl: "{{ aaf_binaries.baseurl }}/jars/jetty9-dta-ssl"
+        baseurl: "{{ aaf_binaries.baseurl }}/jars/jetty94-dta-ssl"
         version: 1.0.0
-        sha256sum: 9c62a5999d5adddea905d7caf4220fc073e6033b755f224084cc240dc8d992a6
+        sha256sum: 5e5de66e3517d30ff19ef66cf7a4aa5443b861d83e36a75e85845b007a03afbf
       commons_dbcp2:
         baseurl: "{{ aaf_binaries.baseurl }}/jars/commons_dbcp2"
         version: 2.8.0
