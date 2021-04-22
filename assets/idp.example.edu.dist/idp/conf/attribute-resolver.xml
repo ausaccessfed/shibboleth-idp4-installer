@@ -200,6 +200,7 @@
         </Script>
     </AttributeDefinition>
 
+{% if source_persistent_id != "" %}
     <!-- ========================================== -->
     <!-- SAML Subject ID Attributes                 -->
     <!-- ========================================== -->
@@ -211,6 +212,7 @@
     <AttributeDefinition xsi:type="Scoped" id="samlPairwiseID" scope="%{idp.scope}">
         <InputDataConnector ref="computed" attributeNames="computedId"/>
     </AttributeDefinition>
+{% endif %}
 
     
     <!-- ========================================== -->
@@ -270,6 +272,7 @@
         <aaf:BeanManagedConnection>shibboleth.JPAStorageService.DataSource</aaf:BeanManagedConnection>
     </DataConnector>
 
+{% if source_persistent_id != "" %}
     <DataConnector id="computed" xsi:type="ComputedId"
         excludeResolutionPhases="c14n/attribute"
             generatedAttributeID="computedId"
@@ -278,6 +281,7 @@
         encoding="BASE32">
 
         <InputDataConnector ref="myLDAP" attributeNames="%{idp.persistentId.sourceAttribute}" />
+{% endif %}
 
     </DataConnector>
 

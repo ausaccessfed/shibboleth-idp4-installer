@@ -288,16 +288,6 @@ function set_update_idp_script_cd_path {
     $UPGRADE_IDP_SCRIPT
 }
 
-#function set_source_attribute_in_attribute_resolver {
-#  local attr_resolver=$ASSETS/idp/conf/attribute-resolver.xml
-#  sed -i "s/YOUR_SOURCE_ATTRIBUTE_HERE/$SOURCE_ATTRIBUTE_ID/g" $attr_resolver
-#}
-
-#function set_source_attribute_in_saml_nameid_properties {
-#  local saml_nameid_properties=$ASSETS/idp/conf/saml-nameid.properties
-#  sed -i "s/YOUR_SOURCE_ATTRIBUTE_HERE/$SOURCE_ATTRIBUTE_ID/g" $saml_nameid_properties
-#}
-
 function set_ldap_properties {
   local ldap_url="`echo $LDAP_URL | sed 's:/:\\\\/:g'`"
   replace_property 'idp.authn.LDAP.ldapURL *=' \
@@ -512,8 +502,6 @@ function bootstrap {
   set_ansible_host_vars
   set_update_idp_script_cd_path
   set_ansible_cfg_log_path
-  set_source_attribute_in_attribute_resolver
-  set_source_attribute_in_saml_nameid_properties
 
   if [ ${LDAP_URL} ]; then
     set_ldap_properties
