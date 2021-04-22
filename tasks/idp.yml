@@ -123,16 +123,11 @@
     - client-storage/client-storage-write.vm
     - duo.vm
     - error.vm
-#    - intercept/attribute-release.vm
-#    - intercept/expiring-password.vm
-#    - intercept/impersonate.vm
-#    - intercept/terms-of-use.vm
     - login-error.vm
     - login.vm
     - logout-complete.vm
     - logout-propagate.vm
     - logout.vm
-#    - spnego-unavailable.vm
     - user-prefs.js
     - user-prefs.vm
 
@@ -218,15 +213,6 @@
     group: jetty
     mode: 0640
     backup: yes
-
-# - name: 'Set cas-protocol'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/cas-protocol.xml'
-#    dest: '{{ shib_idp.home }}/conf/cas-protocol.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
 
 - name: 'Set Shibboleth credentials.xml'
   template:
@@ -335,15 +321,6 @@
     group: jetty
     mode: 0640
     backup: yes
-
-#- name: 'Set session-manager.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/session-manager.xml'
-#    dest: '{{ shib_idp.home }}/conf/session-manager.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
 
 - name: 'Set admin/general-admin.xml'
   template:
@@ -471,78 +448,6 @@
     mode: 0640
     backup: yes
 
-#- name: 'Set authn/discovery-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/discovery-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/discovery-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/duo-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/duo-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/duo-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/duo.properties'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/duo.properties'
-#    dest: '{{ shib_idp.home }}/conf/authn/duo.properties'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/external-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/external-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/external-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/function-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/function-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/function-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/general-authn.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/general-authn.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/general-authn.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/ipaddress-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/ipaddress-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/ipaddress-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/jaas-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/jaas-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/jaas-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
 - name: 'Set authn/jaas.config'
   template:
     src: 'assets/{{inventory_hostname}}/idp/conf/authn/jaas.config'
@@ -552,33 +457,6 @@
     mode: 0640
     backup: yes
 
-#- name: 'Set authn/krb5-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/krb5-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/krb5-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/ldap-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/ldap-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/ldap-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/mfa-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/mfa-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/mfa-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
 - name: 'Set authn/password-authn-config.xml'
   template:
     src: 'assets/{{inventory_hostname}}/idp/conf/authn/password-authn-config.xml'
@@ -587,78 +465,6 @@
     group: jetty
     mode: 0640
     backup: yes
-
-#- name: 'Set authn/remoteuser-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/remoteuser-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/remoteuser-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/remoteuser-internal-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/remoteuser-internal-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/remoteuser-internal-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/saml-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/saml-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/saml-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/spnego-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/spnego-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/spnego-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/x509-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/x509-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/x509-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set authn/x509-internal-authn-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/authn/x509-internal-authn-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/authn/x509-internal-authn-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set c14n/attribute-sourced-subject-c14n-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/c14n/attribute-sourced-subject-c14n-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/c14n/attribute-sourced-subject-c14n-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set c14n/simple-subject-c14n-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/c14n/simple-subject-c14n-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/c14n/simple-subject-c14n-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
 
 - name: 'Set c14n/subject-c14n-events-flow.xml'
   template:
@@ -687,15 +493,6 @@
     mode: 0640
     backup: yes
 
-#- name: 'Set c14n/x500-subject-c14n-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/c14n/x500-subject-c14n-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/c14n/x500-subject-c14n-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
 - name: 'Set intercept/consent-intercept-config.xml'
   template:
     src: 'assets/{{inventory_hostname}}/idp/conf/intercept/consent-intercept-config.xml'
@@ -705,41 +502,6 @@
     mode: 0640
     backup: yes
 
-#- name: 'Set intercept/context-check-intercept-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/context-check-intercept-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/intercept/context-check-intercept-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set intercept/expiring-password-intercept-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/expiring-password-intercept-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/intercept/expiring-password-intercept-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set intercept/external-intercept-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/external-intercept-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/intercept/external-intercept-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
-
-#- name: 'Set intercept/impersonate-intercept-config.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/impersonate-intercept-config.xml'
-#    dest: '{{ shib_idp.home }}/conf/intercept/impersonate-intercept-config.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
 
 - name: 'Set intercept/intercept-events-flow.xml'
   template:
@@ -749,15 +511,6 @@
     group: jetty
     mode: 0640
     backup: yes
-
-#- name: 'Set intercept/profile-intercept.xml'
-#  template:
-#    src: 'assets/{{inventory_hostname}}/idp/conf/intercept/profile-intercept.xml'
-#    dest: '{{ shib_idp.home }}/conf/intercept/profile-intercept.xml'
-#    owner: root
-#    group: jetty
-#    mode: 0640
-#    backup: yes
 
 - name: 'Set credentials/secrets.properties'
   template:
@@ -846,7 +599,6 @@
   - conf/attribute-resolver-ldap.xml
   - conf/attribute-resolver.xml
   - conf/audit.xml
-#  - conf/cas-protocol.xml
   - conf/credentials.xml
   - conf/edugain-attribute-filter.xml
   - conf/errors.xml
@@ -861,41 +613,18 @@
   - conf/saml-nameid.xml
   - conf/services.properties
   - conf/services.xml
-#  - conf/session-manager.xml
   - conf/admin/general-admin.xml
   - conf/admin/metrics.xml
   - conf/authn/authn.properties
   - conf/authn/authn-comparison.xml
   - conf/authn/authn-events-flow.xml
-#  - conf/authn/duo-authn-config.xml
-#  - conf/authn/duo.properties
-#  - conf/authn/external-authn-config.xml
-#  - conf/authn/function-authn-config.xml
-#  - conf/authn/general-authn.xml
-#  - conf/authn/ipaddress-authn-config.xml
-#  - conf/authn/jaas-authn-config.xml
   - conf/authn/jaas.config
-#  - conf/authn/krb5-authn-config.xml
-#  - conf/authn/ldap-authn-config.xml
-#  - conf/authn/mfa-authn-config.xml
   - conf/authn/password-authn-config.xml
-#  - conf/authn/remoteuser-authn-config.xml
-#  - conf/authn/remoteuser-internal-authn-config.xml
-#  - conf/authn/spnego-authn-config.xml
-#  - conf/authn/x509-authn-config.xml
-#  - conf/authn/x509-internal-authn-config.xml
-#  - conf/c14n/attribute-sourced-subject-c14n-config.xml
-#  - conf/c14n/simple-subject-c14n-config.xml
   - conf/c14n/subject-c14n-events-flow.xml
   - conf/c14n/subject-c14n.xml
   - conf/c14n/subject-c14n.properties
-#  - conf/c14n/x500-subject-c14n-config.xml
   - conf/intercept/consent-intercept-config.xml
-#  - conf/intercept/context-check-intercept-config.xml
-#  - conf/intercept/expiring-password-intercept-config.xml
-#  - conf/intercept/impersonate-intercept-config.xml
   - conf/intercept/intercept-events-flow.xml
-#  - conf/intercept/profile-intercept.xml
   - credentials/idp-backchannel.p12
   - credentials/idp-encryption.key
   - credentials/idp-signing.key
