@@ -222,7 +222,7 @@ function replace_property {
   local value=$2
   local file=$3
   if [ ! -z "$value" ]; then
-    sed -i "s/.*$property1.*/$property2 $value/g" $file
+    sed -i "s/^$property1.*/$property2 $value/g" $file
   fi
 }
 
@@ -232,7 +232,7 @@ function replace_property_nosp {
   local value=$2
   local file=$3
   if [ ! -z "$value" ]; then
-    sed -i "s/.*$property.*/$property$value/g" $file
+    sed -i "s/^$property.*/$property$value/g" $file
   fi
 }
 

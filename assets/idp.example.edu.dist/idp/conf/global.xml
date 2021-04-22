@@ -74,7 +74,7 @@
     <!-- Two seperate but same Data Sources providing seperate pools of connections that
          will help prevent problems in one component from breaking the other.
     -->
-    <-- For features like consent and Shared Token generation and reterival -->     
+    <!-- For features like consent and Shared Token generation and reterival -->     
     <bean id="shibboleth.JPAStorageService.DataSource"
         class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" lazy-init="true"
         p:driverClassName="com.mysql.cj.jdbc.Driver"
@@ -87,7 +87,7 @@
         p:validationQuery="select 1"
         p:validationQueryTimeout="5" />
     
-    <-- For creation and reterival of Persistent IDs -->
+    <!-- For creation and reterival of Persistent IDs -->
     <bean id="shibboleth.JPAStorageService.PersistentDataSource"
         class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" lazy-init="true"
         p:driverClassName="com.mysql.cj.jdbc.Driver"
