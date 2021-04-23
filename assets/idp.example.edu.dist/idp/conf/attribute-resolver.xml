@@ -206,7 +206,7 @@
     <!-- ========================================== -->
 
     <AttributeDefinition xsi:type="Scoped" id="samlSubjectID" scope="%{idp.scope}">
-        <InputDataConnector ref="myLDAP" attributeNames="%{idp.persistentId.sourceAttribute}"/>
+        <InputDataConnector ref="ldap" attributeNames="%{idp.persistentId.sourceAttribute}"/>
     </AttributeDefinition>
 
     <AttributeDefinition xsi:type="Scoped" id="samlPairwiseID" scope="%{idp.scope}">
