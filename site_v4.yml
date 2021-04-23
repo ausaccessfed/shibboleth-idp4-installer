@@ -94,7 +94,7 @@
       mysql_connector:
         url: "{{ download.mysql_connector.baseurl }}/mysql-connector-java-{{ download.mysql_connector.version }}.tar.gz"
       dta_ssl:
-        url: "{{ download.dta_ssl.baseurl }}/jetty9-dta-ssl-{{download.dta_ssl.version}}.jar"
+        url: "{{ download.dta_ssl.baseurl }}/jetty94-dta-ssl-{{download.dta_ssl.version}}.jar"
       commons_dbcp2:
         url: "{{ download.commons_dbcp2.baseurl }}/commons-dbcp2-{{ download.commons_dbcp2.version }}-bin.tar.gz"
       commons_pool2:
