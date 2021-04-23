@@ -280,7 +280,7 @@
             algorithm="%{idp.persistentId.algorithm:SHA}"
         encoding="BASE32">
 
-        <InputDataConnector ref="myLDAP" attributeNames="%{idp.persistentId.sourceAttribute}" />
+        <InputDataConnector ref="ldap" attributeNames="%{idp.persistentId.sourceAttribute}" />
 {% endif %}
 
     </DataConnector>
