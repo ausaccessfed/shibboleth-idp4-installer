@@ -274,7 +274,6 @@
 
 {% if source_persistent_id != "" %}
     <DataConnector id="computed" xsi:type="ComputedId"
-        excludeResolutionPhases="c14n/attribute"
             generatedAttributeID="computedId"
             salt="%{idp.persistentId.salt}"
             algorithm="%{idp.persistentId.algorithm:SHA}"
