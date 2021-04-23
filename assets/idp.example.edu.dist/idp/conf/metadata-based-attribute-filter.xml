@@ -84,6 +84,16 @@
             <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
         </AttributeRule>
 
+    <!--         AAF Furture possible CORE attributes   -->
+
+        <AttributeRule attributeID="samlSubjectID">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
+        <AttributeRule attributeID="samlPairwiseID">
+            <PermitValueRule xsi:type="AttributeInMetadata" onlyIfRequired="false"/>
+        </AttributeRule>
+
     <!--         AAF OPTIONAL ATTRIBUTES                -->
 
         <!-- Schema: eduPerson -->
