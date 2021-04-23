@@ -83,51 +83,19 @@
     mode: 0640
     backup: yes
 
-- name: 'Set jetty-backchannel.xml when backchannel enabled'
+- name: 'Set idp-backchannel.xml when backchannel enabled'
   template:
-    dest: '{{ jetty.base }}/etc/jetty-backchannel.xml'
-    src: 'templates/jetty/jetty-backchannel.xml'
+    dest: '{{ jetty.base }}/etc/idp-backchannel.xml'
+    src: 'templates/jetty/idp-backchannel.xml'
     owner: root
     group: jetty
     mode: 0640
     backup: yes
   when: enable_backchannel is defined and enable_backchannel=="true"
 
-- name: 'Unset jetty-backchannel.xml when backchannel disabled'
+- name: 'Unset idp-backchannel.xml when backchannel disabled'
   file:
-    path: '{{ jetty.base }}/etc/jetty-backchannel.xml'
-    state: absent
-  when: enable_backchannel is defined and enable_backchannel=="false"
-
-- name: 'Set jetty-https.xml when backchannel enabled'
-  template:
-    dest: '{{ jetty.base }}/etc/jetty-https.xml'
-    src: 'templates/jetty/jetty-https.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-  when: enable_backchannel is defined and enable_backchannel=="true"
-
-- name: 'Unset jetty-https.xml when backchannel disabled'
-  file:
-    path: '{{ jetty.base }}/etc/jetty-https.xml'
-    state: absent
-  when: enable_backchannel is defined and enable_backchannel=="false"
-
-- name: 'Set jetty-ssl.xml when backchannel enabled'
-  template:
-    dest: '{{ jetty.base }}/etc/jetty-ssl.xml'
-    src: 'templates/jetty/jetty-ssl.xml'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-  when: enable_backchannel is defined and enable_backchannel=="true"
-
-- name: 'Unset jetty-ssl.xml when backchannel disabled'
-  file:
-    path: '{{ jetty.base }}/etc/jetty-ssl.xml'
+    path: '{{ jetty.base }}/etc/idp-backchannel.xml'
     state: absent
   when: enable_backchannel is defined and enable_backchannel=="false"
 
@@ -151,51 +119,19 @@
     mode: 0640
     backup: yes
 
-- name: 'Set backchannel.mod when backchannel enabled'
+- name: 'Set idp-backchannel.mod when backchannel enabled'
   template:
-    dest: '{{ jetty.base }}/modules/backchannel.mod'
-    src: 'templates/jetty/backchannel.mod'
+    dest: '{{ jetty.base }}/modules/idp-backchannel.mod'
+    src: 'templates/jetty/idp-backchannel.mod'
     owner: root
     group: jetty
     mode: 0640
     backup: yes
   when: enable_backchannel is defined and enable_backchannel=="true"
 
-- name: 'UnSet backchannel.mod when backchannel disabled'
+- name: 'UnSet idp-backchannel.mod when backchannel disabled'
   file:
-    path: '{{ jetty.base }}/modules/backchannel.mod'
-    state: absent
-  when: enable_backchannel is defined and enable_backchannel=="false"
-
-- name: 'Set https.mod when backchannel enabled'
-  template:
-    dest: '{{ jetty.base }}/modules/https.mod'
-    src: 'templates/jetty/https.mod'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-  when: enable_backchannel is defined and enable_backchannel=="true"
-
-- name: 'UnSet https.mod when backchannel disabled'
-  file:
-    path: '{{ jetty.base }}/modules/https.mod'
-    state: absent
-  when: enable_backchannel is defined and enable_backchannel=="false"
-
-- name: 'Set ssl.mod when backchannel enabled'
-  template:
-    dest: '{{ jetty.base }}/modules/ssl.mod'
-    src: 'templates/jetty/ssl.mod'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-  when: enable_backchannel is defined and enable_backchannel=="true"
-
-- name: 'UnSet ssl.mod when backchannel disabled'
-  file:
-    path: '{{ jetty.base }}/modules/ssl.mod'
+    path: '{{ jetty.base }}/modules/idp-backchannel.mod'
     state: absent
   when: enable_backchannel is defined and enable_backchannel=="false"
 
@@ -230,51 +166,19 @@
     mode: 0640
     backup: yes
 
-- name: 'Set backchannel.ini when backchannel enabled'
+- name: 'Set idp-backchannel.ini when backchannel enabled'
   template:
-    dest: '{{ jetty.base }}/start.d/backchannel.ini'
-    src: 'templates/jetty/backchannel.ini'
+    dest: '{{ jetty.base }}/start.d/idp-backchannel.ini'
+    src: 'templates/jetty/idp-backchannel.ini'
     owner: root
     group: jetty
     mode: 0640
     backup: yes
   when: enable_backchannel is defined and enable_backchannel=="true"
 
-- name: 'Unset backchannel.ini when backchannel disabled'
+- name: 'Unset idp-backchannel.ini when backchannel disabled'
   file:
-    path: '{{ jetty.base }}/start.d/backchannel.ini'
-    state: absent
-  when: enable_backchannel is defined and enable_backchannel=="false"
-
-- name: 'Set https.ini when backchannel enabled'
-  template:
-    dest: '{{ jetty.base }}/start.d/https.ini'
-    src: 'templates/jetty/https.ini'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-  when: enable_backchannel is defined and enable_backchannel=="true"
-
-- name: 'Unset https.ini when backchannel disabled'
-  file:
-    path: '{{ jetty.base }}/start.d/https.ini'
-    state: absent
-  when: enable_backchannel is defined and enable_backchannel=="false"
-
-- name: 'Set ssl.ini when backchannel enabled'
-  template:
-    dest: '{{ jetty.base }}/start.d/ssl.ini'
-    src: 'templates/jetty/ssl.ini'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
-  when: enable_backchannel is defined and enable_backchannel=="true"
-
-- name: 'Unset ssl.ini when backchannel disabled'
-  file:
-    path: '{{ jetty.base }}/start.d/ssl.ini'
+    path: '{{ jetty.base }}/start.d/idp-backchannel.ini'
     state: absent
   when: enable_backchannel is defined and enable_backchannel=="false"
 
