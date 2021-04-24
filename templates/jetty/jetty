@@ -1,4 +1,4 @@
-JAVA_HOME=/usr/lib/jvm/java
+JAVA_HOME=/usr
 JAVA=$JAVA_HOME/bin/java
 JAVA_OPTIONS=" -server"
 JETTY_HOME={{ jetty.home }}

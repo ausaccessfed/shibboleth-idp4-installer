@@ -34,7 +34,7 @@
         </entry>
         
         <!--
-        <entry key="AccessByUser">
+        <entry key="AccessByAdminUser">
             <bean parent="shibboleth.PredicateAccessControl">
                 <constructor-arg>
                     <bean parent="shibboleth.Conditions.SubjectName" c:collection="#{'jdoe'}" />

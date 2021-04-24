@@ -56,6 +56,9 @@ home_organisation_type: "urn:mace:terena.org:schac:homeOrganizationType:au:unive
 # Run yum -update on every execution of update_idp.sh
 server_patch: "true"
 
+# OS Tool to patch the system
+patch_with: "yum"
+
 # Installed Firewall [firewalld | none ]
 firewall: "firewalld"
 
@@ -73,3 +76,9 @@ edugain_metadata_file_name: edugain-metadata.xml
 
 # eduGAIN Metadata certificate file name
 edugain_metadata_cert_file_name: aaf-metadata.pem
+
+# Source Persistent ID attribute name (for Subject ID and Pairwise ID)
+source_persistent_id:
+
+# Old Persistent ID attribute name (for auEduPersonShared Token and eduPersonTargeted ID)
+old_source_persistent_id:

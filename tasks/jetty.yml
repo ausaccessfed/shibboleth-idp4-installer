@@ -83,6 +83,22 @@
     mode: 0640
     backup: yes
 
+- name: 'Set idp-backchannel.xml when backchannel enabled'
+  template:
+    dest: '{{ jetty.base }}/etc/idp-backchannel.xml'
+    src: 'templates/jetty/idp-backchannel.xml'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+  when: enable_backchannel is defined and enable_backchannel=="true"
+
+- name: 'Unset idp-backchannel.xml when backchannel disabled'
+  file:
+    path: '{{ jetty.base }}/etc/idp-backchannel.xml'
+    state: absent
+  when: enable_backchannel is defined and enable_backchannel=="false"
+
 # Files in jetty.base/modules
 
 - name: 'Set http.mod'
@@ -102,6 +118,22 @@
     group: jetty
     mode: 0640
     backup: yes
+
+- name: 'Set idp-backchannel.mod when backchannel enabled'
+  template:
+    dest: '{{ jetty.base }}/modules/idp-backchannel.mod'
+    src: 'templates/jetty/idp-backchannel.mod'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+  when: enable_backchannel is defined and enable_backchannel=="true"
+
+- name: 'UnSet idp-backchannel.mod when backchannel disabled'
+  file:
+    path: '{{ jetty.base }}/modules/idp-backchannel.mod'
+    state: absent
+  when: enable_backchannel is defined and enable_backchannel=="false"
 
 # Files in jetty.base/resources
 
@@ -133,6 +165,22 @@
     group: jetty
     mode: 0640
     backup: yes
+
+- name: 'Set idp-backchannel.ini when backchannel enabled'
+  template:
+    dest: '{{ jetty.base }}/start.d/idp-backchannel.ini'
+    src: 'templates/jetty/idp-backchannel.ini'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+  when: enable_backchannel is defined and enable_backchannel=="true"
+
+- name: 'Unset idp-backchannel.ini when backchannel disabled'
+  file:
+    path: '{{ jetty.base }}/start.d/idp-backchannel.ini'
+    state: absent
+  when: enable_backchannel is defined and enable_backchannel=="false"
 
 # Files in jetty.base/webapps
 

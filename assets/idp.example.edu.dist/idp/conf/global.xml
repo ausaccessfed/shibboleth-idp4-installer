@@ -21,18 +21,19 @@
     -->
     
     <!--
-    <util:list id="shibboleth.SignatureWhitelist">
-    </util:list>
+    <util:set id="shibboleth.IncludedSignatureAlgorithms">
+    </util:set>
 
-    <util:list id="shibboleth.SignatureBlacklist">
-    </util:list>
+    <util:set id="shibboleth.ExcludedSignatureAlgorithms">
+    </util:set>
 
-    <util:list id="shibboleth.EncryptionWhitelist">
-    </util:list>
+    <util:set id="shibboleth.IncludedEncryptionAlgorithms">
+    </util:set>
 
-    <util:list id="shibboleth.EncryptionBlacklist">
-    </util:list>
+    <util:set id="shibboleth.ExcludedEncryptionAlgorithms">
+    </util:set>
     -->
+
 
     <!--
     If you need to define and inject custom Java object(s) into the various views used throughout the
@@ -70,6 +71,10 @@
         <property name="database" value="MYSQL" />
     </bean>
 
+    <!-- Two seperate but same Data Sources providing seperate pools of connections that
+         will help prevent problems in one component from breaking the other.
+    -->
+    <!-- For features like consent and Shared Token generation and reterival -->     
     <bean id="shibboleth.JPAStorageService.DataSource"
         class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" lazy-init="true"
         p:driverClassName="com.mysql.cj.jdbc.Driver"
@@ -82,4 +87,17 @@
         p:validationQuery="select 1"
         p:validationQueryTimeout="5" />
     
+    <!-- For creation and reterival of Persistent IDs -->
+    <bean id="shibboleth.JPAStorageService.PersistentDataSource"
+        class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close" lazy-init="true"
+        p:driverClassName="com.mysql.cj.jdbc.Driver"
+        p:url="jdbc:mysql://localhost/idp_db?autoReconnect=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=GMT"
+        p:username="idp_admin"
+        p:password="%{idp.storage.dbpassword}"
+        p:maxIdle="5"
+        p:maxWaitMillis="15000"
+        p:testOnBorrow="true"
+        p:validationQuery="select 1"
+        p:validationQueryTimeout="5" />
+
 </beans>

@@ -59,4 +59,8 @@
                 
     </util:list>
     
+<bean id="MyPersistentIdStore" parent="shibboleth.StoredPersistentIdGenerator"
+    p:dataSource-ref="shibboleth.JPAStorageService.PersistentDataSource"
+    p:queryTimeout="PT2S"
+    p:retryableErrors="#{ {'23000'} }" />
 </beans>

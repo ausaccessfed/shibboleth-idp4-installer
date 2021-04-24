@@ -36,7 +36,7 @@
         requireSignedRoot="true">
       </MetadataFilter>
 
-      <MetadataFilter xsi:type="EntityRoleWhiteList">
+      <MetadataFilter xsi:type="EntityRole">
         <RetainedRole>md:SPSSODescriptor</RetainedRole>
       </MetadataFilter>
     </MetadataProvider>
@@ -57,7 +57,7 @@
         requireSignedRoot="true">
       </MetadataFilter>
 
-      <MetadataFilter xsi:type="EntityRoleWhiteList">
+      <MetadataFilter xsi:type="EntityRole">
         <RetainedRole>md:SPSSODescriptor</RetainedRole>
       </MetadataFilter>
     </MetadataProvider>
