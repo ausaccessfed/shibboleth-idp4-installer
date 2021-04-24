@@ -266,10 +266,10 @@ function set_ansible_host_vars {
   replace_property 'source_persistent_id:' "\"$PERSISTENT_ATTRIBUTE_ID\"" \
     $ANSIBLE_HOST_VARS
   if [ $DO_APT == "true" ]; then
-      replace_property 'patch_with: apt'
+      replace_property 'patch_with:' 'apt' $ANSIBLE_HOST_VARS
   fi
   if [ $DO_YUM == "true" ]; then
-      replace_property 'patch_with: yum'
+      replace_property 'patch_with:' 'yum' $ANSIBLE_HOST_VARS
       
   fi
 }
