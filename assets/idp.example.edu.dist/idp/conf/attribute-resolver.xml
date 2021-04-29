@@ -262,13 +262,13 @@
     <DataConnector id="StoredIDConnector" xsi:type="StoredId" 
         generatedAttributeID="StoredID"
         salt="%{idp.persistentId.salt}" >
-        <InputAttributeDefinition ref="%{idp.oldPersistentId.sourceAttribute}" />
+        <InputAttributeDefinition ref="%{idp.persistentId.sourceAttribute}" />
         <BeanManagedConnection>shibboleth.JPAStorageService.PersistentDataSource</BeanManagedConnection>
     </DataConnector>
 
     <DataConnector xsi:type="aaf:SharedToken" id="sharedToken"
         salt="%{idp.aepst.salt}" >
-        <InputAttributeDefinition ref="%{idp.oldPersistentId.sourceAttribute}" />
+        <InputAttributeDefinition ref="%{idp.persistentId.sourceAttribute}" />
         <aaf:BeanManagedConnection>shibboleth.JPAStorageService.DataSource</aaf:BeanManagedConnection>
     </DataConnector>
 
@@ -279,7 +279,7 @@
             algorithm="%{idp.persistentId.algorithm:SHA}"
         encoding="BASE32">
 
-        <InputDataConnector ref="ldap" attributeNames="%{idp.persistentId.sourceAttribute}" />
+        <InputDataConnector ref="ldap" attributeNames="%{idp.newPersistentId.sourceAttribute}" />
     </DataConnector>
 {% endif %}
 
