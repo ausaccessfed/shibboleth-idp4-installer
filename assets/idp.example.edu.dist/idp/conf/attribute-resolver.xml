@@ -280,8 +280,8 @@
         encoding="BASE32">
 
         <InputDataConnector ref="ldap" attributeNames="%{idp.persistentId.sourceAttribute}" />
+    </DataConnector>
 {% endif %}
 
-    </DataConnector>
 
 </AttributeResolver>
