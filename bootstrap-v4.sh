@@ -394,7 +394,7 @@ EOF
 }
 
 function prevent_duplicate_execution {
-  touch "/root/.lock-idp-bootstrap"
+  touch "/root/.lock-idp-bootstrap-v4"
 }
 
 function duplicate_execution_warning {
