@@ -30,7 +30,7 @@
   when: patch_with=="yum"
 
 - name: 'Install required packages - apt'
-  yum:
+  apt:
     name:
       - openjdk-11-jdk
       - mariadb-server
