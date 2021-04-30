@@ -54,6 +54,11 @@
   args:
     creates: '{{ shib_idp.home }}'
 
+- name: 'Enable the Consent module'
+  command: '{{ shib_idp.home }}/bin/module.sh -e idp.intercept.Consent'
+  args:
+    creates: '{{ shib_idp.home }}/views/intercept
+
 - include: libs.yml
 
 - name: 'Set customised messages.properties'
