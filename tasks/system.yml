@@ -1,12 +1,22 @@
 ---
 - name: 'Update yum packages (yum -y update)'
   yum: name=* state=latest
-  when: ((server_patch is undefined) or (server_patch is none) or (server_patch=="true"))
+  when: (((server_patch is undefined) or (server_patch is none) or (server_patch=="true")) and (patch_with=="yum"))
+
+- name: 'Update apt packages (apt -y upgrade)'
+  apt: name=* state=latest
+  when: (((server_patch is undefined) or (server_patch is none) or (server_patch=="true")) and (patch_with=="apt"))
+
+- name: 'Check SELinux installed'
+  stat:
+    path: /etc/selinux/config
+  register: selinux_available
 
 - name: 'Set SELinux to permissive mode'
   selinux:
     policy: targeted
     state: permissive
+  when: selinux_available.stat.exists == true
 
 - name: 'Install required packages'
   yum:
@@ -17,13 +27,23 @@
       - mariadb-server
       - chrony
     state: installed
+  when: patch_with=="yum"
+
+- name: 'Install required packages - apt'
+  apt:
+    name:
+      - openjdk-11-jdk
+      - mariadb-server
+      - chrony
+    state: present
+  when: patch_with=="apt"
 
 - name: 'Install required packages - OS Version 7'
   yum:
     name:
       - MySQL-python
     state: installed
-  when: ansible_distribution_major_version == "7"
+  when: ((ansible_distribution_major_version == "7") and (patch_with=="yum"))
 
 - name: 'Install required packages - OS Version 8'
   yum:
@@ -31,7 +51,14 @@
       - python3-pyOpenSSL
       - python3-PyMySQL
     state: installed
-  when: ansible_distribution_major_version == "8"
+  when: ((ansible_distribution_major_version == "8") and (patch_with=="yum"))
+
+- name: 'Install required packages - apt'
+  apt:
+    name:
+      - python3-pymysql
+    state: present
+  when: patch_with=="apt"
 
 - name: 'Enable chrony service'
   service: name=chronyd state=started enabled=yes

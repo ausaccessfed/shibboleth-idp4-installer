@@ -52,7 +52,7 @@
 
 - name: 'Create application database'
   mysql_db:
-    login_unix_socket: /var/lib/mysql/mysql.sock
+#    login_unix_socket: /var/lib/mysql/mysql.sock
     name: '{{ db.name }}'
     collation: utf8mb4_unicode_ci
     encoding: utf8mb4

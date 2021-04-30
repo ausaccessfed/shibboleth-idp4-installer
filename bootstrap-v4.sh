@@ -4,6 +4,12 @@ set -e
 #
 # ------------------------ END BOOTRAP CONFIGURATION ---------------------------
 
+function setup_valid_oss {
+    APT_LIST="ubuntu"
+    YUM_LIST="rhel centos"
+    OS_LIST="$APT_LIST $YUM_LIST"
+}
+
 function set_internal_variables {
     LOCAL_REPO=$INSTALL_BASE/shibboleth-idp4-installer/repository
     SHIBBOLETH_IDP_INSTANCE=$INSTALL_BASE/shibboleth/shibboleth-idp/current
@@ -28,7 +34,7 @@ function set_internal_variables {
 
 function ensure_mandatory_variables_set {
   for var in HOST_NAME ENVIRONMENT ORGANISATION_NAME ORGANISATION_BASE_DOMAIN \
-    HOME_ORG_TYPE SOURCE_ATTRIBUTE_ID INSTALL_BASE YUM_UPDATE FIREWALL \
+    HOME_ORG_TYPE SOURCE_ATTRIBUTE_ID INSTALL_BASE OS_UPDATE FIREWALL \
     ENABLE_BACKCHANNEL ENABLE_EDUGAIN; do
     if [ ! -n "${!var:-}" ]; then
       echo "Variable '$var' is not set! Set this in `basename $0`"
@@ -36,9 +42,9 @@ function ensure_mandatory_variables_set {
     fi
   done
 
-  if [ $YUM_UPDATE != "true" ] && [ $YUM_UPDATE != "false" ]
+  if [ $OS_UPDATE != "true" ] && [ $OS_UPDATE != "false" ]
   then
-     echo "Variable YUM_UPDATE must be either true or false"
+     echo "Variable OS_UPDATE must be either true or false"
      exit 1
   fi
 
@@ -80,8 +86,59 @@ function ensure_install_base_exists {
   fi
 }
 
+
+function install_apt_dependencies {
+  if [ $OS_UPDATE == "true" ]
+  then
+    apt-get upgrade
+  else
+    count_updates=`apt-get upgrade --dry-run | grep "The following packages will be upgraded:" | wc -l`
+
+    echo "WARNING: Automatic server software updates performed by this"
+    echo "         installer have been disabled!"
+    echo ""
+    if (( $count_updates == 0 ))
+    then
+        echo "There are no patches or updates that are currently outstanding" \
+             "for this server,"
+        echo "however we recommend that you patch your server software" \
+             "regularly!"
+    else
+        echo "There are currently a number of patches or update that are" \
+             "outstanding on this server"
+        echo "Use 'apt-get upgrade' to update to following software!"
+        echo ""
+
+        apt-get upgrade --dry-run
+
+        echo ""
+        echo "We recommend that you patch your server software regularly!"
+    fi
+  fi
+  echo "Install git"
+  apt-get -qq -y install git
+
+  echo ""
+  echo "Install ansible"
+  apt-get -qq -y install ansible
+
+  if [ $FIREWALL == "firewalld" ]
+  then
+    echo ""
+    echo "Install firewalld"
+     apt-get -qq -y install firewalld
+  fi
+
+  if [ $FIREWALL == "iptables" ]
+  then
+    echo ""
+    echo "Install iptables"
+     apt-get -qq -y install iptables-services system-config-firewall-base
+  fi
+}
+
 function install_yum_dependencies {
-  if [ $YUM_UPDATE == "true" ]
+  if [ $OS_UPDATE == "true" ]
   then
     yum -y update
   else
@@ -164,7 +221,7 @@ function replace_property {
   local value=$2
   local file=$3
   if [ ! -z "$value" ]; then
-    sed -i "s/.*$property1.*/$property2 $value/g" $file
+    sed -i "s/^$property1.*/$property2 $value/g" $file
   fi
 }
 
@@ -174,7 +231,7 @@ function replace_property_nosp {
   local value=$2
   local file=$3
   if [ ! -z "$value" ]; then
-    sed -i "s/.*$property.*/$property$value/g" $file
+    sed -i "s/^$property.*/$property$value/g" $file
   fi
 }
 
@@ -195,7 +252,7 @@ function set_ansible_host_vars {
     $ANSIBLE_HOST_VARS
   replace_property 'home_organisation_type:' "\"$HOME_ORG_TYPE\"" \
     $ANSIBLE_HOST_VARS
-  replace_property 'server_patch:' "\"$YUM_UPDATE\"" \
+  replace_property 'server_patch:' "\"$OS_UPDATE\"" \
     $ANSIBLE_HOST_VARS
   replace_property 'firewall:' "\"$FIREWALL\"" \
     $ANSIBLE_HOST_VARS
@@ -203,6 +260,17 @@ function set_ansible_host_vars {
     $ANSIBLE_HOST_VARS
   replace_property 'enable_edugain:' "\"$ENABLE_EDUGAIN\"" \
     $ANSIBLE_HOST_VARS
+  replace_property 'old_source_persistent_id:' "\"$SOURCE_ATTRIBUTE_ID\"" \
+    $ANSIBLE_HOST_VARS
+  replace_property 'source_persistent_id:' "\"$PERSISTENT_ATTRIBUTE_ID\"" \
+    $ANSIBLE_HOST_VARS
+  if [ $DO_APT == "true" ]; then
+      replace_property 'patch_with:' 'apt' $ANSIBLE_HOST_VARS
+  fi
+  if [ $DO_YUM == "true" ]; then
+      replace_property 'patch_with:' 'yum' $ANSIBLE_HOST_VARS
+      
+  fi
 }
 
 function set_ansible_cfg_log_path {
@@ -217,16 +285,6 @@ function set_update_idp_script_cd_path {
     $DEPLOY_IDP_SCRIPT
   replace_property_nosp 'the_install_base=' "${INSTALL_BASE////\\/}" \
     $UPGRADE_IDP_SCRIPT
-}
-
-function set_source_attribute_in_attribute_resolver {
-  local attr_resolver=$ASSETS/idp/conf/attribute-resolver.xml
-  sed -i "s/YOUR_SOURCE_ATTRIBUTE_HERE/$SOURCE_ATTRIBUTE_ID/g" $attr_resolver
-}
-
-function set_source_attribute_in_saml_nameid_properties {
-  local saml_nameid_properties=$ASSETS/idp/conf/saml-nameid.properties
-  sed -i "s/YOUR_SOURCE_ATTRIBUTE_HERE/$SOURCE_ATTRIBUTE_ID/g" $saml_nameid_properties
 }
 
 function set_ldap_properties {
@@ -246,7 +304,7 @@ function set_ldap_properties {
 function create_ansible_assets {
 echo "Host: $HOST_NAME"
   cd $LOCAL_REPO
-  sh create_assets.sh $HOST_NAME $ENVIRONMENT
+  bash create_assets.sh $HOST_NAME $ENVIRONMENT
 }
 
 function create_self_signed_certs {
@@ -335,7 +393,7 @@ EOF
 }
 
 function prevent_duplicate_execution {
-  touch "/root/.lock-idp-bootstrap"
+  touch "/root/.lock-idp-bootstrap-v4"
 }
 
 function duplicate_execution_warning {
@@ -384,6 +442,31 @@ function run_as_root {
     fi
 }
 
+function run_on_os {
+    if [ -f "/etc/os-release" ]; then
+        . /etc/os-release
+
+        if [[ $OS_LIST =~ (^|[[:space:]])"$ID"($|[[:space:]]) ]]; then
+           echo "Preparing to install Shibboleth IdP on $ID OS"
+           echo ""
+           DO_APT="false"
+           DO_YUM="false"
+           if [[ $YUM_LIST =~ (^|[[:space:]])"$ID"($|[[:space:]]) ]]; then
+               DO_YUM="true"
+           fi
+           if [[ $APT_LIST =~ (^|[[:space:]])"$ID"($|[[:space:]]) ]]; then
+               DO_APT="true"
+           fi
+        else
+           echo "$ID is not currently supported by the Installer!"
+           exit 1 
+        fi
+    else
+       echo "File /etc/os-release does not exist, can not determine Operating System ID!"
+       exit 1
+    fi
+}
+
 function get_cfg_section {
 
     if [[ $(declare -F cfg.section.$1) ]]; then
@@ -395,7 +478,9 @@ function get_cfg_section {
 }
 
 function bootstrap {
+  setup_valid_oss
   run_as_root
+  run_on_os
   read_bootstrap_ini 'bootstrap-v4.ini'
   get_cfg_section main
   get_cfg_section ldap
@@ -404,18 +489,20 @@ function bootstrap {
   ensure_mandatory_variables_set
   ensure_install_base_exists
   duplicate_execution_warning
-  install_yum_dependencies
+  if [ $DO_APT == "true" ]; then
+      install_apt_dependencies
+  fi
+  if [ $DO_YUM == "true" ]; then
+      install_yum_dependencies
+  fi
   setup_repo
   set_ansible_hosts
   create_ansible_assets
   set_ansible_host_vars
   set_update_idp_script_cd_path
   set_ansible_cfg_log_path
-  set_source_attribute_in_attribute_resolver
-  set_source_attribute_in_saml_nameid_properties
 
-  if [ ${LDAP_URL} ];
-  then
+  if [ ${LDAP_URL} ]; then
     set_ldap_properties
   fi
 

@@ -38,7 +38,9 @@
     </AttributeDefinition>
 
     <!-- displayName -->
-    <!-- Provided via exportAttributes in the ldap data connector -->
+    <AttributeDefinition id="displayName" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="displayName" />
+    </AttributeDefinition>
 
     <!-- eduPersonAffiliation -->
     <AttributeDefinition xsi:type="ScriptedAttribute" id="eduPersonAffiliation">
@@ -91,7 +93,9 @@
 
     
     <!-- eduPersonEntitlement -->
-    <!-- Provided via exportAttributes in the ldap data connector -->
+    <AttributeDefinition id="eduPersonEntitlement" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="eduPersonEntitlement" />
+    </AttributeDefinition>
 
     <!-- eduPersonPrincipalName -->
     
@@ -125,7 +129,9 @@
     </AttributeDefinition>
 
     <!-- mail -->
-    <!-- Provided via exportAttributes in the ldap data connector -->
+    <AttributeDefinition id="mail" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="mail" />
+    </AttributeDefinition>
 
     <!-- givenName -->
     <AttributeDefinition id="givenName" xsi:type="Simple">
@@ -153,7 +159,9 @@
     </AttributeDefinition>
 
     <!-- eduPersonOrcid -->
-    <!-- Provided via exportAttributes in the ldap data connector -->
+    <AttributeDefinition id="eduPersonOrcid" xsi:type="Simple">
+       <InputDataConnector ref="ldap" attributeNames="eduPersonOrcid" />
+    </AttributeDefinition>
 
     <!-- ========================================== -->
     <!--     AAF improtant Optional ATTRIBUTES       -->
@@ -192,6 +200,20 @@
         </Script>
     </AttributeDefinition>
 
+{% if source_persistent_id != "" %}
+    <!-- ========================================== -->
+    <!-- SAML Subject ID Attributes                 -->
+    <!-- ========================================== -->
+
+    <AttributeDefinition xsi:type="Scoped" id="samlSubjectID" scope="%{idp.scope}">
+        <InputDataConnector ref="ldap" attributeNames="%{idp.persistentId.sourceAttribute}"/>
+    </AttributeDefinition>
+
+    <AttributeDefinition xsi:type="Scoped" id="samlPairwiseID" scope="%{idp.scope}">
+        <InputDataConnector ref="computed" attributeNames="computedId"/>
+    </AttributeDefinition>
+{% endif %}
+
     
     <!-- ========================================== -->
     <!--      Data Connectors                       -->
@@ -220,8 +242,7 @@
         principalCredential="%{idp.attribute.resolver.LDAP.bindDNCredential}"
         useStartTLS="%{idp.attribute.resolver.LDAP.useStartTLS:true}"
         connectTimeout="%{idp.attribute.resolver.LDAP.connectTimeout}"
-        responseTimeout="%{idp.attribute.resolver.LDAP.responseTimeout}"
-        exportAttributes="displayName eduPersonEntitlement mail eduPersonOrcid">
+        responseTimeout="%{idp.attribute.resolver.LDAP.responseTimeout}">
         <FilterTemplate>
             <![CDATA[
                 %{idp.attribute.resolver.LDAP.searchFilter}
@@ -241,14 +262,26 @@
     <DataConnector id="StoredIDConnector" xsi:type="StoredId" 
         generatedAttributeID="StoredID"
         salt="%{idp.persistentId.salt}" >
-        <InputAttributeDefinition ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
-        <BeanManagedConnection>shibboleth.JPAStorageService.DataSource</BeanManagedConnection>
+        <InputAttributeDefinition ref="%{idp.persistentId.sourceAttribute}" />
+        <BeanManagedConnection>shibboleth.JPAStorageService.PersistentDataSource</BeanManagedConnection>
     </DataConnector>
 
     <DataConnector xsi:type="aaf:SharedToken" id="sharedToken"
         salt="%{idp.aepst.salt}" >
-        <InputAttributeDefinition ref="YOUR_SOURCE_ATTRIBUTE_HERE" />
+        <InputAttributeDefinition ref="%{idp.persistentId.sourceAttribute}" />
         <aaf:BeanManagedConnection>shibboleth.JPAStorageService.DataSource</aaf:BeanManagedConnection>
     </DataConnector>
+
+{% if source_persistent_id != "" %}
+    <DataConnector id="computed" xsi:type="ComputedId"
+            generatedAttributeID="computedId"
+            salt="%{idp.persistentId.salt}"
+            algorithm="%{idp.persistentId.algorithm:SHA}"
+        encoding="BASE32">
+
+        <InputDataConnector ref="ldap" attributeNames="%{idp.newPersistentId.sourceAttribute}" />
+    </DataConnector>
+{% endif %}
+
 
 </AttributeResolver>

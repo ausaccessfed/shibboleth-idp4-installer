@@ -10,5 +10,5 @@ export ANT_OPTS=" \
       -Didp.scope={{ idp_attribute_scope }} \
       -Didp.keystore.password={{ shib_idp.keystore_password }} \
       -Didp.sealer.password={{ shib_idp.cookie_enc_key_password }} "
-export JAVA_HOME="/usr/lib/jvm/java"
+export JAVA_HOME="/usr"
 sh {{ shib_idp.src }}/bin/install.sh
