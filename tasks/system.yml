@@ -36,6 +36,7 @@
       - mariadb-server
       - chrony
     state: present
+    update_cache: yes
   when: patch_with=="apt"
 
 - name: 'Install required packages - OS Version 7'
@@ -58,6 +59,7 @@
     name:
       - python3-pymysql
     state: present
+    update_cache: yes
   when: patch_with=="apt"
 
 - name: 'Enable chrony service'
