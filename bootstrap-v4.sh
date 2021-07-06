@@ -4,9 +4,19 @@ set -e
 #
 # ------------------------ END BOOTRAP CONFIGURATION ---------------------------
 
+# Supported Operating Systems
+#
+# Fedora like
+#   rhel    - REDHat Linux 7 and 8
+#   centos  - CentOS 7, 8 and Stream
+#   ol      - ORACLE Linux 7 and 8
+#
+# Debian like
+#   ubuntu - Ubuntu 20.04 (Focal Fossa)
+#  
 function setup_valid_oss {
     APT_LIST="ubuntu"
-    YUM_LIST="rhel centos"
+    YUM_LIST="rhel centos ol"
     OS_LIST="$APT_LIST $YUM_LIST"
 }
 
