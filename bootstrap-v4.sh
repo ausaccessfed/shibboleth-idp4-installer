@@ -299,6 +299,9 @@ function set_ldap_properties {
     "$LDAP_BIND_DN_PASSWORD" $SECRETS_PROPERTIES
   replace_property 'idp.authn.LDAP.userFilter *=' \
     "($LDAP_USER_FILTER_ATTRIBUTE={user})" $LDAP_PROPERTIES
+  RES_PRI='$resolutionContext.principal'
+  replace_property 'idp.attribute.resolver.LDAP.searchFilter *=' \
+    "($LDAP_USER_FILTER_ATTRIBUTE=$RES_PRI)" $LDAP_PROPERTIES
 }
 
 function create_ansible_assets {
