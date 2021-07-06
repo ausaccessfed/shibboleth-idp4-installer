@@ -277,7 +277,6 @@ function set_ansible_cfg_log_path {
 echo $ANSIBLE_CFG
   replace_property_nosp 'log_path=' "${ACTIVITY_LOG////\\/}" \
     $ANSIBLE_CFG
-echo "Done"
 }
 
 function set_update_idp_script_cd_path {
@@ -324,7 +323,6 @@ function run_ansible {
   pushd $LOCAL_REPO > /dev/null
   ansible-playbook -i ansible_hosts site_v4.yml --force-handlers --extra-var="install_base=$INSTALL_BASE"
   popd > /dev/null
-echo "Done"
 }
 
 function backup_shibboleth_credentials {
@@ -332,8 +330,15 @@ function backup_shibboleth_credentials {
     mkdir $CREDENTIAL_BACKUP_PATH
   fi
 
-  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/* $CREDENTIAL_BACKUP_PATH
-echo "Done"
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-backchannel.crt $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-backchannel.p12 $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-encryption.crt $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-encryption.key $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-signing.crt $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-signing.key $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/sealer.jks $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/sealer.kver $CREDENTIAL_BACKUP_PATH
+
 }
 
 function display_fr_idp_registration_link {
@@ -342,7 +347,6 @@ function display_fr_idp_registration_link {
   else
     echo "$FR_PROD_REG"
   fi
-echo "Done"
 }
 
 function display_completion_message {
