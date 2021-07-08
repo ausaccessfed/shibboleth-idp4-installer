@@ -46,7 +46,7 @@ function set_internal_variables {
 function ensure_mandatory_variables_set {
   for var in HOST_NAME ENVIRONMENT ORGANISATION_NAME ORGANISATION_BASE_DOMAIN \
     HOME_ORG_TYPE SOURCE_ATTRIBUTE_ID INSTALL_BASE OS_UPDATE FIREWALL \
-    ENABLE_BACKCHANNEL ENABLE_EDUGAIN; do
+    ENABLE_BACKCHANNEL ENABLE_EDUGAIN IDP_BEHIND_PROXY; do
     if [ ! -n "${!var:-}" ]; then
       echo "Variable '$var' is not set! Set this in `basename $0`"
       exit 1
@@ -80,10 +80,15 @@ function ensure_mandatory_variables_set {
      exit 1
   fi
 
-
   if [ $ENABLE_EDUGAIN != "true" ] && [ $ENABLE_EDUGAIN != "false" ]
   then
      echo "Variable ENABLE_EDUGAIN must be either true or false"
+     exit 1
+  fi
+
+  if [ $IDP_BEHIND_PROXY != "true" ] && [ $IDP_BEHIND_PROXY != "false" ]
+  then
+     echo "Variable IDP_BEHIND_PROXY must be either true or false"
      exit 1
   fi
 }
@@ -270,6 +275,8 @@ function set_ansible_host_vars {
   replace_property 'enable_backchannel:' "\"$ENABLE_BACKCHANNEL\"" \
     $ANSIBLE_HOST_VARS
   replace_property 'enable_edugain:' "\"$ENABLE_EDUGAIN\"" \
+    $ANSIBLE_HOST_VARS
+  replace_property 'idp_behind_proxy:' "\"$IDP_BEHIND_PROXY\"" \
     $ANSIBLE_HOST_VARS
   replace_property 'old_source_persistent_id:' "\"$SOURCE_ATTRIBUTE_ID\"" \
     $ANSIBLE_HOST_VARS
