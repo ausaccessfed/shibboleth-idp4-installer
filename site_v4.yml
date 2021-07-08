@@ -79,18 +79,10 @@
         url: "{{ download.mysql_connector.baseurl }}/mysql-connector-java-{{ download.mysql_connector.version }}.tar.gz"
       dta_ssl:
         url: "{{ download.dta_ssl.baseurl }}/jetty94-dta-ssl-{{download.dta_ssl.version}}.jar"
-      commons_dbcp2:
-        url: "{{ download.commons_dbcp2.baseurl }}/commons-dbcp2-{{ download.commons_dbcp2.version }}-bin.tar.gz"
-      commons_pool2:
-        url: "{{ download.commons_pool2.baseurl }}/commons-pool2-{{ download.commons_pool2.version }}-bin.tar.gz"
       aaf_shib_ext:
         url: "{{ download.aaf_shib_ext.baseurl }}/aaf-shib-ext-{{ download.aaf_shib_ext.version }}.jar"
       keystore:
         url: "{{ download.keystore.baseurl }}/keystore"
-      cas_client_core:
-        url: "{{ download.cas_client_core.baseurl }}/cas-client-core-{{ download.cas_client_core.version }}.jar"
-      shib_cas_authenticator:
-         url: "{{ download.shib_cas_authenticator.baseurl }}/shib-cas-authenticator-{{ download.shib_cas_authenticator.version }}.jar"
       logback_access:
          url: "{{ download.logback_access.baseurl }}/logback-access-{{ download.logback_access.version }}.jar"
       logback_classic:
