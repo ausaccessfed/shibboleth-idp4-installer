@@ -84,4 +84,8 @@ source_persistent_id:
 old_source_persistent_id:
 
 # Set to true is the IdP is behind a device where ssl has been off-loaded to.
-idp_behind_proxy: false
+idp_behind_proxy: "false"
+
+# Set default encryption [GCM | CBC].
+default_encryption: "GCM"
+
