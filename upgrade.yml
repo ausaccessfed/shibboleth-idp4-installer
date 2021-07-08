@@ -1,0 +1,22 @@
+---
+- hosts: all
+  pre_tasks:
+  vars:
+    installer:
+      root: "{{ install_base }}/shibboleth-idp4-installer"
+      path: "{{ install_base }}/shibboleth-idp4-installer/build"
+      repository: "{{ install_base }}/shibboleth-idp4-installer/repository"
+  tasks:
+    - name: 'Verify Ansible meets AAF Installer version requirments.'
+      assert:
+        that: "ansible_version.full is version_compare('2.9', '>=')"
+        msg: "You must update Ansible to at least 2.9 to use this version of the AAF IdP Installer."
+
+- hosts: idp-servers
+  tasks:
+    - name: 'Add idp_behind_proxy to host_vars if it does not exist'
+      lineinfile:
+        path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
+        line: "\n# Set to true is the IdP is behind a device where ssl has been off-loaded to.\nidp_behind_proxy: \"false\""
+        insertafter: EOF
+      when: enable_shibcas is not defined
