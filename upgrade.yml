@@ -27,3 +27,9 @@
         line: "\n# Set default encryption [GCM | CBC].\ndefault_encryption: \"GCM\""
         insertafter: EOF
       when: default_encryption is not defined
+
+    - name: 'Copy example files to assets only if they do not exist'
+      copy:
+        src: '{{ installer.repository }}/assets/idp.example.edu.dist/'
+        dest: '{{ installer.repository }}/assets/{{inventory_hostname}}'
+        force: no
