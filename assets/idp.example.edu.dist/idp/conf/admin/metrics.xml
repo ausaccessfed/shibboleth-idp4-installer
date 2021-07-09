@@ -73,7 +73,7 @@
         <value>idp.entityID</value>
     </util:set>
     -->
-
+    
     <!-- If you don't specify an alternate access policy, this named policy will be enforced. -->
     <bean id="shibboleth.metrics.DefaultAccessPolicy" class="java.lang.String" c:_0="AccessByIPAddress" />
     

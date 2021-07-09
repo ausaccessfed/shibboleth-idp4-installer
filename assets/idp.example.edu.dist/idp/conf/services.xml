@@ -11,7 +11,6 @@
                                
     <!-- By default we look at resources whose names are derived from %{idp.home}. -->
 
-    <!-- This set of resources supports a native Spring relying-party.xml file. -->
     <util:list id="shibboleth.RelyingPartyResolverResources">
         <value>%{idp.home}/conf/relying-party.xml</value>
         <value>%{idp.home}/conf/credentials.xml</value>
