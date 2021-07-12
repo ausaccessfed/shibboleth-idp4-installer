@@ -49,7 +49,7 @@ then
         echo -e "\nNo changes have been made. Exiting."
         exit 1
     else 
-        ansible-playbook -i ansible_hosts update.yml --extra-var="install_base=$the_install_base"
+        ansible-playbook -i ansible_hosts upgrade.yml --extra-var="install_base=$the_install_base"
 
         echo "Changes have been applied, you must now deploy to apply these changes."
     fi

@@ -28,28 +28,20 @@
     download:
       jetty:
         baseurl: "{{ aaf_binaries.baseurl }}/jetty"
-        version: 9.4.38.v20210224
-        sha256sum: 579f6496ecf1d2a77cac8a12a0606b37e5098eca95f0c4de74235ddb898eff09
+        version: 9.4.43.v20210629
+        sha256sum: 01fae654b09932e446019aa859e7af6e05e27dbade12b54cd7bae3249fc723d9
       shib_idp:
         baseurl: "{{ aaf_binaries.baseurl }}/shibboleth"
-        version: 4.1.0
-        sha256sum: 46fe154859f9f1557acd1ae26ee9ac82ded938af52a7dec0b18adbf5bb4510e9
+        version: 4.1.2
+        sha256sum: 2d35dbccc6c6ae6f7eec4adc98eaa406c33df3ad49879839a3839dbf427afff8
       mysql_connector:
         baseurl: "{{ aaf_binaries.baseurl }}/jars/Connector-J"
-        version: 8.0.23
-        sha256sum: 6a0a6b9bbc84e40ed5571930af12328479d78472ebc9a01ee50fbee9d5a3be8c
+        version: 8.0.25
+        sha256sum: 883954c6979eeb41cde2bfce508347c5946c57f919688cd215cb2f7f91d34834
       dta_ssl:
         baseurl: "{{ aaf_binaries.baseurl }}/jars/jetty94-dta-ssl"
         version: 1.0.0
         sha256sum: 5e5de66e3517d30ff19ef66cf7a4aa5443b861d83e36a75e85845b007a03afbf
-      commons_dbcp2:
-        baseurl: "{{ aaf_binaries.baseurl }}/jars/commons_dbcp2"
-        version: 2.8.0
-        sha256sum: X-c25520cd156f8e6425bbb01edecae3795a344d517fdcc537408206cc21e96e8f
-      commons_pool2:
-        baseurl: "{{ aaf_binaries.baseurl }}/jars/commons_pool2"
-        version: 2.9.0
-        sha256sum: X-3e84d5bb006834c9087e18d8d2333f047469aa54da8cb0aac3474dfb74efafcd
       aaf_shib_ext:
         baseurl: "{{ aaf_binaries.baseurl }}/jars/aaf_shib_ext"
         version: 2.0.0
@@ -58,14 +50,6 @@
         baseurl: "{{ aaf_binaries.baseurl }}/keystore"
         version: "Unknown"
         sha256sum: ae4185b2f0bb1af00abc6a4502fbfbdc6a90aec65c7bcee08e37a1bc20de5ac1 
-      cas_client_core:
-        baseurl: "{{ aaf_binaries.baseurl }}/jars/cas_extensions"
-        version: 3.6.0
-        sha256sum: X-21c46f083530a494fb3f94c91d1c817851608409717382c9e3673c44acada522
-      shib_cas_authenticator:
-        baseurl: "{{ aaf_binaries.baseurl }}/jars/cas_extensions"
-        version: 3.3.0
-        sha256sum: X-435aebc3e301341e31c22e73ee5dee42c36bb1ea88483b5db182b13170a79ff2
       logback_access:
         baseurl: "{{ aaf_binaries.baseurl }}/jars/logback"
         version: 1.2.3
@@ -95,18 +79,10 @@
         url: "{{ download.mysql_connector.baseurl }}/mysql-connector-java-{{ download.mysql_connector.version }}.tar.gz"
       dta_ssl:
         url: "{{ download.dta_ssl.baseurl }}/jetty94-dta-ssl-{{download.dta_ssl.version}}.jar"
-      commons_dbcp2:
-        url: "{{ download.commons_dbcp2.baseurl }}/commons-dbcp2-{{ download.commons_dbcp2.version }}-bin.tar.gz"
-      commons_pool2:
-        url: "{{ download.commons_pool2.baseurl }}/commons-pool2-{{ download.commons_pool2.version }}-bin.tar.gz"
       aaf_shib_ext:
         url: "{{ download.aaf_shib_ext.baseurl }}/aaf-shib-ext-{{ download.aaf_shib_ext.version }}.jar"
       keystore:
         url: "{{ download.keystore.baseurl }}/keystore"
-      cas_client_core:
-        url: "{{ download.cas_client_core.baseurl }}/cas-client-core-{{ download.cas_client_core.version }}.jar"
-      shib_cas_authenticator:
-         url: "{{ download.shib_cas_authenticator.baseurl }}/shib-cas-authenticator-{{ download.shib_cas_authenticator.version }}.jar"
       logback_access:
          url: "{{ download.logback_access.baseurl }}/logback-access-{{ download.logback_access.version }}.jar"
       logback_classic:
