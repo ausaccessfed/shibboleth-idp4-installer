@@ -24,6 +24,7 @@
   shell: >
     umask 0027;
     tar zx -C {{ jetty.root }} -f {{ jetty_dist_archive_path }} --no-same-permissions;
+    chown -R root {{ jetty.home }};
     chgrp -R jetty {{ jetty.home }}
     creates={{ jetty.home }}
 

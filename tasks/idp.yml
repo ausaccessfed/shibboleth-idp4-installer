@@ -58,12 +58,16 @@
     mode: 0700
 
 - name: 'Run IdP install'
-  command: '{{ shib_idp.src_root }}/install-{{ download.shib_idp.version }}.sh'
+  shell: |
+    umask 0022
+    {{ shib_idp.src_root }}/install-{{ download.shib_idp.version }}.sh
   args:
     creates: '{{ shib_idp.home }}'
 
 - name: 'Enable the Consent module'
-  command: '{{ shib_idp.home }}/bin/module.sh -e idp.intercept.Consent'
+  shell: |
+    umask 0022
+    {{ shib_idp.home }}/bin/module.sh -e idp.intercept.Consent
   args:
     creates: '{{ shib_idp.home }}/views/intercept'
 
@@ -145,7 +149,9 @@
     - user-prefs.vm
 
 - name: 'Re-run IdP install.sh to install aaf-shib-ext and IdP branding'
-  shell: '{{ shib_idp.src_root }}/install-{{ download.shib_idp.version}}.sh'
+  shell: |
+    umask 0022
+    {{ shib_idp.src_root }}/install-{{ download.shib_idp.version}}.sh
 
 - name: 'Symlink IdP log directory'
   file:
