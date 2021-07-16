@@ -25,13 +25,11 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        #*
         #if ($promptForSP)
             <meta http-equiv="refresh" content="10;url=$flowExecutionUrl&_eventId=propagate">
         #elseif ($promptForIdP)
             <meta http-equiv="refresh" content="10;url=$flowExecutionUrl&_eventId=local">
         #end
-        *#
         <title>#springMessageText("idp.title", "Web Login Service")</title>
         <link rel="stylesheet" type="text/css" href="$request.getContextPath()/css/main.css">
     </head>

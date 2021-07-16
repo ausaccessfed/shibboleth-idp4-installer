@@ -34,10 +34,12 @@
     #set ($eventKey = $springMacroRequestContext.getMessage("$eventId", "error"))
     #set ($titleSuffix = $springMacroRequestContext.getMessage("${eventKey}.title", "$defaultTitleSuffix"))
     #set ($message = $springMacroRequestContext.getMessage("${eventKey}.message", "$defaultTitleSuffix: $eventId"))
+    $response.setStatus(500)
 #else
 	## This is a catch-all that theoretically shouldn't happen?
     #set ($titleSuffix = $defaultTitleSuffix)
     #set ($message = $springMacroRequestContext.getMessage("idp.message", "An unidentified error occurred."))
+    $response.setStatus(500)
 #end
 ##
 <!DOCTYPE html>

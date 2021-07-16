@@ -164,6 +164,8 @@ write_bootstrap_ini ()
     echo "FIREWALL=$firewall" >> $bootstrap_file
     echo "ENABLE_EDUGAIN=$enable_edugain" >> $bootstrap_file
     echo "ENABLE_BACKCHANNEL=$enable_backchannel" >> $bootstrap_file
+    echo "IDP_BEHIND_PROXY=false" >> $bootstrap_file
+    echo "DEFAULT_ENCRYPTION=GCM" >> $bootstrap_file
 }
 
 copy_bilateral ()

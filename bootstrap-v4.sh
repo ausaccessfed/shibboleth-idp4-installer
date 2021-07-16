@@ -4,9 +4,19 @@ set -e
 #
 # ------------------------ END BOOTRAP CONFIGURATION ---------------------------
 
+# Supported Operating Systems
+#
+# Fedora like
+#   rhel    - REDHat Linux 7 and 8
+#   centos  - CentOS 7, 8 and Stream
+#   ol      - ORACLE Linux 7 and 8
+#
+# Debian like
+#   ubuntu - Ubuntu 20.04 (Focal Fossa)
+#  
 function setup_valid_oss {
     APT_LIST="ubuntu"
-    YUM_LIST="rhel centos"
+    YUM_LIST="rhel centos ol"
     OS_LIST="$APT_LIST $YUM_LIST"
 }
 
@@ -35,7 +45,7 @@ function set_internal_variables {
 function ensure_mandatory_variables_set {
   for var in HOST_NAME ENVIRONMENT ORGANISATION_NAME ORGANISATION_BASE_DOMAIN \
     HOME_ORG_TYPE SOURCE_ATTRIBUTE_ID INSTALL_BASE OS_UPDATE FIREWALL \
-    ENABLE_BACKCHANNEL ENABLE_EDUGAIN; do
+    ENABLE_BACKCHANNEL ENABLE_EDUGAIN IDP_BEHIND_PROXY DEFAULT_ENCRYPTION; do
     if [ ! -n "${!var:-}" ]; then
       echo "Variable '$var' is not set! Set this in `basename $0`"
       exit 1
@@ -69,10 +79,21 @@ function ensure_mandatory_variables_set {
      exit 1
   fi
 
-
   if [ $ENABLE_EDUGAIN != "true" ] && [ $ENABLE_EDUGAIN != "false" ]
   then
      echo "Variable ENABLE_EDUGAIN must be either true or false"
+     exit 1
+  fi
+
+  if [ $IDP_BEHIND_PROXY != "true" ] && [ $IDP_BEHIND_PROXY != "false" ]
+  then
+     echo "Variable IDP_BEHIND_PROXY must be either true or false"
+     exit 1
+  fi
+
+  if [ $DEFAULT_ENCRYPTION != "GCM" ] && [ $DEFAULT_ENCRYPTION != "CBC" ]
+  then
+     echo "Variable DEFAULT_ENCRYPTION must be either GCM or CBC"
      exit 1
   fi
 }
@@ -260,6 +281,10 @@ function set_ansible_host_vars {
     $ANSIBLE_HOST_VARS
   replace_property 'enable_edugain:' "\"$ENABLE_EDUGAIN\"" \
     $ANSIBLE_HOST_VARS
+  replace_property 'idp_behind_proxy:' "\"$IDP_BEHIND_PROXY\"" \
+    $ANSIBLE_HOST_VARS
+  replace_property 'default_encryption:' "\"$DEFAULT_ENCRYPTION\"" \
+    $ANSIBLE_HOST_VARS
   replace_property 'old_source_persistent_id:' "\"$SOURCE_ATTRIBUTE_ID\"" \
     $ANSIBLE_HOST_VARS
   replace_property 'source_persistent_id:' "\"$PERSISTENT_ATTRIBUTE_ID\"" \
@@ -277,7 +302,6 @@ function set_ansible_cfg_log_path {
 echo $ANSIBLE_CFG
   replace_property_nosp 'log_path=' "${ACTIVITY_LOG////\\/}" \
     $ANSIBLE_CFG
-echo "Done"
 }
 
 function set_update_idp_script_cd_path {
@@ -299,6 +323,9 @@ function set_ldap_properties {
     "$LDAP_BIND_DN_PASSWORD" $SECRETS_PROPERTIES
   replace_property 'idp.authn.LDAP.userFilter *=' \
     "($LDAP_USER_FILTER_ATTRIBUTE={user})" $LDAP_PROPERTIES
+  RES_PRI='$resolutionContext.principal'
+  replace_property 'idp.attribute.resolver.LDAP.searchFilter *=' \
+    "($LDAP_USER_FILTER_ATTRIBUTE=$RES_PRI)" $LDAP_PROPERTIES
 }
 
 function create_ansible_assets {
@@ -324,7 +351,6 @@ function run_ansible {
   pushd $LOCAL_REPO > /dev/null
   ansible-playbook -i ansible_hosts site_v4.yml --force-handlers --extra-var="install_base=$INSTALL_BASE"
   popd > /dev/null
-echo "Done"
 }
 
 function backup_shibboleth_credentials {
@@ -332,8 +358,15 @@ function backup_shibboleth_credentials {
     mkdir $CREDENTIAL_BACKUP_PATH
   fi
 
-  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/* $CREDENTIAL_BACKUP_PATH
-echo "Done"
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-backchannel.crt $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-backchannel.p12 $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-encryption.crt $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-encryption.key $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-signing.crt $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/idp-signing.key $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/sealer.jks $CREDENTIAL_BACKUP_PATH
+  cp -R $SHIBBOLETH_IDP_INSTANCE/credentials/sealer.kver $CREDENTIAL_BACKUP_PATH
+  
 }
 
 function display_fr_idp_registration_link {
@@ -342,7 +375,6 @@ function display_fr_idp_registration_link {
   else
     echo "$FR_PROD_REG"
   fi
-echo "Done"
 }
 
 function display_completion_message {

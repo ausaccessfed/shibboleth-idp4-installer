@@ -1,0 +1,35 @@
+---
+- hosts: all
+  pre_tasks:
+  tasks:
+    - name: 'Verify Ansible meets AAF Installer version requirments.'
+      assert:
+        that: "ansible_version.full is version_compare('2.9', '>=')"
+        msg: "You must update Ansible to at least 2.9 to use this version of the AAF IdP Installer."
+
+- hosts: idp_servers
+  vars:
+    installer:
+      root: "{{ install_base }}/shibboleth-idp4-installer"
+      path: "{{ install_base }}/shibboleth-idp4-installer/build"
+      repository: "{{ install_base }}/shibboleth-idp4-installer/repository"
+  tasks:
+    - name: 'Add idp_behind_proxy to host_vars if it does not exist'
+      lineinfile:
+        path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
+        line: "\n# Set to true is the IdP is behind a device where ssl has been off-loaded to.\nidp_behind_proxy: \"false\""
+        insertafter: EOF
+      when: idp_behind_proxy is not defined
+
+    - name: 'Add default_encryption to host_vars if it does not exist'
+      lineinfile:
+        path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
+        line: "\n# Set default encryption [GCM | CBC].\ndefault_encryption: \"GCM\""
+        insertafter: EOF
+      when: default_encryption is not defined
+
+    - name: 'Copy example files to assets only if they do not exist'
+      copy:
+        src: '{{ installer.repository }}/assets/idp.example.edu.dist/'
+        dest: '{{ installer.repository }}/assets/{{inventory_hostname}}'
+        force: no

@@ -82,3 +82,9 @@ source_persistent_id:
 
 # Old Persistent ID attribute name (for auEduPersonShared Token and eduPersonTargeted ID)
 old_source_persistent_id:
+
+# Set to true is the IdP is behind a device where ssl has been off-loaded to.
+idp_behind_proxy: "false"
+
+# Set default encryption [GCM | CBC].
+default_encryption: "GCM"
