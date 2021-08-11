@@ -42,6 +42,7 @@
 - name: 'Install required packages - OS Version 7'
   yum:
     name:
+      - pyOpenSSL
       - MySQL-python
     state: installed
   when: ((ansible_distribution_major_version == "7") and (patch_with=="yum"))
