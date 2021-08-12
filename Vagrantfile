@@ -26,7 +26,7 @@ Vagrant.configure(2) do |config|
     subconfig.vm.box = "centos/7"
     subconfig.vm.hostname = "shib-installer-v4"
 
-    # config.vm.network "private_network", ip: "55.55.55.150"
+    config.vm.network "private_network", ip: "192.168.56.10"
     # config.vm.synced_folder "../openldap_server", "/openldap_server"
 
     subconfig.vm.provider "virtualbox" do |vb|
