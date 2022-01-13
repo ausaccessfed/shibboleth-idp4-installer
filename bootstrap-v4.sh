@@ -10,13 +10,14 @@ set -e
 #   rhel    - REDHat Linux 7 and 8
 #   centos  - CentOS 7, 8 and Stream
 #   ol      - ORACLE Linux 7 and 8
+#   rocky   - Rocky Linux 8
 #
 # Debian like
 #   ubuntu - Ubuntu 20.04 (Focal Fossa)
 #  
 function setup_valid_oss {
     APT_LIST="ubuntu"
-    YUM_LIST="rhel centos ol"
+    YUM_LIST="rhel centos ol rocky"
     OS_LIST="$APT_LIST $YUM_LIST"
 }
 
