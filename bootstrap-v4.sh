@@ -36,7 +36,8 @@ function set_internal_variables {
     ACTIVITY_LOG=$INSTALL_BASE/shibboleth-idp4-installer/activity.log
 
     GIT_REPO=https://github.com/ausaccessfed/shibboleth-idp4-installer.git
-    GIT_BRANCH=master
+#    GIT_BRANCH=master
+    GIT_BRANCH=feature-fticks
 
     FR_TEST_REG=https://manager.test.aaf.edu.au/federationregistry/registration/idp
     FR_PROD_REG=https://manager.aaf.edu.au/federationregistry/registration/idp
@@ -297,6 +298,12 @@ function set_ansible_host_vars {
       replace_property 'patch_with:' 'yum' $ANSIBLE_HOST_VARS
       
   fi
+  if [ -n "$FTICKS_KEY_ID" ]; then
+     replace_property 'fticks_key_id:' "\"$FTICKS_FKEY_ID"\" $ANSIBLE_HOST_VARS
+  fi
+  if [ -n "$FTICKS_SECRET_KEY" ]; then
+     replace_property 'fticks_secret_key:' "\"$FTICKS_SECREY_FKEY"\" $ANSIBLE_HOST_VARS
+  fi
 }
 
 function set_ansible_cfg_log_path {
@@ -516,6 +523,7 @@ function bootstrap {
   run_on_os
   read_bootstrap_ini 'bootstrap-v4.ini'
   get_cfg_section main
+  get_cfg_section logging
   get_cfg_section ldap
   get_cfg_section advanced
   set_internal_variables 
