@@ -149,3 +149,7 @@
       service:
         name: mariadb
         state: restarted
+    - name: Restart td-agent
+      service:
+        name: td-agent
+        state: restarted
