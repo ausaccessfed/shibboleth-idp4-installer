@@ -1,0 +1,14 @@
+---
+
+- name: Add td-agent user to the jetty group so it can read logs
+  user:
+    name: td-agent
+    groups: jetty
+
+- name: Add TresureData repositoy
+  yum_repository:
+    name: TreasureData
+    description: Contains the td-agent
+    baseurl: http://packages.treasuredata.com/4/redhat/$releasever/$basearch
+    gpgcheck: yes
+    gpgkey: https://packages.treasuredata.com/GPG-KEY-td-agent
