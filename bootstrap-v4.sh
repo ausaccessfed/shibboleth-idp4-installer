@@ -299,10 +299,10 @@ function set_ansible_host_vars {
       
   fi
   if [ -n "$FTICKS_KEY_ID" ]; then
-     replace_property 'fticks_key_id:' "\"$FTICKS_FKEY_ID"\" $ANSIBLE_HOST_VARS
+     replace_property 'fticks_key_id:' "\"$FTICKS_KEY_ID"\" $ANSIBLE_HOST_VARS
   fi
   if [ -n "$FTICKS_SECRET_KEY" ]; then
-     replace_property 'fticks_secret_key:' "\"$FTICKS_SECREY_FKEY"\" $ANSIBLE_HOST_VARS
+     replace_property 'fticks_secret_key:' "\"$FTICKS_SECRET_KEY"\" $ANSIBLE_HOST_VARS
   fi
 }
 
