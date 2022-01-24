@@ -33,9 +33,9 @@
         path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
         line: "\n# Are we running in the AAF Production environment\naaf_prod_env: \"true\""
         insertafter: EOF
-      when: aaf_environment is not defined and metadata_url == "https://md.aaf.edu.au/aaf-metadata.xml"
+      when: aaf_prod_env is not defined and metadata_url == "https://md.aaf.edu.au/aaf-metadata.xml"
 
-    - name: 'Add aaf_environment value to host_vars if it does not exist - AAF Test'
+    - name: 'Add aaf_prod_env value to host_vars if it does not exist - AAF Test'
       lineinfile:
         path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
         line: "\n# Are we running in the AAF Production environment\naaf_prod_env: \"false\""
