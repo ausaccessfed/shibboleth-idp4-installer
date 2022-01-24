@@ -40,7 +40,7 @@
         path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
         line: "\n# Are we running in the AAF Production environment\naaf_prod_env: \"false\""
         insertafter: EOF
-      when: aaf_environment is not defined and metadata_url != "https://md.aaf.edu.au/aaf-metadata.xml"
+      when: aaf_prod_env is not defined and metadata_url != "https://md.aaf.edu.au/aaf-metadata.xml"
 
     - name: 'Copy example files to assets only if they do not exist'
       copy:
