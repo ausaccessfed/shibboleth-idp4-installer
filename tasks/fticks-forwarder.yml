@@ -12,3 +12,16 @@
     baseurl: http://packages.treasuredata.com/4/redhat/$releasever/$basearch
     gpgcheck: yes
     gpgkey: https://packages.treasuredata.com/GPG-KEY-td-agent
+
+- name: Install td-agent
+  yum:
+    pkg:
+      - td-agent
+    state: installed
+
+- name: Install Kinesis plugin
+  gem:
+    executable: /sbin/td-agent-gem
+    name: fluent-plugin-kinesis
+    status: latest
+    user_install: no
