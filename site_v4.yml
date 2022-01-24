@@ -120,6 +120,9 @@
       name: idp_db
       username: idp_admin
       password: "{{ lookup('password', installer.repository + '/passwords/' + inventory_hostname + '/mariadb chars=letters,digits length=64') }}"
+    fticks:
+      forwarder:
+        region: ap-southeast-2
   tasks:
     - name: 'Create required directories for installer setup'
       file:

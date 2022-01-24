@@ -1,0 +1,25 @@
+<source>
+  @type tail
+
+  tag fticks
+  <parse>
+    @type none
+  </parse>
+  path /var/log/idp/shibboleth-idp/idp-fticks.log
+  pos-file /var/log/shibboleth-idp/idp-fticks.log.pos
+</source>
+
+<match fticks>
+  @type kinesis_firehose
+
+  data_key message
+  <inject>
+    time_key time
+  </inject>
+
+  delivery_stream_name {{ delivery_stream_name }}
+  region {{ fticks.forwarder.region }}
+
+  aws_key_id {{ fticks_key_id }}
+  aws_sec_key {{ fticks_secret_key }}
+</match>
