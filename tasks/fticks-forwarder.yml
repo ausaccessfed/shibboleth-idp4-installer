@@ -1,11 +1,11 @@
 ---
 
-- name: Add td-agent user to the jetty group so it can read logs
+- name: FTicks: Add td-agent user to the jetty group so it can read logs
   user:
     name: td-agent
     groups: jetty
 
-- name: Add TresureData repositoy
+- name: FTicks: Add TresureData repositoy
   yum_repository:
     name: TreasureData
     description: Contains the td-agent
@@ -13,15 +13,15 @@
     gpgcheck: yes
     gpgkey: https://packages.treasuredata.com/GPG-KEY-td-agent
 
-- name: Install td-agent
+- name: FTicks: Install td-agent
   yum:
     pkg:
       - td-agent
     state: installed
 
-- name: Install Kinesis plugin
+- name: FTicks: Install Kinesis plugin
   gem:
     executable: /sbin/td-agent-gem
     name: fluent-plugin-kinesis
-    status: latest
+    state: latest
     user_install: no

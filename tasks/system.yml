@@ -26,6 +26,7 @@
       - mariadb
       - mariadb-server
       - chrony
+      - ruby
     state: installed
   when: patch_with=="yum"
 
@@ -35,6 +36,7 @@
       - openjdk-11-jdk
       - mariadb-server
       - chrony
+      - ruby
     state: present
     update_cache: yes
   when: patch_with=="apt"
