@@ -28,28 +28,22 @@
         insertafter: EOF
       when: default_encryption is not defined
 
+    - name: 'Add aaf_environment value to host_vars if it does not exist - AAF Prod'
+      lineinfile:
+        path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
+        line: "\n# Are we running in the AAF Production environment\naaf_prod_env: \"true\""
+        insertafter: EOF
+      when: aaf_environment is not defined and metadata_url == "https://md.aaf.edu.au/aaf-metadata.xml"
+
+    - name: 'Add aaf_environment value to host_vars if it does not exist - AAF Test'
+      lineinfile:
+        path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
+        line: "\n# Are we running in the AAF Production environment\naaf_prod_env: \"false\""
+        insertafter: EOF
+      when: aaf_environment is not defined and metadata_url != "https://md.aaf.edu.au/aaf-metadata.xml"
+
     - name: 'Copy example files to assets only if they do not exist'
       copy:
         src: '{{ installer.repository }}/assets/idp.example.edu.dist/'
         dest: '{{ installer.repository }}/assets/{{inventory_hostname}}'
         force: no
-
-    - name: 'Determine the AAF environment the IdP is running in'
-      set_fact:
-        is_prod: true
-      when: ( {metadata_url} == "https://md.aaf.edu.au/aaf-metadata.xml" )
-
-    - name: 'Add aaf_environment to host_vars if it does not exist'
-      lineinfile:
-        path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
-        line: "\n# Set the Environment we are running in the AAF Production environment."
-        insertafter: EOF
-      when: aaf_environment is not defined
-
-    - name: 'Add aaf_environment value to host_vars if it does not exist - AAF Prod'
-      lineinfile:
-        path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
-        line: "\naaf_prod_env: \"true\""
-        insertafter: EOF
-      when: (aaf_environment is not defined && is_prod)
-
