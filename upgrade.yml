@@ -35,12 +35,26 @@
         insertafter: EOF
       when: aaf_prod_env is not defined and metadata_url == "https://md.aaf.edu.au/aaf-metadata.xml"
 
-    - name: 'Add aaf_prod_env value to host_vars if it does not exist - AAF Test'
+    - name: 'Add aaf_prod_env value to host_vars if it does not exist'
       lineinfile:
         path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
         line: "\n# Are we running in the AAF Production environment\naaf_prod_env: \"false\""
         insertafter: EOF
       when: aaf_prod_env is not defined and metadata_url != "https://md.aaf.edu.au/aaf-metadata.xml"
+
+    - name: 'Add fticks_key_id value to hosts_vars if it does not exists'
+      lineinfile:
+        path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
+        line: "\n# KEY ID provided by the AAF to enable FTicks logging\nfticks_key_id: \"\""
+        insertafter: EOF
+      when: fticks_key_id is not defined
+
+    - name: 'Add fticks_secret_key value to hosts_vars if it does not exists'
+      lineinfile:
+        path: '{{ installer.repository }}/host_vars/{{inventory_hostname}}'
+        line: "\n# SECRET KEY provided by the AAF to enable FTicks logging\nfticks_secret_key: \"\""
+        insertafter: EOF
+      when: fticks_key_id is not defined
 
     - name: 'Copy example files to assets only if they do not exist'
       copy:
