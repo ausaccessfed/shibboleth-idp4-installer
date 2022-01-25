@@ -17,7 +17,12 @@
     time_key time
   </inject>
 
-  delivery_stream_name {{ delivery_stream_name }}
+  {% if aaf_prod_env %}
+  delivery_stream_name aafFticksReceiver
+  {% else %}
+  delivery_stream_name aaf-testFticksReceiver
+  {% endif %}
+
   region {{ fticks.forwarder.region }}
 
   aws_key_id {{ fticks_key_id }}

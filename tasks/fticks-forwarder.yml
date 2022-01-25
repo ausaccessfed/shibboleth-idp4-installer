@@ -3,7 +3,7 @@
 - name: FTicks... Add td-agent user to the jetty group so it can read logs
   user:
     name: td-agent
-    groups jetty
+    groups: jetty
 
 - name: FTicks... Add TresureData repositoy
   yum_repository:
@@ -37,5 +37,5 @@
 - name: FTicks... Enable and starti the td-agent service
   service:
     name: td-agent
-    enable: yes
-    start: started
+    enabled: yes
+    state: started
