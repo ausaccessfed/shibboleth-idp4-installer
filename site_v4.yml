@@ -123,6 +123,7 @@
     fticks:
       forwarder:
         region: ap-southeast-2
+      salt: "{{ lookup('password', installer.repository + '/passwords/' + inventory_hostname + '/fticks_salt chars=letters,digits length=64') }}"
   tasks:
     - name: 'Create required directories for installer setup'
       file:
