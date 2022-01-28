@@ -90,7 +90,7 @@ idp_behind_proxy: "false"
 default_encryption: "GCM"
 
 # Set the Environment we are running in [TEST | PROD].
-aaf_environment: "PROD"
+aaf_prod_env: "true"
 
 # FTicks KEY_ID (Value provided on request to support@aaf.edu.au)
 fticks_key_id:
