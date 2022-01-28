@@ -34,8 +34,17 @@
     mode: u=rw,g=r,o=r
   notify: Restart td-agent
 
-- name: FTicks... Enable and starti the td-agent service
+- name: FTicks... Enable and start the td-agent service
   service:
     name: td-agent
     enabled: yes
     state: started
+
+- name: FTicks... Set fticks.properties file
+  templete:
+    src: 'assets/{{inventory_hostname}}/idp/conf/fticks.properties'
+    dest: {{ shib_idp.home }}/conf/fticks.properties'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: no
