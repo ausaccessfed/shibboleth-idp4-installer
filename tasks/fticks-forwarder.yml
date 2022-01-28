@@ -40,10 +40,18 @@
     enabled: yes
     state: started
 
+- name: FTicks... Create directory to hold the log position file
+  file:
+    path: /var/log/td-agent/shib-idp
+    state: directory
+    mode: '0750'
+    owner: jetty
+    group: jetty
+
 - name: FTicks... Set fticks.properties file
-  templete:
+  template:
     src: 'assets/{{inventory_hostname}}/idp/conf/fticks.properties'
-    dest: {{ shib_idp.home }}/conf/fticks.properties'
+    dest: '{{ shib_idp.home }}/conf/fticks.properties'
     owner: root
     group: jetty
     mode: 0640
