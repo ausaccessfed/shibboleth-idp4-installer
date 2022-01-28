@@ -45,8 +45,8 @@
     path: /var/log/td-agent/shib-idp
     state: directory
     mode: '0750'
-    owner: jetty
-    group: jetty
+    owner: td-agent
+    group: td-agent
 
 - name: FTicks... Set fticks.properties file
   template:
