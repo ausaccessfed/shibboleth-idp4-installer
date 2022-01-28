@@ -6,7 +6,7 @@
     @type none
   </parse>
   path /var/log/shibboleth-idp/idp-fticks.log
-  pos-file /var/log/td-agent/shib-idp/idp-fticks.log.pos
+  pos_file /var/log/td-agent/shib-idp/idp-fticks.log.pos
 </source>
 
 <match fticks>
@@ -17,7 +17,7 @@
     time_key time
   </inject>
 
-  {% if aaf_prod_env %}
+  {% if aaf_prod_env == "true" %}
   delivery_stream_name aafFticksReceiver
   {% else %}
   delivery_stream_name aaf-testFticksReceiver
