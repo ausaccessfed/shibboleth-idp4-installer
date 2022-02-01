@@ -176,6 +176,19 @@
         <suffixPattern>[%thread] %logger %msg</suffixPattern>
     </appender>
 
+    <!-- F-TICKS log file destination -->
+    <appender name="IDP_FTICKS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <File>${idp.home}/logs/idp-fticks.log</File>
+      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>${idp.home}/logs/idp-fticks-%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+        <maxHistory>180</maxHistory>
+      </rollingPolicy>
+      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <charset>UTF-8</charset>
+        <Pattern>%msg%n</Pattern>
+      </encoder>
+    </appender>
+
     <logger name="Shibboleth-Audit" level="ALL">
         <appender-ref ref="${idp.audit.appender:-IDP_AUDIT}"/>
     </logger>
@@ -192,18 +205,5 @@
         <appender-ref ref="${idp.process.appender:-IDP_PROCESS}"/>
         <appender-ref ref="${idp.warn.appender:-IDP_WARN}" />
     </root>
-
-    <!-- F-TICKS log file destination -->
-    <appender name="IDP_FTICKS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-      <File>${idp.home}/logs/idp-fticks.log</File>
-      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-        <fileNamePattern>${idp.home}/logs/idp-fticks-%d{yyyy-MM-dd}.log.gz</fileNamePattern>
-        <maxHistory>180</maxHistory>
-      </rollingPolicy>
-      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-        <charset>UTF-8</charset>
-        <Pattern>%msg%n</Pattern>
-      </encoder>
-    </appender>
 
 </configuration>
