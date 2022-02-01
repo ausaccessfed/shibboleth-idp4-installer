@@ -3,6 +3,9 @@
 # EXAMPLE: CONFIGURED FOR AAF PRODUCTION ENVIRONMENT
 # ------------------------------------------------------------------------------
 
+# Which environment are we running in
+aaf_prod_end="true"
+
 # The host name of the target machine
 idp_host_name: "idp.example.edu"
 
