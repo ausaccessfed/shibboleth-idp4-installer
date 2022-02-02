@@ -59,16 +59,25 @@
     - name: 'Check if F-TICKS config is already in logback.xml'
       lineinfile:
         path: '{{ installer.repository }}/assets/{{inventory_hostname}}/idp/conf/logback.xml'
-        regexp: '<appender name="IDP_FTICKS_FILE"'
+        regexp: 'fticks.properties'
         state: absent
       check_mode: yes
       register: fticks
 
-    - name: 'Add F-TICKS log file destination to logback.xml'
-      replace:
+    - name: 'Add loading of fticks.properties file to logback'
+      lineinfile:
         path: '{{ installer.repository }}/assets/{{inventory_hostname}}/idp/conf/logback.xml'
-        regexp: '</configuration>'
-        replace: '    <!-- F-TICKS log file destination -->\n    <appender name="IDP_FTICKS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">\n      <File>${idp.home}/logs/idp-fticks.log</File>\n      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">\n        <fileNamePattern>${idp.home}/logs/idp-fticks-%d{yyyy-MM-dd}.log.gz</fileNamePattern>\n        <maxHistory>180</maxHistory>\n      </rollingPolicy>\n      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">\n        <charset>UTF-8</charset>\n        <Pattern>%msg%n</Pattern>\n      </encoder>\n    </appender>\n\n</configuration>'
+        insertafter: "<variable file="
+        firstmatch: yes
+        line: '<variable file="${idp.home}/conf/fticks.properties" />'
+      when: not fticks.found
+
+    - name: 'Add F-TICKS log file destination to logback.xml'
+      lineinfile:
+        path: '{{ installer.repository }}/assets/{{inventory_hostname}}/idp/conf/logback.xml'
+        insertbefore: "<logger"
+        firstmatch: yes
+        line: '    <!-- F-TICKS log file destination -->\n    <appender name="IDP_FTICKS_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">\n      <File>${idp.home}/logs/idp-fticks.log</File>\n      <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">\n        <fileNamePattern>${idp.home}/logs/idp-fticks-%d{yyyy-MM-dd}.log.gz</fileNamePattern>\n        <maxHistory>180</maxHistory>\n      </rollingPolicy>\n      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">\n        <charset>UTF-8</charset>\n        <Pattern>%msg%n</Pattern>\n      </encoder>\n    </appender>\n\n</configuration>'
       when: not fticks.found
 
     - name: 'Copy example files to assets only if they do not exist'

@@ -11,6 +11,7 @@
     we load the main property file for you.
     -->
     <variable file="${idp.home}/conf/idp.properties" />
+    <variable file="${idp.home}/conf/fticks.properties" />
 
     <!-- Location and retention. -->
     
