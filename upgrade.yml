@@ -92,12 +92,12 @@
           </appender>
       when: not fticks.found
 
-    -name: 'Add fticks.salt to secrets.properties'
-     lineinfile:
-       path: '{{ installer.repository }}/assets/{{inventory_hostname}}/idp/credentials/secrets.properties'
-       insertafter: EOF
-       state: present
-       line: '# FTicks Salt\n fticks.salt = {{ '{{' }} fticks.salt {{ '}}' }}'
+    - name: 'Add fticks.salt to secrets.properties'
+      lineinfile:
+        path: '{{ installer.repository }}/assets/{{inventory_hostname}}/idp/credentials/secrets.properties'
+        insertafter: EOF
+        state: present
+        line: "fticks.salt = {{ '{{' }} fticks.salt {{ '}}' }}"
 
     - name: 'Copy example files to assets only if they do not exist'
       copy:
