@@ -64,6 +64,22 @@
       check_mode: yes
       register: fticks
 
+    - name: 'Add loading of secrets.properties file to logback'
+      lineinfile:
+        path: '{{ installer.repository }}/assets/{{inventory_hostname}}/idp/conf/logback.xml'
+        insertafter: "<variable file="
+        firstmatch: yes
+        line: '<variable file="${idp.home}/credentials/secrects.properties" />'
+      when: not fticks.found
+
+    - name: 'Add loading of secrets.properties file to logback'
+      lineinfile:
+        path: '{{ installer.repository }}/assets/{{inventory_hostname}}/idp/conf/logback.xml'
+        insertafter: "<variable file="
+        firstmatch: yes
+        line: '<variable file="${idp.home}/credentials/secrects.properties" />'
+      when: not fticks.found
+
     - name: 'Add loading of fticks.properties file to logback'
       lineinfile:
         path: '{{ installer.repository }}/assets/{{inventory_hostname}}/idp/conf/logback.xml'
