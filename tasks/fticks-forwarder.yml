@@ -12,12 +12,36 @@
     baseurl: http://packages.treasuredata.com/4/redhat/$releasever/$basearch
     gpgcheck: yes
     gpgkey: https://packages.treasuredata.com/GPG-KEY-td-agent
+  when: patch_with=="yum"
 
-- name: FTicks... Install td-agent
+- name: FTicks... Install td-agent - yum
   yum:
     pkg:
       - td-agent
     state: installed
+  when: patch_with=="yum"
+
+- name: FTicks... get the td-agent apt key
+  apt_key:
+    url: https://packages.treasuredata.com/GPG-KEY-td-agent
+    state: present
+
+- name: FTicks... Add treasure data repository to apt
+  template:
+    src: templates/fticks-forwarder/treasure-data.list
+    dest: /etc/apt/sources.list.d/treasure-data.list
+    owner: root
+    group: root
+    mode: 0644
+  when: patch_with=="apt"
+
+- name: FTicks... Install td-agent - apt
+  apt:
+    name:
+      - td-agent
+    state: present
+    update_cache: yes
+  when: patch_with=="apt"
 
 - name: FTicks... Install Kinesis plugin
   gem:
