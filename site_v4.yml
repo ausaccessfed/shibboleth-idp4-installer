@@ -147,6 +147,7 @@
         fticks_key_id | default('', true) | trim != '' and 
         fticks_secret_key | default('', true) |  trim != ''
     - include_tasks: tasks/local_conf.yml
+    - include_tasks: tasks/final.yml
 
   handlers:
     - name: Restart idp
