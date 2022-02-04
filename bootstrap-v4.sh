@@ -113,7 +113,7 @@ function ensure_install_base_exists {
 function install_apt_dependencies {
   if [ $OS_UPDATE == "true" ]
   then
-    apt-get upgrade
+    apt-get upgrade -y
   else
     count_updates=`apt-get upgrade --dry-run | grep "The following packages will be upgraded:" | wc -l`
 
