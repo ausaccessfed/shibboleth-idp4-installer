@@ -36,8 +36,7 @@ function set_internal_variables {
     ACTIVITY_LOG=$INSTALL_BASE/shibboleth-idp4-installer/activity.log
 
     GIT_REPO=https://github.com/ausaccessfed/shibboleth-idp4-installer.git
-#    GIT_BRANCH=master
-    GIT_BRANCH=feature-fticks
+    GIT_BRANCH=master
 
     FR_TEST_REG=https://manager.test.aaf.edu.au/federationregistry/registration/idp
     FR_PROD_REG=https://manager.aaf.edu.au/federationregistry/registration/idp
