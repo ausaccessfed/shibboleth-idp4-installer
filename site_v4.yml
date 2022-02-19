@@ -120,6 +120,10 @@
       name: idp_db
       username: idp_admin
       password: "{{ lookup('password', installer.repository + '/passwords/' + inventory_hostname + '/mariadb chars=letters,digits length=64') }}"
+    fticks:
+      forwarder:
+        region: ap-southeast-2
+      salt: "{{ lookup('password', installer.repository + '/passwords/' + inventory_hostname + '/fticks_salt chars=letters,digits length=64') }}"
   tasks:
     - name: 'Create required directories for installer setup'
       file:
@@ -138,7 +142,12 @@
     - include_tasks: tasks/idp.yml
     - include_tasks: tasks/firewalld.yml
       when: firewall is defined and firewall=="firewalld"
+    - include_tasks: tasks/fticks-forwarder.yml
+      when: >
+        fticks_key_id | default('', true) | trim != '' and 
+        fticks_secret_key | default('', true) |  trim != ''
     - include_tasks: tasks/local_conf.yml
+    - include_tasks: tasks/final.yml
 
   handlers:
     - name: Restart idp
@@ -148,4 +157,8 @@
     - name: Restart database
       service:
         name: mariadb
+        state: restarted
+    - name: Restart td-agent
+      service:
+        name: td-agent
         state: restarted
