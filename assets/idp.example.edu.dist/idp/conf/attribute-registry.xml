@@ -24,6 +24,6 @@
     <!-- Default directory for custom mappings. -->
     <bean parent="shibboleth.TranscodingRuleLoader"
         c:dir="%{idp.home}/conf/attributes/custom"
-        c:extensions="#{{ '{{' }}'.txt', '.props', '.properties', '.rule'{{ '}}' }}" />
+        c:extensions="#{{'.txt', '.props', '.properties', '.rule'}}" />
    
 </beans>
