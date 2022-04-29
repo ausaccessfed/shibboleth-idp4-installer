@@ -15,7 +15,7 @@ This software is actively being developed and maintained. It is ready for use in
 
 This version now enables the technical connection to eduGAIN, the global federation of federations.
 
-This release is for Shibboleth version 4.1.6 running on Jetty 9.4.46
+This release is for Shibboleth version 4.1.7 running on Jetty 9.4.46
 
 ## License
 Apache License Version 2.0, January 2004
