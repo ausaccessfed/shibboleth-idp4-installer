@@ -112,7 +112,7 @@ function ensure_install_base_exists {
 function install_apt_dependencies {
   if [ $OS_UPDATE == "true" ]
   then
-    apt-get upgrade
+    apt-get upgrade -y
   else
     count_updates=`apt-get upgrade --dry-run | grep "The following packages will be upgraded:" | wc -l`
 
@@ -296,6 +296,12 @@ function set_ansible_host_vars {
   if [ $DO_YUM == "true" ]; then
       replace_property 'patch_with:' 'yum' $ANSIBLE_HOST_VARS
       
+  fi
+  if [ -n "$FTICKS_KEY_ID" ]; then
+     replace_property 'fticks_key_id:' "\"$FTICKS_KEY_ID"\" $ANSIBLE_HOST_VARS
+  fi
+  if [ -n "$FTICKS_SECRET_KEY" ]; then
+     replace_property 'fticks_secret_key:' "\"$FTICKS_SECRET_KEY"\" $ANSIBLE_HOST_VARS
   fi
 }
 
@@ -516,6 +522,7 @@ function bootstrap {
   run_on_os
   read_bootstrap_ini 'bootstrap-v4.ini'
   get_cfg_section main
+  get_cfg_section logging
   get_cfg_section ldap
   get_cfg_section advanced
   set_internal_variables 

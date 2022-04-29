@@ -3,6 +3,9 @@
 # EXAMPLE: CONFIGURED FOR AAF PRODUCTION ENVIRONMENT
 # ------------------------------------------------------------------------------
 
+# Which environment are we running in
+aaf_prod_env: "true"
+
 # The host name of the target machine
 idp_host_name: "idp.example.edu"
 
@@ -88,4 +91,13 @@ idp_behind_proxy: "false"
 
 # Set default encryption [GCM | CBC].
 default_encryption: "GCM"
+
+# FTicks KEY_ID (Value provided on request to support@aaf.edu.au)
+fticks_key_id:
+
+# FTicks SECRET_KEY (Value provided on request to support@aaf.edu.au)
+fticks_secret_key:
+
+# FTicks delivery stream name
+delivery_stream_name: aafFticksReceiver
 
