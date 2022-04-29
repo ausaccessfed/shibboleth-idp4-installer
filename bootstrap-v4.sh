@@ -37,7 +37,7 @@ function set_internal_variables {
 
     GIT_REPO=https://github.com/ausaccessfed/shibboleth-idp4-installer.git
 #    GIT_BRANCH=master
-    GIT_BRANCH=feature-417
+    GIT_BRANCH=feature-v417
 
     FR_TEST_REG=https://manager.test.aaf.edu.au/federationregistry/registration/idp
     FR_PROD_REG=https://manager.aaf.edu.au/federationregistry/registration/idp
