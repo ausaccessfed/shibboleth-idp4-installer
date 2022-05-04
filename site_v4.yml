@@ -32,7 +32,7 @@
         sha256sum: ea018b057102181d26ce4e05d358fc7bbe07393cc6d0f80add78ec29c60d3ed9
       shib_idp:
         baseurl: "{{ aaf_binaries.baseurl }}/shibboleth"
-        version: 4.1.7
+        version: 4.2.1
         sha256sum: 115a5e9838e873193af0743965a0e59cc84fe1eea184a62136cf6cb5384a5418
       mysql_connector:
         baseurl: "{{ aaf_binaries.baseurl }}/jars/Connector-J"
