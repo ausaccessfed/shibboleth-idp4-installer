@@ -50,28 +50,28 @@
             var StringAttributeValue = Java.type("net.shibboleth.idp.attribute.StringAttributeValue");
             var newAffiliations = new HashSet();
 
-            add_member = false;
-
-            if (typeof eduPersonAffiliation != "undefined" && eduPersonAffiliation.getValues().size() >= 1) {
+            if (typeof eduPersonAffiliation != "undefined") {
                 for ( i = 0; i < eduPersonAffiliation.getValues().size(); i++){
                     value = eduPersonAffiliation.getValues().get(i).toLowerCase();
-                    if (value.equals("affiliate") ||
-                        value.equals("alum") ||
-                        value.equals("member") ||
-                        value.equals("library-walk-in")) {
-                        newAffiliations.add(new StringAttributeValue(value));
-                    }
                     if (value.equals("student") ||
                         value.equals("faculty") ||
                         value.equals("staff") ||
-                        value.equals("employee")) {
-                        newAffiliations.add(new StringAttributeValue(value));
-                        add_member = true;
+                        value.equals("employee") ||
+                        value.equals("affiliate") ||
+                        value.equals("alum") ||
+                        value.equals("member") ||
+                        value.equals("library-walk-in")) {
+                            newAffiliations.add(new StringAttributeValue(value));
                     }
                 }
             }
 
-            if (add_member) { newAffiliations.add(new StringAttributeValue("member")); }
+            if (newAffiliations.contains(new StringAttributeValue("student")) ||
+                newAffiliations.contains(new StringAttributeValue("faculty")) ||
+                newAffiliations.contains(new StringAttributeValue("staff")) ||
+                newAffiliations.contains(new StringAttributeValue("employee"))) {
+                    newAffiliations.add(new StringAttributeValue("member"));
+            }
 
             if (newAffiliations.size() < 1) {
                 newAffiliations.add(new StringAttributeValue("affiliate"));
