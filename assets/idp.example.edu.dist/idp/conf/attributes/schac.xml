@@ -14,7 +14,7 @@
 
     <!--
     Note that all built-in rules rely on URI-naming and thus include the implied settings:
-
+    
     <prop key="saml2.nameFormat">urn:oasis:names:tc:SAML:2.0:attrname-format:uri</prop>
     <prop key="saml1.namespace">urn:mace:shibboleth:1.0:attributeNamespace:uri</prop>
     -->
@@ -92,7 +92,7 @@
                     <prop key="displayName.en">Home Organization</prop>
                     <prop key="displayName.fi">Kotiorganisaatio</prop>
                     <prop key="displayDescription.en">The domain name of the person's home organisation</prop>
-                    <prop key="displayDescription.fi">Henkilöotiorganisaation domain-nimi</prop>
+                    <prop key="displayDescription.fi">Henkilön kotiorganisaation domain-nimi</prop>
                 </props>
             </property>
         </bean>
@@ -160,7 +160,7 @@
             </property>
         </bean>
 
-        <bean parent="shibboleth.TranscodingProperties">
+	<bean parent="shibboleth.TranscodingProperties">
             <property name="properties">
                 <props merge="true">
                     <prop key="id">schacPersonalUniqueID</prop>
