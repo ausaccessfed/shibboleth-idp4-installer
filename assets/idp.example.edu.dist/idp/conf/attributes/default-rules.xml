@@ -23,6 +23,7 @@
     <import resource="inetOrgPerson.xml" />
     <import resource="eduPerson.xml" />
     <import resource="eduCourse.xml" />
+    <import resource="schac.xml" />
     <import resource="samlSubject.xml" />
 
 </beans>
