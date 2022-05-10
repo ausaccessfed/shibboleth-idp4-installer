@@ -23,30 +23,32 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>#springMessageText("idp.title", "Web Login Service")</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+        #*
         #if ($promptForSP)
             <meta http-equiv="refresh" content="10;url=$flowExecutionUrl&_eventId=propagate">
         #elseif ($promptForIdP)
             <meta http-equiv="refresh" content="10;url=$flowExecutionUrl&_eventId=local">
         #end
-        <title>#springMessageText("idp.title", "Web Login Service")</title>
-        <link rel="stylesheet" type="text/css" href="$request.getContextPath()/css/main.css">
+        *#
+        <link rel="stylesheet" type="text/css" href="$request.getContextPath()#springMessageText("idp.css", "/css/placeholder.css")">
     </head>
 
-    <body>
-    <div class="wrapper">   
-      <div class="container">
-        <header>
-          <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")">
-        </header>
+   <body>
+        <main class="main">
+            <header>
+                <img class="main-logo" src="$request.getContextPath()#springMessageText("idp.logo", "/images/placeholder-logo.png")" alt="#springMessageText("idp.logo.alt-text", "logo")" />
+            </header>
 
-        <div class="content">
-          <div class="column one">
-            <p>This page is displayed when a logout operation at the Identity Provider completes. This page is an example
-            and should be customized. It is not fully internationalized because the presentation will be a highly localized
-            decision, and we don't have a good suggestion for a default.</p>
-            <br>
+            <section>
+                <div class="output-message">
+                    <p><strong>Note for deployers:</strong> This page is displayed when a logout operation at the Identity Provider completes.
+                    This page is an example and should be customized. It is not fully internationalized because the presentation will be a highly localized decision,
+                    and we don't have a good suggestion for a default.</p>
+                </div>
     
             #if ($rpContext)
               <p>#springMessageText("idp.logout.sp-initiated", "You have been logged out of the following service:")</p>
@@ -66,17 +68,13 @@
 
               <form id="propagate_form" method="POST" action="$flowExecutionUrl">
                 
-                <div class="form-element-wrapper">
-                  <button id="logout_local" class="form-element form-button" type="submit" name="_eventId" value="local">#springMessageText("idp.logout.idponly", "Logout Locally")</button>
+                  <p><button id="logout_local" type="submit" name="_eventId" value="local">#springMessageText("idp.logout.idponly", "Logout Locally")</button></p>
                   <p>#springMessageText("idp.logout.idponly.caption", "End your SSO session.")</p>
-                </div>
             #end
 
             #if ($promptForSP)
-                <div class="form-element-wrapper">
-                  <button id="logout_propagate" class="form-element form-button" type="submit" name="_eventId" value="propagate">#springMessageText("idp.logout.global", "Logout Globally")</button>
+                  <p><button id="logout_propagate" type="submit" name="_eventId" value="propagate">#springMessageText("idp.logout.global", "Logout Globally")</button></p>
                   <p>#springMessageText("idp.logout.global.caption", "End your SSO session and attempt logout of services accessed during session.")</p>
-                  <br>
                   <p>#springMessageText("idp.logout.contactServices", "If instructed, the system will attempt to contact the following services:")</p>
                   <ol>
                   #foreach ($sp in $logoutContext.getSessionMap().keySet())
@@ -91,15 +89,11 @@
                     #end
                   #end
                   </ol>
-                  <br>
-                </div>
             #end
 
             #if ($promptForIdP)
-                <div class="form-element-wrapper">
-                  <button id="logout_cancel" class="form-element form-button" type="submit" name="_eventId" value="end">#springMessageText("idp.logout.cancel", "Cancel")</button>
+                  <p><button class="button--secondary" id="logout_cancel" type="submit" name="_eventId" value="end">#springMessageText("idp.logout.cancel", "Cancel")</button></p>
                   <p>#springMessageText("idp.logout.cancel.caption", "Cancel logout and retain your SSO session.")</p>
-                </div>
             #end
             
             #if ($promptForIdP or $promptForSP)
@@ -110,22 +104,17 @@
                 <iframe style="display:none" src="$flowExecutionUrl&_eventId=proceed"></iframe>
             #end
 
-          </div>
-          <div class="column two">
-            <ul class="list list-help">
-              <li class="list-help-item"><a href="#springMessageText("idp.url.password.reset", '#')"><span class="item-marker">&rsaquo;</span> #springMessageText("idp.login.forgotPassword", "Forgot your password?")</a></li>
-              <li class="list-help-item"><a href="#springMessageText("idp.url.helpdesk", '#')"><span class="item-marker">&rsaquo;</span> #springMessageText("idp.login.needHelp", "Need Help?")</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <footer>
-        <div class="container container-footer">
-          <p class="footer-text">#springMessageText("idp.footer", "Insert your footer text here.")</p>
-        </div>
-      </footer>
-    </div>
-    
-  </body>
+                <ul>
+                    <li><a href="#springMessageText("idp.url.password.reset", '#')">#springMessageText("idp.login.forgotPassword", "Forgot your password?")</a></li>
+                    <li><a href="#springMessageText("idp.url.helpdesk", '#')">#springMessageText("idp.login.needHelp", "Need Help?")</a></li>
+                </ul>
+            </section>
+            
+        </main>
+        <footer class="footer">
+            <div class="cc">
+                <p>#springMessageText("idp.footer", "Insert your footer text here.")</p>
+            </div>
+        </footer>
+    </body>
 </html>

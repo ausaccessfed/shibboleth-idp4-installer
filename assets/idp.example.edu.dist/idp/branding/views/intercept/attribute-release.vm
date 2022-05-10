@@ -28,133 +28,134 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="$request.getContextPath()/css/consent.css">
         <title>#springMessageText("idp.attribute-release.title", "Information Release")</title>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+        <link rel="stylesheet" type="text/css" href="$request.getContextPath()#springMessageText("idp.css", "/css/placeholder.css")">
     </head>
     <body>
-        <form action="$flowExecutionUrl" method="post" style="padding:10px" >
-            #parse("csrf/csrf.vm")
-            <div class="box">
-                <header>
-                    <img src="$request.getContextPath()#springMessage("idp.logo")" alt="#springMessageText("idp.logo.alt-text", "logo")" class="federation_logo">
-                    #if ($rpOrganizationLogo)
-                        <img src="$encoder.encodeForHTMLAttribute($rpOrganizationLogo)" alt="logo for $encoder.encodeForHTMLAttribute($serviceName)" class="organization_logo">
+        <main class="main">
+            <header>
+                <img class="main-logo" src="$request.getContextPath()#springMessageText("idp.logo", "/images/placeholder-logo.png")" alt="#springMessageText("idp.logo.alt-text", "logo")" />
+            </header>
+            <section>
+            <h1>Information Release</h1>
+            #if ($rpOrganizationLogo)
+                <img class="service-logo" src="$encoder.encodeForHTMLAttribute($rpOrganizationLogo)" alt="logo for $encoder.encodeForHTMLAttribute($serviceName)" />
+            #end
+
+            #if ($serviceName)
+                <p>
+                    #springMessageText("idp.attribute-release.serviceNameLabel", "You are about to access the service:")<br>
+                    <strong>$encoder.encodeForHTML($serviceName)</strong>
+                    #if ($rpOrganizationName)
+                        #springMessageText("idp.attribute-release.of", "of") $encoder.encodeForHTML($rpOrganizationName)
                     #end
-                </header>
-                #if ($serviceName)
-                    <p style="margin-top: 70px;">
-                        #springMessageText("idp.attribute-release.serviceNameLabel", "You are about to access the service:")<br>
-                        <span class="service_name">$serviceName</span>
-                        #if ($rpOrganizationName)
-                            #springMessageText("idp.attribute-release.of", "of") <span class="organization_name">$encoder.encodeForHTML($rpOrganizationName)</span>
+                </p>
+            #end
+
+            #if ($serviceDescription)
+                <p>
+                    #springMessageText("idp.attribute-release.serviceDescriptionLabel", "Description as provided by this service:")<br>
+                    <strong>$encoder.encodeForHTML($serviceDescription)</strong>
+                </p>
+            #end
+
+            <ul>
+            #if ($informationURL)
+                <li>
+                    <a href="$informationURL">#springMessageText("idp.attribute-release.informationURLLabel", "Additional information about the service")</a>
+                </li>
+            #end
+
+            #if ($privacyStatementURL)
+                <li>
+                    <a href="$privacyStatementURL">#springMessageText("idp.attribute-release.privacyStatementURLLabel", "Data privacy information of the service")</a>
+                </li>
+            #end
+            </ul>
+
+            <form action="$flowExecutionUrl" method="post" style="padding:10px">
+                #parse("csrf/csrf.vm")
+                <div class="boxed">
+                    <h2>#springMessageText("idp.attribute-release.attributesHeader", "Information to be Provided to Service")</h2>
+
+                    #foreach ($attribute in $attributeReleaseContext.getConsentableAttributes().values())
+                        #if ($attributeReleaseFlowDescriptor.perAttributeConsentEnabled)
+                            <fieldset>
+                            <legend><p>$encoder.encodeForHTML($attributeDisplayNameFunction.apply($attribute))</p></legend>
+                        #else
+                            <p>$encoder.encodeForHTML($attributeDisplayNameFunction.apply($attribute))</p>
                         #end
-                    </p>
-                #end
-                #if ($serviceDescription)
-                    <p style="margin-top: 10px;">
-                        #springMessageText("idp.attribute-release.serviceDescriptionLabel", "Description as provided by this service:")<br>
-                        <span class="service_description">$encoder.encodeForHTML($serviceDescription)</span>
-                        <br>
-                    </p>
-                #end
-                #if ($informationURL)
-                    <p style="margin-top: 10px;">
-                        <a href="$informationURL">#springMessageText("idp.attribute-release.informationURLLabel", "Additional information about the service")</a>
-                    </p>
-                #end
-                <div id="attributeRelease">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th colspan="3">
-                                    #springMessageText("idp.attribute-release.attributesHeader", "Information to be Provided to Service")
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            #foreach ($attribute in $attributeReleaseContext.getConsentableAttributes().values())
-                                <tr>
-                                    <td>$encoder.encodeForHTML($attributeDisplayNameFunction.apply($attribute))</td>
-                                    <td>
-                                        #foreach ($value in $attribute.values)
-                                            #if ($replaceDollarWithNewline)
-                                                #set ($encodedValue = $encoder.encodeForHTML($value.getDisplayValue()).replaceAll($encoder.encodeForHTML('$'),"<br>"))
-                                            #else
-                                                #set ($encodedValue = $encoder.encodeForHTML($value.getDisplayValue()))
-                                            #end
-                                            #if ($attributeReleaseFlowDescriptor.perAttributeConsentEnabled)
-                                                <label for="$attribute.id"><strong>$encodedValue</strong></label>
-                                            #else
-                                                <strong>$encodedValue</strong>
-                                            #end
-                                            <br>
-                                        #end
-                                    </td>
-                                    <td style="vertical-align: top">
-                                        #if ($attributeReleaseFlowDescriptor.perAttributeConsentEnabled)
-                                            #set ($inputType = "checkbox")
-                                        #else
-                                            #set ($inputType = "hidden")
-                                        #end
-                                        <input id="$attribute.id" type="$inputType" name="_shib_idp_consentIds" value="$encoder.encodeForHTML($attribute.id)" checked>
-                                    </td>
-                                </tr>
+                        #foreach ($value in $attribute.values)
+                            #if ($replaceDollarWithNewline)
+                                #set ($encodedValue = $encoder.encodeForHTML($value.getDisplayValue()).replaceAll($encoder.encodeForHTML('$'),"<br>"))
+                            #else
+                                #set ($encodedValue = $encoder.encodeForHTML($value.getDisplayValue()))
                             #end
-                        </tbody>
-                    </table>
+                            <p>
+                            #if ($attributeReleaseFlowDescriptor.perAttributeConsentEnabled)
+                                <input id="$attribute.id" type="checkbox" name="_shib_idp_consentIds" value="$encoder.encodeForHTML($attribute.id)" checked>
+                                <label for="$attribute.id"><strong>$encodedValue</strong></label>
+                            #else
+                                <strong>$encodedValue</strong>
+                                <input id="$attribute.id" type="hidden" name="_shib_idp_consentIds" value="$encoder.encodeForHTML($attribute.id)" checked>
+                            #end
+                            </p>
+                        #end
+                        #if ($attributeReleaseFlowDescriptor.perAttributeConsentEnabled)
+                            </fieldset>
+                        #end
+                    #end
+                    </fieldset>
                 </div>
-                #if ($privacyStatementURL)
-                    <p style="margin-top: 10px;">
-                        <a href="$privacyStatementURL">#springMessageText("idp.attribute-release.privacyStatementURLLabel", "Data privacy information of the service")</a>
-                    </p>
+
+                <p>#springMessageText("idp.attribute-release.confirmationQuestion", "The information above would be shared with the service if you proceed. Do you agree to release this information to the service every time you access it?")</p>
+
+                <fieldset>
+                #if ($attributeReleaseFlowDescriptor.doNotRememberConsentAllowed || $attributeReleaseFlowDescriptor.globalConsentAllowed)
+                    <legend>
+                        <p><strong>#springMessageText("idp.attribute-release.consentMethod", "Select an information release consent duration:")</strong></p>
+                    </legend>
                 #end
-                <div style="float:left;">
-                    <p>
-                        #springMessageText("idp.attribute-release.confirmationQuestion", "The information above would be shared with the service if you proceed. Do you agree to release this information to the service every time you access it?")
-                    </p>
-                    #if ($attributeReleaseFlowDescriptor.doNotRememberConsentAllowed || $attributeReleaseFlowDescriptor.globalConsentAllowed)
-                        <div id="generalConsentDiv" style="display: block; background-color: #F6F6F6;border: 1px gray solid; padding: 10px; width: 92%;">
-                        #springMessageText("idp.attribute-release.consentMethod", "Select an information release consent duration:")
-                    #end
-                    #if ($attributeReleaseFlowDescriptor.doNotRememberConsentAllowed)
-                        <p>
-                            <input id="_shib_idp_doNotRememberConsent" type="radio" name="_shib_idp_consentOptions" value="_shib_idp_doNotRememberConsent">
-                            <label for="_shib_idp_doNotRememberConsent">#springMessageText("idp.attribute-release.doNotRememberConsent", "Ask me again at next login")</label>
-                            <ul>
-                                <li>#springMessageText("idp.attribute-release.doNotRememberConsentItem", "I agree to send my information this time.")</li>
-                            </ul>
-                        </p>
-                    #end
-                    #if ($attributeReleaseFlowDescriptor.doNotRememberConsentAllowed || $attributeReleaseFlowDescriptor.globalConsentAllowed)
-                        <p>
-                            <input id="_shib_idp_rememberConsent" type="radio" name="_shib_idp_consentOptions" value="_shib_idp_rememberConsent" checked>
-                            <label for="_shib_idp_rememberConsent">#springMessageText("idp.attribute-release.rememberConsent", "Ask me again if information changes")</label>
-                            <ul>
-                                <li>#springMessageText("idp.attribute-release.rememberConsentItem", "I agree that the same information will be sent automatically to this service in the future.")</li>
-                            </ul>
-                        </p>
-                    #end
-                    #if ($attributeReleaseFlowDescriptor.globalConsentAllowed)
-                        <p>
-                            <input id="_shib_idp_globalConsent" type="radio" name="_shib_idp_consentOptions" value="_shib_idp_globalConsent">
-                            <label for="_shib_idp_globalConsent">#springMessageText("idp.attribute-release.globalConsent", "Do not ask me again")</label>
-                            <ul>
-                                <li>#springMessageText("idp.attribute-release.globalConsentItem", "I agree that <strong>all</strong> of my information will be released to <strong>any</strong> service.")</li>
-                            </ul>
-                        </p>
-                    #end
-                    #if ($attributeReleaseFlowDescriptor.doNotRememberConsentAllowed || $attributeReleaseFlowDescriptor.globalConsentAllowed)
-                        #springMessageText("idp.attribute-release.consentMethodRevoke", "This setting can be revoked at any time with the checkbox on the login page.")
-                        </div>
-                    #end
-                    <p style="text-align: center;">
-                        <input type="submit" name="_eventId_AttributeReleaseRejected" value="#springMessageText("idp.attribute-release.reject", "Reject")" style="margin-right: 30px;">
-                        <input type="submit" name="_eventId_proceed" value="#springMessageText("idp.attribute-release.accept", "Accept")">
-                    </p>
+
+                #if ($attributeReleaseFlowDescriptor.doNotRememberConsentAllowed)
+                    <input id="_shib_idp_doNotRememberConsent" type="radio" name="_shib_idp_consentOptions" value="_shib_idp_doNotRememberConsent">
+                    <label for="_shib_idp_doNotRememberConsent">#springMessageText("idp.attribute-release.doNotRememberConsent", "Ask me again at next login")</label>
+                    <p><small>#springMessageText("idp.attribute-release.doNotRememberConsentItem", "I agree to send my information this time.")</small></p>
+                #end
+                #if ($attributeReleaseFlowDescriptor.doNotRememberConsentAllowed || $attributeReleaseFlowDescriptor.globalConsentAllowed)
+                    <input id="_shib_idp_rememberConsent" type="radio" name="_shib_idp_consentOptions" value="_shib_idp_rememberConsent" checked>
+                    <label for="_shib_idp_rememberConsent">#springMessageText("idp.attribute-release.rememberConsent", "Ask me again if information changes")</label>
+                    <p><small>#springMessageText("idp.attribute-release.rememberConsentItem", "I agree that the same information will be sent automatically to this service in the future.")</small></p>
+                #end
+                #if ($attributeReleaseFlowDescriptor.globalConsentAllowed)
+                    <input id="_shib_idp_globalConsent" type="radio" name="_shib_idp_consentOptions" value="_shib_idp_globalConsent">
+                    <label for="_shib_idp_globalConsent">#springMessageText("idp.attribute-release.globalConsent", "Do not ask me again")</label>
+                    <p><small>#springMessageText("idp.attribute-release.globalConsentItem", "I agree that <strong>all</strong> of my information will be released to <strong>any</strong> service.")</small></p>
+                #end
+                </fieldset>
+
+                <div class="grid md-2">
+                    <div class="grid-item">
+                        <button class="button--full" type="submit" name="_eventId_proceed">#springMessageText("idp.attribute-release.accept", "Accept")</button>
+                    </div>
+
+                    <div class="grid-item">
+                        <button class="button--secondary button--full" type="submit" name="_eventId_AttributeReleaseRejected">#springMessageText("idp.attribute-release.reject", "Reject")</button>
+                    </div>
                 </div>
+                #if ($attributeReleaseFlowDescriptor.doNotRememberConsentAllowed || $attributeReleaseFlowDescriptor.globalConsentAllowed)
+                    <p>#springMessageText("idp.attribute-release.consentMethodRevoke", "This setting can be revoked at any time with the checkbox on the login page.")</p>
+                #end
+            </form>
+            </section>
+        </main>
+        <footer class="footer">
+            <div class="cc">
+                <p>#springMessageText("idp.footer", "Insert your footer text here.")</p>
             </div>
-        </form>
+        </footer>
     </body>
 </html>
