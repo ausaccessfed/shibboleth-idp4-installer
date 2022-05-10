@@ -1,4 +1,5 @@
-ity Template for DisplayUsernamePasswordPage view-state
+##
+## Velocity Template for DisplayUsernamePasswordPage view-state
 ##
 ## Velocity context will contain the following properties
 ## flowExecutionUrl - the form action location
