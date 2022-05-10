@@ -396,7 +396,7 @@
     mode: 0640
     backup: yes
 
-- name: 'Set attributes/schac.xml
+- name: 'Set attributes/schac.xml'
   template:
     src: 'assets/{{inventory_hostname}}/idp/conf/attributes/schac.xml'
     dest: '{{ shib_idp.home }}/conf/attributes/schac.xml'
