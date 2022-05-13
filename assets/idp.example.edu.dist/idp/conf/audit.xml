@@ -29,6 +29,10 @@
         <value>http://shibboleth.net/ns/profiles/mdquery</value>
     </util:list>
 
+    <!--
+    You can freely add/change this map to map constants or frequently appearing strings into
+    shorter values in the audit log.
+    -->
     <util:map id="shibboleth.AuditFieldReplacementMap">
         <entry key="urn:oasis:names:tc:SAML:1.0:am:password" value="password" />
         <entry key="urn:oasis:names:tc:SAML:2.0:ac:classes:Password" value="password" />

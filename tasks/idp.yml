@@ -396,6 +396,15 @@
     mode: 0640
     backup: yes
 
+- name: 'Set attributes/schac.xml'
+  template:
+    src: 'assets/{{inventory_hostname}}/idp/conf/attributes/schac.xml'
+    dest: '{{ shib_idp.home }}/conf/attributes/schac.xml'
+    owner: root
+    group: jetty
+    mode: 0640
+    backup: yes
+
 - name: 'Set attributes/custom/auEduPersonSharedToken.props'
   template:
     src: 'assets/{{inventory_hostname}}/idp/conf/attributes/custom/auEduPersonSharedToken.props'
@@ -414,23 +423,15 @@
     mode: 0640
     backup: yes
 
-- name: 'Set attributes/custom/schacHomeOrganization.props'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/attributes/custom/schacHomeOrganization.props'
-    dest: '{{ shib_idp.home }}/conf/attributes/custom/schacHomeOrganization.props'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+- name: 'Remove attributes/custom/schacHomeOrganization.props'
+  file:
+    path: '{{ shib_idp.home }}/conf/attributes/custom/schacHomeOrganization.props'
+    state: absent
 
-- name: 'Set attributes/custom/schacHomeOrganizationType.props'
-  template:
-    src: 'assets/{{inventory_hostname}}/idp/conf/attributes/custom/schacHomeOrganizationType.props'
-    dest: '{{ shib_idp.home }}/conf/attributes/custom/schacHomeOrganizationType.props'
-    owner: root
-    group: jetty
-    mode: 0640
-    backup: yes
+- name: 'Remove attributes/custom/schacHomeOrganizationType.props'
+  file:
+    path: '{{ shib_idp.home }}/conf/attributes/custom/schacHomeOrganizationType.props'
+    state: absent
 
 - name: 'Set authn/authn.properties'
   template:
