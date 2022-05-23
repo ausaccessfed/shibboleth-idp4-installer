@@ -12,6 +12,13 @@
        default-init-method="initialize"
        default-destroy-method="destroy">
 
+    <!--
+    Note that all built-in rules rely on URI-naming and thus include the implied settings:
+    
+    <prop key="saml2.nameFormat">urn:oasis:names:tc:SAML:2.0:attrname-format:uri</prop>
+    <prop key="saml1.namespace">urn:mace:shibboleth:1.0:attributeNamespace:uri</prop>
+    -->
+
     <bean parent="shibboleth.TranscodingRuleLoader">
     <constructor-arg>
     <list>

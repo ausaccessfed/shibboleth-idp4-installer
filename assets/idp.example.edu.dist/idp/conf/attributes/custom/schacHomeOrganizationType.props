@@ -1,7 +1,0 @@
-id=schacHomeOrganizationType
-transcoder=SAML2StringTranscoder SAML1StringTranscoder
-saml1.name=urn:oid:1.3.6.1.4.1.25178.1.2.10
-saml2.name=urn:oid:1.3.6.1.4.1.25178.1.2.10
-displayName.en=Home Orgainisation type
-description.en=Type of Organisation the user belongs too
-

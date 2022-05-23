@@ -1,7 +1,0 @@
-id=schacHomeOrganization
-transcoder=SAML2StringTranscoder SAML1StringTranscoder
-saml1.name=urn:oid:1.3.6.1.4.1.25178.1.2.9
-saml2.name=urn:oid:1.3.6.1.4.1.25178.1.2.9
-displayName.en=Home Orgainisation
-description.en=Specifies a person's home organization using the domain name of the organizstion.
-
