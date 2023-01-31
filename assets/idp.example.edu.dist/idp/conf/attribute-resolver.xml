@@ -216,7 +216,7 @@
             Base32 = new Base32Type();
 
             var saltedUserId = "%{idp.entityID}" + "!" +
-                               %{idp.persistentId.sourceAttribute}.getValues().get(0) + "!" +
+                               %{idp.newPersistentId.sourceAttribute}.getValues().get(0) + "!" +
                                "%{idp.persistentId.salt}";
             var hashedUserId = Base32.encodeToString(md.digest(saltedUserId.getBytes()));
 
