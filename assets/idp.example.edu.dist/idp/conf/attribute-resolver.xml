@@ -205,8 +205,24 @@
     <!-- SAML Subject ID Attributes                 -->
     <!-- ========================================== -->
 
-    <AttributeDefinition xsi:type="Scoped" id="samlSubjectID" scope="%{idp.scope}">
-        <InputDataConnector ref="ldap" attributeNames="%{idp.persistentId.sourceAttribute}"/>
+    <AttributeDefinition xsi:type="ScriptedAttribute" id="samlSubjectID">
+        <InputDataConnector ref="ldap" attributeNames="%{idp.newPersistentId.sourceAttribute}"/>
+        <Script><![CDATA[
+            scopedValueType = Java.type("net.shibboleth.idp.attribute.ScopedStringAttributeValue");
+            MessageDigestType = Java.type("java.security.MessageDigest");
+            Base32Type = Java.type("org.apache.commons.codec.binary.Base32");
+
+            md = MessageDigestType.getInstance("SHA-1");
+            Base32 = new Base32Type();
+
+            var saltedUserId = "%{idp.entityID}" + "!" +
+                               %{idp.persistentId.sourceAttribute}.getValues().get(0) + "!" +
+                               "%{idp.persistentId.salt}";
+            var hashedUserId = Base32.encodeToString(md.digest(saltedUserId.getBytes()));
+
+            samlSubjectID.addValue(new scopedValueType(hashedUserId, "%{idp.scope}"));
+        ]]>
+        </Script>
     </AttributeDefinition>
 
     <AttributeDefinition xsi:type="Scoped" id="samlPairwiseID" scope="%{idp.scope}">
