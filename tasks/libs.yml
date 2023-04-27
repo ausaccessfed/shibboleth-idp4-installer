@@ -56,7 +56,7 @@
   get_url:
     url: '{{ urls.logback_core.url }}'
     dest: '{{ shib_idp.libs }}/logback-core-{{ download.logback_core.version }}.jar'
-    checksum: 'sha265:{{ download.logback_core.sha256sum }}'
+    checksum: 'sha256:{{ download.logback_core.sha256sum }}'
     owner: root
     group: jetty
     mode: 0640
