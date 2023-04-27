@@ -71,7 +71,7 @@
   args:
     creates: '{{ shib_idp.home }}/views/intercept'
 
-- include: libs.yml
+- include_tasks: libs.yml
 
 - name: 'Set customised messages.properties'
   template:
@@ -589,7 +589,7 @@
     group: jetty
     mode: 0640
 
-- include: idp-credentials.yml
+- include_tasks: idp-credentials.yml
 
 - name: 'Fix IdP dir permissions'
   file:
