@@ -6,7 +6,7 @@ The AAF Shibboleth IdP Installer is designed to automate the install of version 
 * CentOS 7, Stream 8 or Stream 9
 * RedHAT 7, 8 or 9
 * ORACLE Linux 7, 8 or 9
-* Ubuntu 20.04 (Focal Fossa)
+* Ubuntu 20.04 (Focal Fossa) or 22.04 (Jammy Jellyfish)
 
 For a full set of documentation and guidance on upgrading from Shibboleth version 3 please refer to the [AAF IdPv4 Installer Knowledge base](https://aaf.freshdesk.com/support/solutions/articles/19000120020-shibboleth-idpv4-installer).
 
