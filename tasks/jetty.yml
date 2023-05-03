@@ -18,7 +18,7 @@
   get_url:
     url: '{{ urls.jetty.url }}'
     dest: '{{ jetty_dist_archive_path }}'
-    sha256sum: '{{ download.jetty.sha256sum }}'
+    checksum: 'sha256:{{ download.jetty.sha256sum }}'
 
 - name: 'Extract jetty distribution'
   shell: >
