@@ -36,7 +36,7 @@
     <AttributeRule attributeID="givenName">
       <PermitValueRule xsi:type="ANY"/>
     </AttributeRule>
-    <AttributeRule attributeID="surname">
+    <AttributeRule attributeID="sn">
       <PermitValueRule xsi:type="ANY"/>
     </AttributeRule>
    
