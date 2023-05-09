@@ -23,7 +23,7 @@
   get_url:
     url: '{{ urls.shib_idp.url }}'
     dest: '{{ idp_dist_archive_path }}'
-    sha256sum: '{{ download.shib_idp.sha256sum }}'
+    checksum: 'sha256:{{ download.shib_idp.sha256sum }}'
 
 - name: 'Extract Shibboleth IdP distribution'
   shell: >
@@ -71,7 +71,7 @@
   args:
     creates: '{{ shib_idp.home }}/views/intercept'
 
-- include: libs.yml
+- include_tasks: libs.yml
 
 - name: 'Set customised messages.properties'
   template:
@@ -554,7 +554,7 @@
   get_url:
     url: '{{ metadata_cert_url }}'
     dest: '{{ shib_idp.home }}/credentials/{{ metadata_cert_file_name }}'
-    sha256sum: '{{ metadata_cert_sha256sum }}'
+    checksum: 'sha256:{{ metadata_cert_sha256sum }}'
     force: yes
   when: metadata_cert_sha256sum is defined
 
@@ -589,7 +589,7 @@
     group: jetty
     mode: 0640
 
-- include: idp-credentials.yml
+- include_tasks: idp-credentials.yml
 
 - name: 'Fix IdP dir permissions'
   file:
