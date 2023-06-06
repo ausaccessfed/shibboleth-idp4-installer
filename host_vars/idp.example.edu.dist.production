@@ -90,7 +90,7 @@ old_source_persistent_id:
 idp_behind_proxy: "false"
 
 # Set default encryption [GCM | CBC].
-default_encryption: "GCM"
+default_encryption: "CBC"
 
 # FTicks KEY_ID (Value provided on request to support@aaf.edu.au)
 fticks_key_id:
