@@ -86,7 +86,8 @@
     </bean>
 
     <!--
-    Condition to evaluate to apply attribute-release consent to attribute queries.
+    Condition to evaluate to apply attribute-release consent check to attribute queries, CAS validation,
+    or other back-channel profiles. Generally should be enabled if the attribute-release feature is enabled.
     -->
     <bean id="shibboleth.consent.AttributeQuery.Condition" parent="shibboleth.Conditions.FALSE" />
 

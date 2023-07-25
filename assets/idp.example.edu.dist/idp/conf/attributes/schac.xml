@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
+
+       default-init-method="initialize"
+       default-destroy-method="destroy">
+
+    <!--
+    Note that all built-in rules rely on URI-naming and thus include the implied settings:
+    
+    <prop key="saml2.nameFormat">urn:oasis:names:tc:SAML:2.0:attrname-format:uri</prop>
+    <prop key="saml1.namespace">urn:mace:shibboleth:1.0:attributeNamespace:uri</prop>
+    -->
+
+    <bean parent="shibboleth.TranscodingRuleLoader">
+    <constructor-arg>
+    <list>
+         <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacMotherTongue</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.1</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.1</prop>
+                    <prop key="displayName.en">Mother Tongue</prop>
+                </props>
+            </property>
+        </bean>
+
+         <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacGender</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.2</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.2</prop>
+                    <prop key="displayName.en">Gender</prop>
+                </props>
+            </property>
+        </bean>
+
+         <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacDateOfBirth</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.3</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.3</prop>
+                    <prop key="displayName.en">Date or Birth</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacPlaceOfBirth</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.4</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.4</prop>
+                    <prop key="displayName.en">Place of Birth</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacCountryOfCitizenship</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.5</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.5</prop>
+                    <prop key="displayName.en">Country of Citizenship</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacHomeOrganization</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.9</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.9</prop>
+                    <prop key="displayName.en">Home Organization</prop>
+                    <prop key="displayName.fi">Kotiorganisaatio</prop>
+                    <prop key="displayDescription.en">The domain name of the person's home organisation</prop>
+                    <prop key="displayDescription.fi">Henkilön kotiorganisaation domain-nimi</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacHomeOrganizationType</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.10</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.10</prop>
+                    <prop key="displayName.en">Home organization type</prop>
+                    <prop key="displayName.fi">Kotiorganisaation tyyppi</prop>
+                    <prop key="displayDescription.en">Home organisation type: university, polytechnic, etc</prop>
+                    <prop key="displayDescription.fi">Kotiorganisaation tyyppi: yliopisto, ammattikorkeakoulu jne</prop>
+                </props>
+            </property>
+        </bean>
+
+         <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacCountryOfResidence</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.11</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.11</prop>
+                    <prop key="displayName.en">Country of Reseidence</prop>
+                </props>
+            </property>
+        </bean>
+
+         <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacUserPresenceID</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.12</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.12</prop>
+                    <prop key="displayName.en">User Presence ID</prop>
+                </props>
+            </property>
+        </bean>
+
+         <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacPersonalPosition</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.13</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.13</prop>
+                    <prop key="displayName.en">Personal Position</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacPersonalUniqueCode</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.14</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.14</prop>
+                    <prop key="displayName.en">Personal Unique Code</prop>
+                </props>
+            </property>
+        </bean>
+
+	<bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacPersonalUniqueID</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.15</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.15</prop>
+                    <prop key="displayName.en">Personal Unique ID</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacExpiryDate</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.17</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.17</prop>
+                    <prop key="displayName.en">Expiry Date</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacUserPrivateAttribute</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.18</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.18</prop>
+                    <prop key="displayName.en">User Private Attribute</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacUserStatus</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.19</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.19</prop>
+                    <prop key="displayName.en">User Status</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacProjectMembership</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.20</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.20</prop>
+                    <prop key="displayName.en">Project Membership</prop>
+                </props>
+            </property>
+        </bean>
+
+        <bean parent="shibboleth.TranscodingProperties">
+            <property name="properties">
+                <props merge="true">
+                    <prop key="id">schacProjectSpecificRole</prop>
+                    <prop key="transcoder">SAML2StringTranscoder</prop>
+                    <prop key="saml2.name">urn:oid:1.3.6.1.4.1.25178.1.2.21</prop>
+                    <prop key="saml1.name">urn:oid:1.3.6.1.4.1.25178.1.2.21</prop>
+                    <prop key="displayName.en">Project Specific Role</prop>
+                </props>
+            </property>
+        </bean>
+    </list>
+    </constructor-arg>
+    </bean>
+</beans>

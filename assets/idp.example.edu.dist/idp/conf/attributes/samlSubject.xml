@@ -12,6 +12,12 @@
        default-init-method="initialize"
        default-destroy-method="destroy">
 
+    <!--
+    Note that all built-in rules rely on URI-naming and thus include the implied settings:
+    
+    <prop key="saml2.nameFormat">urn:oasis:names:tc:SAML:2.0:attrname-format:uri</prop>
+    -->
+
     <!-- https://wiki.oasis-open.org/security/SAMLSubjectIDAttr -->
 
     <bean parent="shibboleth.TranscodingRuleLoader">
