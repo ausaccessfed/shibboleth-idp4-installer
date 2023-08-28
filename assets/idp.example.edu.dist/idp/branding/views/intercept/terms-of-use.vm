@@ -29,13 +29,13 @@
             <header>
                 <img class="main-logo" src="$request.getContextPath()#springMessageText("idp.logo", "/images/placeholder-logo.png")" alt="#springMessageText("idp.logo.alt-text", "logo")" />
             </header>
-
+            
             <section>
                 <h1>#springMessageText("${termsOfUseId}.title", "Terms of Use")</h1>
                 #if ($rpOrganizationLogo)
                     <img class="service-logo" src="$encoder.encodeForHTMLAttribute($rpOrganizationLogo)" alt="logo for $encoder.encodeForHTMLAttribute($serviceName)" />
-                #end
-
+                #end    
+                
                 <p>#springMessageText("${termsOfUseId}.text", "Terms of Use Text...")</p>
                 <form action="$flowExecutionUrl" method="post">
                     <fieldset>
@@ -49,10 +49,10 @@
                             #end
                             </label>
                     </fieldset>
-
+                    
                     <div class="grid md-2">
                         <div class="grid-item">
-                            <button class="button--full" type="submit" name="_eventId_proceed">#springMessageText("idp.terms-of-use.submit", "Submit")</button>
+                            <button class="button--full" type="submit" name="_eventId_proceed">#springMessageText("idp.terms-of-use.submit", "Submit")</button> 
                         </div>
                         </form>
                         <div class="grid-item">
@@ -65,7 +65,7 @@
                 </form>
             </section>
         </main>
-
+        
         <footer class="footer">
             <div class="cc">
                 <p>#springMessageText("idp.footer", "Insert your footer text here.")</p>

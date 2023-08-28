@@ -27,13 +27,11 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-        #*
         #if ($promptForSP)
             <meta http-equiv="refresh" content="10;url=$flowExecutionUrl&_eventId=propagate">
         #elseif ($promptForIdP)
             <meta http-equiv="refresh" content="10;url=$flowExecutionUrl&_eventId=local">
         #end
-        *#
         <link rel="stylesheet" type="text/css" href="$request.getContextPath()#springMessageText("idp.css", "/css/placeholder.css")">
     </head>
 

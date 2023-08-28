@@ -26,7 +26,6 @@
       - mariadb
       - mariadb-server
       - chrony
-      - ruby
     state: installed
   when: (((ansible_distribution_major_version == "7") or 
           (ansible_distribution_major_version == "8")) and 
@@ -40,7 +39,6 @@
       - mariadb
       - mariadb-server
       - chrony
-      - ruby
     state: installed
     enablerepo: crb
   when: ((ansible_distribution_major_version == "9") and
@@ -52,7 +50,6 @@
       - openjdk-11-jdk
       - mariadb-server
       - chrony
-      - ruby
     state: present
     update_cache: yes
   when: patch_with=="apt"

@@ -43,7 +43,7 @@
             <h1>Information Release</h1>
             #if ($rpOrganizationLogo)
                 <img class="service-logo" src="$encoder.encodeForHTMLAttribute($rpOrganizationLogo)" alt="logo for $encoder.encodeForHTMLAttribute($serviceName)" />
-            #end
+            #end                
 
             #if ($serviceName)
                 <p>
@@ -54,7 +54,7 @@
                     #end
                 </p>
             #end
-
+            
             #if ($serviceDescription)
                 <p>
                     #springMessageText("idp.attribute-release.serviceDescriptionLabel", "Description as provided by this service:")<br>
@@ -68,14 +68,14 @@
                     <a href="$informationURL">#springMessageText("idp.attribute-release.informationURLLabel", "Additional information about the service")</a>
                 </li>
             #end
-
+            
             #if ($privacyStatementURL)
                 <li>
                     <a href="$privacyStatementURL">#springMessageText("idp.attribute-release.privacyStatementURLLabel", "Data privacy information of the service")</a>
                 </li>
             #end
             </ul>
-
+            
             <form action="$flowExecutionUrl" method="post" style="padding:10px">
                 #parse("csrf/csrf.vm")
                 <div class="boxed">
@@ -119,7 +119,7 @@
                         <p><strong>#springMessageText("idp.attribute-release.consentMethod", "Select an information release consent duration:")</strong></p>
                     </legend>
                 #end
-
+                
                 #if ($attributeReleaseFlowDescriptor.doNotRememberConsentAllowed)
                     <input id="_shib_idp_doNotRememberConsent" type="radio" name="_shib_idp_consentOptions" value="_shib_idp_doNotRememberConsent">
                     <label for="_shib_idp_doNotRememberConsent">#springMessageText("idp.attribute-release.doNotRememberConsent", "Ask me again at next login")</label>
@@ -141,7 +141,7 @@
                     <div class="grid-item">
                         <button class="button--full" type="submit" name="_eventId_proceed">#springMessageText("idp.attribute-release.accept", "Accept")</button>
                     </div>
-
+                    
                     <div class="grid-item">
                         <button class="button--secondary button--full" type="submit" name="_eventId_AttributeReleaseRejected">#springMessageText("idp.attribute-release.reject", "Reject")</button>
                     </div>
