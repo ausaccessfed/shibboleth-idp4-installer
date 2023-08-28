@@ -46,4 +46,23 @@
     </AttributeRule>
   </AttributeFilterPolicy>
 
+  <!-- ================================================== --> 
+
+  <!-- REFEDS Anonymous Access V.2 -->
+  <AttributeFilterPolicy id="releaseRandSAttributeBundle">
+    <PolicyRequirementRule xsi:type="EntityAttributeExactMatch"
+      attributeName="http://macedir.org/entity-category"
+      attributeValue="https://refeds.org/category/anonymous"/>
+ 
+    <!-- release of schacHomeOrganization is REQUIRED -->
+    <AttributeRule attributeID="schacHomeOrganization">
+      <PermitValueRule xsi:type="ANY"/>
+    </AttributeRule>
+
+    <!-- release of ePSA is REQUIRED -->
+    <AttributeRule attributeID="eduPersonScopedAffiliation">
+      <PermitValueRule xsi:type="ANY"/>
+    </AttributeRule>
+  </AttributeFilterPolicy>
+
 </AttributeFilterPolicyGroup>
