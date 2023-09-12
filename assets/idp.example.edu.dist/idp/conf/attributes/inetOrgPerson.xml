@@ -33,7 +33,9 @@
                     <prop key="saml2.name">urn:oid:2.5.4.3</prop>
                     <prop key="saml1.name">urn:mace:dir:attribute-def:cn</prop>
                     <prop key="displayName.en">Common name</prop>
+                    <prop key="displayName.fr">Nom et Prénom</prop>
                     <prop key="description.en">Common name of a person</prop>
+                    <prop key="description.fr">Nom complet sans accent d'une personne</prop>
                 </props>
             </property>
         </bean>
@@ -46,9 +48,11 @@
                     <prop key="saml2.name">urn:oid:2.16.840.1.113730.3.1.2</prop>
                     <prop key="saml1.name">urn:mace:dir:attribute-def:departmentNumber</prop>
                     <prop key="displayName.en">Department number</prop>
+                    <prop key="displayName.fr">departmentNumber</prop>
                     <prop key="displayName.de">Abteilungsnummer</prop>
                     <prop key="description.en">Department number</prop>
                     <prop key="description.de">Nummer der Abteilung</prop>
+                    <prop key="description.fr">Identifiant du département dans l'organisation</prop>
                 </props>
             </property>
         </bean>
@@ -65,7 +69,7 @@
                     <prop key="displayName.fr">Nom</prop>
                     <prop key="displayName.it">Nome</prop>
                     <prop key="displayName.ja">表示名</prop>
-                    <prop key="description.en">The name that should appear in white-pages-like applications for this person.</prop>
+                    <prop key="description.en">The name that should appear in white-pages-like applications for this person</prop>
                     <prop key="description.de">Anzeigename</prop>
                     <prop key="description.fr">Nom complet d'affichage</prop>
                     <prop key="description.it">Nome</prop>
@@ -103,7 +107,9 @@
                     <prop key="saml2.name">urn:oid:2.16.840.1.113730.3.1.4</prop>
                     <prop key="saml1.name">urn:mace:dir:attribute-def:employeeType</prop>
                     <prop key="displayName.en">Employee type</prop>
+                    <prop key="displayName.fr">Type d'employé</prop>
                     <prop key="description.en">Employee type</prop>
+                    <prop key="description.fr">Catégorie d'employé dans l'organisation</prop>
                 </props>
             </property>
         </bean>
@@ -202,7 +208,7 @@
                     <prop key="saml1.name">urn:mace:dir:attribute-def:l</prop>
                     <prop key="displayName.en">Locality name</prop>
                     <prop key="displayName.de">Ort</prop>
-                    <prop key="displayName.fr">Locality name</prop>
+                    <prop key="displayName.fr">Localité</prop>
                     <prop key="displayName.ja">場所(L)</prop>
                     <prop key="description.en">Locality name</prop>
                     <prop key="description.de">Ort</prop>
@@ -405,7 +411,7 @@
                     <prop key="displayName.ja">姓</prop>
                     <prop key="description.en">Surname or family name</prop>
                     <prop key="description.de">Familienname</prop>
-                    <prop key="description.fr">Nom de famille de l'utilisateur.</prop>
+                    <prop key="description.fr">Nom de famille de l'utilisateur</prop>
                     <prop key="description.it">Cognome dell'utilizzatore</prop>
                     <prop key="description.ja">氏名(姓)の英語表記</prop>
                 </props>
@@ -420,8 +426,10 @@
                     <prop key="saml2.name">urn:oid:2.5.4.8</prop>
                     <prop key="saml1.name">urn:mace:dir:attribute-def:st</prop>
                     <prop key="displayName.en">State or province name</prop>
+                    <prop key="displayName.fr">Etat ou nom de province</prop>
                     <prop key="displayName.ja">都道府県もしくは州や省(ST)</prop>
                     <prop key="description.en">State or province name</prop>
+                    <prop key="description.fr">Etat ou nom de province</prop>
                     <prop key="description.ja">州名や省名 国によって異なり日本の場合は都道府県名</prop>
                 </props>
             </property>
@@ -501,10 +509,10 @@
                     <prop key="displayName.fr">ID utilisateur</prop>
                     <prop key="displayName.it">ID dell'utente</prop>
                     <prop key="displayName.ja">ユーザID</prop>
-                    <prop key="description.en">A unique identifier for a person, mainly used for user identification within the user's home organization.</prop>
-                    <prop key="description.de">Eine eindeutige Nummer für eine Person, welche hauptsächlich zur Identifikation innerhalb der Organisation benutzt wird.</prop>
-                    <prop key="description.fr">Identifiant de connexion d'une personnes sur les systèmes informatiques.</prop>
-                    <prop key="description.it">Identificativo unico della persona, usato per l'identificazione dell'utente all'interno della organizzazione di appartenenza.</prop>
+                    <prop key="description.en">A unique identifier for a person, mainly used for user identification within the user's home organization</prop>
+                    <prop key="description.de">Eine eindeutige Nummer für eine Person, welche hauptsächlich zur Identifikation innerhalb der Organisation benutzt wird</prop>
+                    <prop key="description.fr">Identifiant de connexion d'une personnes sur les systèmes informatiques</prop>
+                    <prop key="description.it">Identificativo unico della persona, usato per l'identificazione dell'utente all'interno della organizzazione di appartenenza</prop>
                     <prop key="description.ja">所属機関内で一意の利用者識別子</prop>
                 </props>
             </property>

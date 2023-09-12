@@ -33,13 +33,13 @@
         <main class="main">
             <header>
                 <img class="main-logo" src="$request.getContextPath()#springMessageText("idp.logo", "/images/placeholder-logo.png")" alt="#springMessageText("idp.logo.alt-text", "logo")" />
-
+                
                 #set ($serviceName = $rpUIContext.serviceName)
                 #if ($serviceName && !$rpContext.getRelyingPartyId().contains($serviceName))
                     <h1>#springMessageText("idp.login.loginTo", "Login to") $encoder.encodeForHTML($serviceName)</h1>
                 #end
             </header>
-
+            
             <section>
                 <form action="$flowExecutionUrl" method="post">
                     #parse("csrf/csrf.vm")
@@ -63,25 +63,25 @@
                     #if ($desc)
                         <p>$encoder.encodeForHTML($desc)</p>
                     #end
-
+                            
                     #parse("login-error.vm")
 
                     <label for="username">#springMessageText("idp.login.username", "Username")</label>
                     <input id="username" name="j_username" type="text"
                         value="#if($username)$encoder.encodeForHTML($username)#end" />
-
+                        
                     <label for="password">#springMessageText("idp.login.password", "Password")</label>
                     <input type="password" name="j_password" id="password" value="" />
-
+    
                     ## You may need to modify this to taste, such as changing the flow name checked to authn/MFA.
                     #if (!$authenticationContext.getActiveResults().containsKey('authn/Password'))
                         <input type="checkbox" name="donotcache" value="1" id="donotcache" />
                         <label for="donotcache">#springMessageText("idp.login.donotcache", "Don't Remember Login")</label>
                     #end
-
+    
                     <input id="_shib_idp_revokeConsent" type="checkbox" name="_shib_idp_revokeConsent" value="true" />
                     <label for="_shib_idp_revokeConsent">#springMessageText("idp.attribute-release.revoke", "Clear prior granting of permission for release of your information to this service.")</label>
-
+    
                     <div class="grid">
                         <div class="grid-item">
                             <button type="submit" name="_eventId_proceed"
@@ -90,7 +90,7 @@
                         </div>
                     </div>
                 </form>
-
+    
                 <ul>
                     <li><a href="#springMessageText("idp.url.password.reset", '#')">#springMessageText("idp.login.forgotPassword", "Forgot your password?")</a></li>
                     <li><a href="#springMessageText("idp.url.helpdesk", '#')">#springMessageText("idp.login.needHelp", "Need Help?")</a></li>

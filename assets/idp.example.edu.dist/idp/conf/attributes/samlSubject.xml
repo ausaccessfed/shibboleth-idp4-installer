@@ -35,7 +35,7 @@
                     <prop key="displayName.fr">ID unique</prop>
                     <prop key="displayName.it">ID unico</prop>
                     <prop key="displayName.ja">サブジェクトID</prop>
-                    <prop key="description.en">A unique identifier for a person, mainly for inter-institutional user identification.</prop>
+                    <prop key="description.en">A unique identifier for a person, mainly for inter-institutional user identification</prop>
                     <prop key="description.de">Eindeutige Benutzeridentifikation</prop>
                     <prop key="description.de-ch">Eindeutige Benützeridentifikation</prop>
                     <prop key="description.fr">Identifiant unique de l'utilisateur</prop>
@@ -56,11 +56,11 @@
                     <prop key="displayName.fr">Pairwise ID</prop>
                     <prop key="displayName.it">Pairwise ID</prop>
                     <prop key="displayName.ja">ペアワイズID</prop>
-                    <prop key="description.en">Pairwise ID: A unique identifier for a person, different for each service provider.</prop>
-                    <prop key="description.de">Pairwise ID: Eindeutige Benutzeridentifikation, unterschiedlich pro Service Provider.</prop>
-                    <prop key="description.de-ch">Pairwise ID: Eindeutige Benützeridentifikation, unterschiedlich pro Service Provider.</prop>
-                    <prop key="description.fr">Pairwise ID: Un identifiant unique de l'utilisateur, différent pour chaque fournisseur de service.</prop>
-                    <prop key="description.it">Pairwise ID: identificativo unico della persona, differente per ogni fornitore di servizio.</prop>
+                    <prop key="description.en">Pairwise ID: A unique identifier for a person, different for each service provider</prop>
+                    <prop key="description.de">Pairwise ID: Eindeutige Benutzeridentifikation, unterschiedlich pro Service Provider</prop>
+                    <prop key="description.de-ch">Pairwise ID: Eindeutige Benützeridentifikation, unterschiedlich pro Service Provider</prop>
+                    <prop key="description.fr">Pairwise ID: Un identifiant unique de l'utilisateur, différent pour chaque fournisseur de service</prop>
+                    <prop key="description.it">Pairwise ID: identificativo unico della persona, differente per ogni fornitore di servizio</prop>
                     <prop key="description.ja">フェデレーション内で一意かつSP毎に送出される値が異なる利用者識別子(eduPersonTargetedIDの後継)</prop>
                 </props>
             </property>
