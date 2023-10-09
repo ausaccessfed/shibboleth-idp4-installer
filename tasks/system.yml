@@ -86,6 +86,6 @@
     update_cache: yes
   when: patch_with=="apt"
 
-- name: 'Enable chrony service'
-  service: name=chronyd state=started enabled=yes
+#- name: 'Enable chrony service'
+#  service: name=chronyd state=started enabled=yes
 
